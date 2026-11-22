@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="is-locked">
+  <div class="scroll-progress" aria-hidden="true"></div>
   <main class="page">
     <section id="intro" class="section">
       <img class="intro-photo" src="assets/image-1.jpg" alt="" />
@@ -106,7 +107,7 @@
         <p class="kicker">Được tổ chức vào lúc</p>
         <p class="event-time">11:30, Thứ 5</p>
         <div class="lockup">
-          <p class="big-date"><span class="big-day">17</span><span class="big-rule" aria-hidden="true"></span><span class="big-month">Tháng 12<br />2026</span></p>
+          <p class="big-date"><span class="big-day">17</span><span class="big-rule" aria-hidden="true"></span><span class="big-month"><span class="m1">Tháng 12</span><span class="m2">2026</span></span></p>
           <p class="kicker">Trung tâm tiệc cưới</p>
           <p class="venue">PROMES CENTER</p>
         </div>
@@ -165,11 +166,11 @@
           <input id="name" name="name" type="text" required maxlength="100" autocomplete="name" enterkeyhint="next" placeholder="Nhập họ và tên" />
         </div>
 
-        <fieldset class="field attend">
-          <legend>Quý khách có tham dự không?</legend>
+        <div class="field attend" role="radiogroup" aria-labelledby="attend-label">
+          <p class="field-label" id="attend-label">Quý khách có tham dự không?</p>
           <label class="choice"><input type="radio" name="attending" value="yes" /><span>Tôi sẽ tham dự</span></label>
           <label class="choice"><input type="radio" name="attending" value="no" /><span>Tiếc quá, tôi không thể đến</span></label>
-        </fieldset>
+        </div>
 
         <div class="field" id="guests-field" hidden>
           <label for="guests">Số người tham dự</label>

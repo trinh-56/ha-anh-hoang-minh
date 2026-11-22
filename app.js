@@ -66,6 +66,7 @@ const guestsField = document.getElementById('guests-field');
 form.addEventListener('change', (e) => {
   if (e.target.name === 'attending') {
     guestsField.hidden = e.target.value !== 'yes';
+    statusEl.textContent = '';
   }
 });
 
@@ -116,4 +117,13 @@ form.addEventListener('submit', async (e) => {
     statusEl.textContent = 'Gửi chưa được, vui lòng thử lại.';
     submitBtn.disabled = false;
   }
+});
+
+// Guests stepper
+const guestsInput = document.getElementById('guests');
+document.querySelectorAll('.step').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const next = Number(guestsInput.value || 1) + Number(btn.dataset.step);
+    guestsInput.value = Math.min(10, Math.max(1, next));
+  });
 });

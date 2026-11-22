@@ -24,7 +24,7 @@
       </button>
       <p class="hint">Chạm để mở thiệp</p>
       <div class="intro-text">
-        <h1 class="intro-title">
+        <h1 class="names">
           <span class="name">Hà Anh</span>
           <span class="amp">&amp;</span>
           <span class="name">Hoàng Minh</span>
@@ -33,10 +33,10 @@
       </div>
     </section>
     <section id="save-date" class="section save-date">
-      <h2 class="save-title reveal">
-        <span>SAVE</span>
-        <span class="script">the</span>
-        <span>DATE</span>
+      <h2 class="names save-title reveal">
+        <span class="name">Save</span>
+        <span class="amp sans">the</span>
+        <span class="name">Date</span>
       </h2>
       <div class="stage">
         <img class="lily-watermark" src="assets/lily-1.png" alt="" aria-hidden="true" />
@@ -96,10 +96,10 @@
         <p>9:30 (Tức ngày 09 tháng 11 Bính Ngọ)</p>
       </div>
 
-      <div class="couple-names reveal">
-        <p class="script">Hà Anh</p>
-        <p class="and">AND</p>
-        <p class="script">Hoàng Minh</p>
+      <div class="names couple-names reveal">
+        <span class="name">Hà Anh</span>
+        <span class="amp">&amp;</span>
+        <span class="name">Hoàng Minh</span>
       </div>
 
       <div class="family-block reveal">
@@ -154,30 +154,38 @@
       <p class="closing reveal">Rất hân hạnh được đón tiếp</p>
     </section>
     <section id="rsvp" class="section rsvp">
+      <h2 class="script rsvp-title reveal">RSVP</h2>
       <form id="rsvp-form" class="rsvp-form reveal" novalidate>
         <p class="rsvp-intro">Vui lòng xác nhận tham dự để chúng tôi chuẩn bị đón tiếp chu đáo nhất. Trân trọng!</p>
 
         <div class="field">
           <label for="name">Tên của quý khách</label>
-          <input id="name" name="name" type="text" required maxlength="100" autocomplete="name" enterkeyhint="next" />
+          <input id="name" name="name" type="text" required maxlength="100" autocomplete="name" enterkeyhint="next" placeholder="Nhập họ và tên" />
         </div>
 
         <fieldset class="field attend">
           <legend>Quý khách có tham dự không?</legend>
-          <label class="pill"><input type="radio" name="attending" value="yes" /> Tôi sẽ tham dự</label>
-          <label class="pill"><input type="radio" name="attending" value="no" /> Tiếc quá, tôi không thể đến</label>
+          <label class="choice"><input type="radio" name="attending" value="yes" /><span>Tôi sẽ tham dự</span></label>
+          <label class="choice"><input type="radio" name="attending" value="no" /><span>Tiếc quá, tôi không thể đến</span></label>
         </fieldset>
 
         <div class="field" id="guests-field" hidden>
           <label for="guests">Số người tham dự</label>
-          <input id="guests" name="guests" type="number" min="1" max="10" value="1" inputmode="numeric" />
+          <div class="stepper">
+            <button type="button" class="step" data-step="-1" aria-label="Giảm số người">&minus;</button>
+            <input id="guests" name="guests" type="number" min="1" max="10" value="1" inputmode="numeric" />
+            <button type="button" class="step" data-step="1" aria-label="Tăng số người">+</button>
+          </div>
         </div>
 
         <div class="hp" aria-hidden="true">
           <label>Website <input name="website" tabindex="-1" autocomplete="off" /></label>
         </div>
 
-        <button type="submit" class="submit" id="rsvp-submit">GỬI XÁC NHẬN</button>
+        <button type="submit" class="submit" id="rsvp-submit">
+          <span>Gửi xác nhận</span>
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </button>
         <p id="rsvp-status" role="status"></p>
       </form>
 

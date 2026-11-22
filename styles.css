@@ -16,6 +16,12 @@
   --script: 'FS North Land', cursive;
   --sans: 'Montserrat', sans-serif;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --gutter: 32px; /* side padding for text sections (full-bleed photo sections ignore it) */
+}
+
+/* display rules on classes would otherwise override the hidden attribute */
+[hidden] {
+  display: none !important;
 }
 
 html {
@@ -44,8 +50,8 @@ body {
   position: relative;
   min-height: 100svh;
   overflow-x: clip;
-  padding-left: max(16px, env(safe-area-inset-left));
-  padding-right: max(16px, env(safe-area-inset-right));
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
 }
 
 img {
@@ -90,6 +96,34 @@ button:active, a:active {
   }
 }
 
+/* ---------- Shared: stacked names (page 1, save the date, info page) ---------- */
+.names {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  font-family: var(--script);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.names .name {
+  font-size: clamp(3.4rem, 15vw, 4.4rem);
+  line-height: 0.82;
+}
+
+.names .amp {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.names .amp.sans {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+}
+
 /* ---------- Intro (page-1 / page-1.2) ---------- */
 #intro {
   height: 100svh;
@@ -98,7 +132,7 @@ button:active, a:active {
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: color-mix(in srgb, var(--ink) 90%, var(--ivory)); /* a touch lighter than the desktop backdrop so the column edge reads as a frame */
+  background: var(--ivory);
 }
 
 .intro-photo {
@@ -110,7 +144,7 @@ button:active, a:active {
   object-position: 50% 30%;
   transform: scale(0.3); /* closed: a small centred picture, ~30% of the screen */
   filter: none;
-  box-shadow: 0 10px 40px rgb(0 0 0 / 0.5);
+  box-shadow: 0 10px 40px rgb(0 0 0 / 0.22);
   transition: transform 1300ms var(--ease-out) 300ms, filter 1200ms var(--ease-out) 500ms;
 }
 
@@ -126,7 +160,8 @@ button:active, a:active {
 
 .lily {
   position: absolute;
-  top: 62%;
+  top: 75%;
+  filter: drop-shadow(0 8px 16px rgb(41 39 39 / 0.22));
   max-width: none; /* override the global img cap so the bouquets can be zoomed past the screen edges */
   height: auto;
   transform: translateY(-50%) rotate(var(--tilt));
@@ -135,8 +170,8 @@ button:active, a:active {
 }
 
 /* Zoomed in so the bouquets and seal hide the photo until the reveal; tilted toward the centre. */
-.lily-left { --tilt: 18deg; left: -46%; width: 115%; }
-.lily-right { --tilt: -18deg; right: -30%; width: 76%; }
+.lily-left { --tilt: 22.5deg; left: -52%; width: 135%; }
+.lily-right { --tilt: -22.5deg; right: -31%; width: 90%; }
 
 .seal {
   position: relative;
@@ -166,12 +201,11 @@ button:active, a:active {
 }
 
 .hint {
-  top: calc(50% + 22svh);
+  top: calc(50% - 20svh);
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 0.95;
-  text-shadow: 0 1px 8px rgb(0 0 0 / 0.7);
+  color: var(--mauve);
   transition: opacity 400ms var(--ease-out);
 }
 
@@ -179,29 +213,10 @@ button:active, a:active {
   bottom: calc(6svh + env(safe-area-inset-bottom));
   display: grid;
   justify-items: center;
-  gap: 12px;
+  gap: 10px;
   text-shadow: 0 2px 14px rgb(0 0 0 / 0.55);
   opacity: 0;
   transition: opacity 800ms var(--ease-out) 1200ms;
-}
-
-.intro-title {
-  margin: 0;
-  display: grid;
-  justify-items: center;
-  font-family: var(--script);
-  font-weight: 400;
-  line-height: 1;
-}
-
-.intro-title .name {
-  font-size: clamp(3.4rem, 15vw, 4.4rem);
-  line-height: 1.05;
-}
-
-.intro-title .amp {
-  font-size: 1.7rem;
-  line-height: 1.3;
 }
 
 .intro-date {
@@ -245,36 +260,18 @@ body.is-locked {
 /* ---------- Save the date (page-date) ---------- */
 .save-date {
   min-height: 0;
-  padding-top: 48px;
+  padding-top: 56px;
   padding-bottom: 48px;
 }
 
 .save-title {
-  margin: 0;
-  font-family: var(--sans);
-  font-weight: 300;
-  font-size: 3.2rem;
-  line-height: 0.95;
-  text-transform: uppercase;
   color: var(--mauve);
-}
-
-.save-title span {
-  display: block;
-}
-
-.save-title .script {
-  font-family: var(--script);
-  font-size: 2.4rem;
-  text-transform: none;
-  padding-left: 0.6rem;
-  line-height: 1.2;
 }
 
 .stage {
   position: relative;
-  margin-top: 24px;
-  padding: 36px 0 56px;
+  margin-top: 8px;
+  padding: 36px 0 230px; /* room below the strip so the middle of the envelope shows */
 }
 
 .lily-watermark {
@@ -289,8 +286,8 @@ body.is-locked {
 /* envelope.png has ~12% transparent padding on every side, so it is drawn oversized to look full-size */
 .envelope {
   position: absolute;
-  right: -22%;
-  bottom: 4%;
+  left: -17.5%;
+  bottom: 0;
   width: 135%;
   max-width: none;
   rotate: -12deg;
@@ -299,8 +296,8 @@ body.is-locked {
 .strip {
   position: relative;
   z-index: 1;
-  width: 56%;
-  margin-left: 18%;
+  width: 62%;
+  margin: 0 auto;
   padding: 10px;
   display: grid;
   gap: 10px;
@@ -309,10 +306,11 @@ body.is-locked {
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
 }
 
-/* each photo keeps its own shape so nothing is cropped */
 .strip img {
   width: 100%;
-  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: 50% 30%;
   filter: grayscale(1);
 }
 
@@ -464,26 +462,6 @@ body.is-locked {
 
 .family-block p {
   margin: 0;
-}
-
-.couple-names {
-  text-align: right;
-  display: grid;
-  gap: 2px;
-  justify-items: end;
-}
-
-.couple-names .script {
-  margin: 0;
-  font-family: var(--script);
-  font-size: 2.6rem;
-  line-height: 1.15;
-}
-
-.couple-names .and {
-  margin: 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
 }
 
 .big-date {
@@ -668,20 +646,36 @@ body.is-locked {
 /* ---------- RSVP (page-confirm) ---------- */
 .rsvp {
   min-height: 0;
-  padding-top: 56px;
+  padding-top: 64px;
   padding-bottom: 0;
+}
+
+.rsvp-title {
+  margin: 0 0 20px;
+  text-align: center;
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: 3.6rem;
+  line-height: 1;
+  color: var(--mauve);
 }
 
 .rsvp-form {
   display: grid;
-  gap: 18px;
+  gap: 22px;
+  padding: 28px 22px;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--mauve) 18%, transparent);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgb(41 39 39 / 0.08);
 }
 
 .rsvp-intro {
   margin: 0;
   text-align: center;
   font-size: 0.85rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--ink) 80%, transparent);
 }
 
 .field {
@@ -689,55 +683,124 @@ body.is-locked {
   padding: 0;
   border: 0;
   display: grid;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
 }
 
-.field > label,
+.field > label:not(.choice),
 .field > legend {
   padding: 0;
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mauve);
 }
 
 .field input[type="text"],
-.field input[type="number"] {
+.stepper input {
   width: 100%;
-  height: 48px;
-  padding: 0 18px;
-  border: 1px solid var(--ink);
+  height: 52px;
+  padding: 0 20px;
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
   border-radius: 999px;
-  background: transparent;
+  background: var(--ivory);
   color: var(--ink);
   font-family: var(--sans);
   box-sizing: border-box;
+  transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
+}
+
+.field input:focus-visible {
+  outline: none;
+  border-color: var(--mauve);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--peony) 30%, transparent);
 }
 
 .attend {
-  gap: 8px;
+  gap: 10px;
 }
 
-.pill {
+.choice {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  min-height: 44px;
-  padding: 0 16px;
-  border: 1px solid var(--ink);
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 18px;
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
   border-radius: 999px;
-  font-size: 0.9rem;
+  background: var(--ivory);
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background 150ms var(--ease-out), border-color 150ms var(--ease-out), color 150ms var(--ease-out);
+}
+
+/* the real radio stays in the DOM (keyboard + screen reader) but is drawn by ::before */
+.choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.choice::before {
+  content: '';
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--ink) 40%, transparent);
+  box-sizing: border-box;
+}
+
+.choice:has(input:checked) {
+  background: var(--wine);
+  border-color: var(--wine);
+  color: var(--ivory);
+}
+
+.choice:has(input:checked)::before {
+  border-color: var(--ivory);
+  background: radial-gradient(circle, var(--ivory) 0 4px, transparent 5px);
+}
+
+.choice:has(input:focus-visible) {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--peony) 30%, transparent);
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: 52px 1fr 52px;
+  align-items: center;
+  gap: 12px;
+}
+
+.step {
+  height: 52px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--mauve) 45%, transparent);
+  border-radius: 50%;
+  background: var(--ivory);
+  color: var(--mauve);
+  font-family: var(--sans);
+  font-size: 1.5rem;
+  line-height: 1;
   cursor: pointer;
 }
 
-.pill input {
-  accent-color: var(--carmine);
-  margin: 0;
+.stepper input {
+  padding: 0;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
-.pill:has(input:checked) {
-  background: var(--carmine);
-  border-color: var(--carmine);
-  color: var(--ivory);
+.stepper input::-webkit-inner-spin-button,
+.stepper input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .hp {
@@ -749,21 +812,39 @@ body.is-locked {
 }
 
 .submit {
-  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 58px;
   border: 0;
   border-radius: 999px;
-  background: var(--carmine);
+  background: linear-gradient(135deg, var(--carmine), color-mix(in srgb, var(--carmine) 62%, var(--ink)));
   color: var(--ivory);
   font-family: var(--sans);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   cursor: pointer;
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--carmine) 38%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.25);
+  transition: box-shadow 200ms var(--ease-out), transform 100ms var(--ease-out);
 }
 
 .submit:disabled {
   opacity: 0.6;
   cursor: default;
+  box-shadow: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .submit:not(:disabled):hover {
+    box-shadow: 0 16px 32px color-mix(in srgb, var(--carmine) 48%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.25);
+  }
+
+  .choice:hover {
+    border-color: var(--mauve);
+  }
 }
 
 #rsvp-status {
@@ -783,48 +864,48 @@ body.is-locked {
 }
 
 /* ---------- Thank you (page-confirm bottom) ---------- */
+/* Full-bleed photo at its original ratio; the text sits over the bottom of the photo, at their feet. */
 .thanks {
-  margin: 56px -16px 0;
+  margin: 48px calc(-1 * var(--gutter)) 0;
   min-height: 0;
-  padding: 64px 16px;
-  background: var(--wine);
+  padding: 0;
   color: var(--ivory);
   text-align: center;
+  background: var(--wine);
 }
 
 .thanks-bg {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   filter: grayscale(1);
 }
 
 .thanks::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: var(--wine);
-  opacity: 0.85;
+  inset: auto 0 0 0;
+  height: 62%;
+  background: linear-gradient(to top, color-mix(in srgb, var(--wine) 96%, transparent) 0%, color-mix(in srgb, var(--wine) 88%, transparent) 55%, transparent 100%);
 }
 
 .thanks-content {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0 var(--gutter) 28px;
   display: grid;
-  gap: 16px;
+  gap: 10px;
 }
 
 .thanks-content p {
   margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.85rem;
+  line-height: 1.55;
 }
 
 .thanks-content .thanks-script {
-  margin-top: 24px;
+  margin-top: 6px;
   font-family: var(--script);
-  font-size: 4rem;
-  line-height: 1.1;
+  font-size: 3.4rem;
+  line-height: 1;
 }

@@ -19,7 +19,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--ivory);
+  background: var(--ink);
   color: var(--ink);
   font-family: var(--sans);
   font-weight: 400;

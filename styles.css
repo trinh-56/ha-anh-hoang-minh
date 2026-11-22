@@ -108,8 +108,10 @@ button:active, a:active {
   height: 100%;
   object-fit: cover;
   object-position: 50% 30%;
+  transform: scale(0.3); /* closed: a small centred picture, ~30% of the screen */
   filter: none;
-  transition: filter 1200ms var(--ease-out) 500ms;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 0.5);
+  transition: transform 1300ms var(--ease-out) 300ms, filter 1200ms var(--ease-out) 500ms;
 }
 
 #intro::after {
@@ -117,13 +119,14 @@ button:active, a:active {
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, rgb(0 0 0 / 0) 45%, rgb(0 0 0 / 0.6) 100%);
-  transition: opacity 800ms var(--ease-out);
+  opacity: 0;
+  transition: opacity 800ms var(--ease-out) 600ms;
   pointer-events: none;
 }
 
 .lily {
   position: absolute;
-  top: 50%;
+  top: 62%;
   max-width: none; /* override the global img cap so the bouquets can be zoomed past the screen edges */
   height: auto;
   transform: translateY(-50%) rotate(var(--tilt));
@@ -132,8 +135,8 @@ button:active, a:active {
 }
 
 /* Zoomed in so the bouquets and seal hide the photo until the reveal; tilted toward the centre. */
-.lily-left { --tilt: 18deg; left: -62%; width: 190%; }
-.lily-right { --tilt: -18deg; right: -32%; width: 130%; }
+.lily-left { --tilt: 18deg; left: -46%; width: 115%; }
+.lily-right { --tilt: -18deg; right: -30%; width: 76%; }
 
 .seal {
   position: relative;
@@ -217,7 +220,7 @@ button:active, a:active {
 #intro.is-open .lily-left { transform: translate(-100%, -50%) rotate(var(--tilt)); }
 #intro.is-open .lily-right { transform: translate(100%, -50%) rotate(var(--tilt)); }
 
-#intro.is-open .intro-photo { filter: grayscale(1); }
+#intro.is-open .intro-photo { transform: scale(1); filter: grayscale(1); }
 #intro.is-open::after { opacity: 0.6; }
 
 #intro.is-open .hint { opacity: 0; }

@@ -16,9 +16,16 @@ const observer = new IntersectionObserver((entries) => {
 
 reveals.forEach((el) => observer.observe(el));
 
-// Scrolling up hides all content below the cover (CSS: body.scrolling-up) until the user scrolls down again.
-// Small movements add up, so slow trackpad scrolling and the tail of a swipe still count; a reversal
-// needs about 4px in the new direction, which filters out sub-pixel jitter.
+// Direction rule: starting to scroll UP makes everything on screen disappear; elements that then scroll INTO view
+// fade in as usual (the observer above). Scrolling DOWN again brings back everything on screen.
+// Small movements add up, so slow trackpad scrolling counts too; a reversal needs about 4px.
+function visibleShare(el) {
+  const r = el.getBoundingClientRect();
+  if (r.height === 0) return 0;
+  return Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0)) / r.height;
+}
+
+let scrollingUp = false;
 let lastY = window.scrollY;
 let moved = 0;
 window.addEventListener('scroll', () => {
@@ -29,9 +36,14 @@ window.addEventListener('scroll', () => {
   if (Math.sign(delta) !== Math.sign(moved)) moved = 0;
   moved += delta;
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  if (moved >= 4) document.body.classList.remove('scrolling-up');
+  if (moved >= 4 && scrollingUp) {
+    scrollingUp = false;
+    reveals.forEach((el) => el.classList.toggle('is-in', visibleShare(el) >= 0.2));
   // y > 0 and y < max skip the iOS rubber-band bounce at the top and bottom edges
-  else if (moved <= -4 && y > 0 && y < max) document.body.classList.add('scrolling-up');
+  } else if (moved <= -4 && y > 0 && y < max && !scrollingUp) {
+    scrollingUp = true;
+    reveals.forEach((el) => el.classList.remove('is-in'));
+  }
 }, { passive: true });
 
 const intro = document.getElementById('intro');
@@ -47,7 +59,7 @@ window.addEventListener('pageshow', (e) => {
   if (!e.persisted) return;
   intro.classList.remove('is-open');
   document.body.classList.add('is-locked');
-  document.body.classList.remove('scrolling-up');
+  scrollingUp = false;
   window.scrollTo(0, 0);
 });
 

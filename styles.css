@@ -272,8 +272,6 @@ body.is-locked {
 
 .save-title {
   --n: clamp(4.42rem, 19.5vw, 5.72rem); /* name size: 30% bigger than the shared .names size */
-  justify-items: start; /* left-aligned, on the same left edge as the family blocks */
-  text-align: left;
 }
 
 .save-title .name {
@@ -482,29 +480,72 @@ body.is-locked {
   margin: 0;
 }
 
-.big-date {
+.family-block.centered {
+  padding-left: 0;
+  border-left: 0;
+  justify-items: center;
+  text-align: center;
+}
+
+.family-block .event-time {
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+
+/* Date row and venue share one grid column, so "17 | Tháng 12 / 2026" is exactly as wide as PROMES CENTER.
+   Everything scales from --u so the proportions hold on every screen width. */
+.lockup {
+  --u: clamp(1.1rem, 5.6vw, 1.5rem);
+  display: grid;
+  justify-items: stretch;
+  width: fit-content;
+  max-width: 100%;
+  gap: 4px;
+}
+
+.lockup .big-date {
+  margin: 0;
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-size: 1rem;
+  justify-content: space-between;
+  gap: 0.6em;
+  font-size: calc(var(--u) * 1.05);
   line-height: 1.2;
+  text-align: left;
 }
 
 .big-day {
+  font-size: calc(var(--u) * 3.7);
   font-weight: 300;
-  font-size: 3rem;
   line-height: 1;
 }
 
 .big-rule {
+  align-self: stretch;
   width: 1px;
-  height: 2.4rem;
   background: var(--ink);
 }
 
-.venue {
+.lockup .kicker {
+  margin-top: 18px;
+}
+
+.lockup .venue {
+  margin: 0 -0.14em 0 0; /* cancels the trailing letter-spacing so the visible text spans the full column */
+  font-size: var(--u);
   font-weight: 600;
-  font-size: 1.1rem;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+.family-block .hall {
+  margin-top: 6px;
+  font-size: 0.95rem;
+}
+
+.family-block .address {
+  font-size: 0.85rem;
+  opacity: 0.85;
 }
 
 .map-link {

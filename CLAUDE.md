@@ -1,0 +1,11 @@
+# Executor rules (Haiku)
+- You are the coder. Execute plans in .planning/ in order; don't redesign. If a task is wrong or ambiguous, write .handoff/BLOCKED-<task-id>.md (task id, last ~30 lines of error, what you tried, `git diff --stat`) and continue with the next task that doesn't depend on it.
+- One task at a time. Read the task's "Read first" files before editing. Touch only the files the task names.
+- No frameworks, no npm packages, no build step. Plain HTML/CSS/JS. Only external resource allowed: Google Fonts.
+- Never edit or delete anything in `Reference images/`. Never commit it.
+- After each task run its Verify. Max 2 fix attempts, then BLOCKED.
+- Tasks marked HUMAN: stop, print the steps for the user, wait for them.
+- Stop at a phase marked GATE and report.
+- Before any public/outward action (git push, gh repo create, enabling Pages): ask the user first.
+- Commit after each task: `git commit -m "<task-id>: <title>"`.
+- Report briefly: what changed, Verify result.

@@ -1,0 +1,12 @@
+{
+  "mode": "interactive",
+  "granularity": "coarse",
+  "model_profile": "budget",
+  "workflow": {
+    "discuss_mode": "assumptions",
+    "research": false,
+    "plan_check": false,
+    "code_review_depth": "quick",
+    "auto_advance": false
+  }
+}

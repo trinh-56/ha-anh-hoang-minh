@@ -924,48 +924,40 @@ body.is-locked {
 }
 
 /* ---------- Thank you (page-confirm bottom) ---------- */
-/* Full-bleed photo at its original ratio; the text sits over the bottom of the photo, at their feet. */
+/* Same look as the bride & groom section: wine background, photo card (colour, original ratio), text below. */
 .thanks {
   margin: 48px calc(-1 * var(--gutter)) 0;
   min-height: 0;
-  padding: 0;
+  padding: 56px var(--gutter);
+  display: grid;
+  justify-items: center;
+  gap: 28px;
+  background: var(--wine);
   color: var(--ivory);
   text-align: center;
-  background: var(--wine);
 }
 
 .thanks-bg {
   display: block;
-  width: 100%;
+  width: 72%;
   height: auto;
-  filter: grayscale(1);
-}
-
-.thanks::before {
-  content: '';
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 62%;
-  background: linear-gradient(to top, color-mix(in srgb, var(--wine) 96%, transparent) 0%, color-mix(in srgb, var(--wine) 88%, transparent) 55%, transparent 100%);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
 }
 
 .thanks-content {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: 0 var(--gutter) 28px;
   display: grid;
   gap: 10px;
 }
 
 .thanks-content p {
   margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.55;
+  font-size: 0.78rem;
+  line-height: 1.6;
 }
 
 .thanks-content .thanks-script {
-  margin-top: 6px;
+  margin-top: 8px;
   font-family: var(--script);
-  font-size: 3.4rem;
+  font-size: 4.42rem; /* 30% bigger than before (3.4rem) */
   line-height: 1;
 }

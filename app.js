@@ -1,15 +1,22 @@
 import { TARGET, countdownParts } from './countdown.js';
 
+// Start every visit at page 1: stop the browser restoring the old scroll position on reload.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
 const reveals = document.querySelectorAll('.reveal');
 
+// Fade elements in as they enter, and hide them again when the user scrolls back up past them,
+// so they animate in once more on the next scroll down. Elements scrolled past at the top stay visible.
 const observer = new IntersectionObserver((entries) => {
   for (const entry of entries) {
-    if (entry.isIntersecting) {
+    if (entry.intersectionRatio >= 0.2) {
       entry.target.classList.add('is-in');
-      observer.unobserve(entry.target);
+    } else if (entry.boundingClientRect.top > 0) {
+      entry.target.classList.remove('is-in');
     }
   }
-}, { threshold: 0.2 });
+}, { threshold: [0, 0.2] });
 
 reveals.forEach((el) => observer.observe(el));
 
@@ -19,6 +26,14 @@ const seal = intro.querySelector('.seal');
 seal.addEventListener('click', () => {
   intro.classList.add('is-open');
   document.body.classList.remove('is-locked');
+});
+
+// Coming back via the browser's back/forward cache would keep the page opened and scrolled: replay the intro instead.
+window.addEventListener('pageshow', (e) => {
+  if (!e.persisted) return;
+  intro.classList.remove('is-open');
+  document.body.classList.add('is-locked');
+  window.scrollTo(0, 0);
 });
 
 // Countdown

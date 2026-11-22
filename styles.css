@@ -186,7 +186,7 @@ button:active, a:active {
 }
 
 /* Zoomed in so the bouquets and seal hide the photo until the reveal; tilted toward the centre. */
-.lily-left { --tilt: 28deg; left: -55%; width: 172%; }
+.lily-left { --tilt: 33.6deg; left: -61%; width: 192%; }
 .lily-right { --tilt: -28deg; right: -38%; width: 104%; }
 
 .seal {

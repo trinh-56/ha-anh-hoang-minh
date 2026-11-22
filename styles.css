@@ -270,10 +270,24 @@ body.is-locked {
   color: var(--mauve);
 }
 
+.save-title {
+  --n: clamp(4.42rem, 19.5vw, 5.72rem); /* name size: 30% bigger than the shared .names size */
+}
+
+.save-title .name {
+  font-size: var(--n);
+}
+
+/* pull "the" in so the gap above and below it is equal and as tight as around the & in the names block */
+.save-title .amp.sans {
+  font-size: calc(var(--n) * 0.2); /* scales with the names so the gaps stay equal at every screen width */
+  margin: calc(var(--n) * -0.12) 0 calc(var(--n) * 0.045);
+}
+
 .stage {
   position: relative;
   margin-top: 8px;
-  padding: 36px 0 230px; /* room below the strip so the middle of the envelope shows */
+  padding: 36px 0 60px;
 }
 
 .lily-watermark {
@@ -288,8 +302,8 @@ body.is-locked {
 /* envelope.png has ~12% transparent padding on every side, so it is drawn oversized to look full-size */
 .envelope {
   position: absolute;
-  left: -17.5%;
-  bottom: 0;
+  left: 27.5%; /* was -17.5%; moved 45% to the right so the middle of the envelope sits beside the strip */
+  bottom: 20px;
   width: 135%;
   max-width: none;
   rotate: -12deg;
@@ -298,11 +312,11 @@ body.is-locked {
 .strip {
   position: relative;
   z-index: 1;
-  width: 62%;
+  width: 37%; /* 40% smaller than before (62%) */
   margin: 0 auto;
-  padding: 10px;
+  padding: 6px;
   display: grid;
-  gap: 10px;
+  gap: 6px;
   background: #fff;
   rotate: 8deg;
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);

@@ -42,6 +42,14 @@ body {
   font-weight: 400;
 }
 
+/* Desktop: the area outside the phone-width invitation is filled with Sweet Peony */
+@media (min-width: 481px) {
+  html,
+  body {
+    background: var(--peony);
+  }
+}
+
 .page {
   max-width: 480px;
   margin: 0 auto;

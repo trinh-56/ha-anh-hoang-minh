@@ -1087,3 +1087,15 @@ body.is-locked {
     }
   }
 }
+
+/* ---------- Scroll up: hide everything below the cover until the user scrolls down again ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .page > section:not(#intro) {
+    transition: opacity 600ms var(--ease-out); /* coming back is soft... */
+  }
+
+  body.scrolling-up .page > section:not(#intro) {
+    opacity: 0;
+    transition: opacity 90ms ease-in; /* ...going away is almost instant */
+  }
+}

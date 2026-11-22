@@ -16,6 +16,17 @@ const observer = new IntersectionObserver((entries) => {
 
 reveals.forEach((el) => observer.observe(el));
 
+// Scrolling up hides all content below the cover (CSS: body.scrolling-up) until the user scrolls down again.
+let lastY = window.scrollY;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  if (y > lastY + 2) document.body.classList.remove('scrolling-up');
+  // y > 0 and y < max skip the iOS rubber-band bounce at the top and bottom edges
+  else if (y < lastY - 2 && y > 0 && y < max) document.body.classList.add('scrolling-up');
+  lastY = y;
+}, { passive: true });
+
 const intro = document.getElementById('intro');
 const seal = intro.querySelector('.seal');
 
@@ -29,6 +40,7 @@ window.addEventListener('pageshow', (e) => {
   if (!e.persisted) return;
   intro.classList.remove('is-open');
   document.body.classList.add('is-locked');
+  document.body.classList.remove('scrolling-up');
   window.scrollTo(0, 0);
 });
 

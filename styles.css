@@ -215,3 +215,76 @@ body.is-locked {
     transition-delay: 0ms;
   }
 }
+
+/* ---------- Save the date (page-date) ---------- */
+.save-date {
+  min-height: 0;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.save-title {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 3.2rem;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--mauve);
+}
+
+.save-title span {
+  display: block;
+}
+
+.save-title .script {
+  font-family: var(--script);
+  font-size: 2.4rem;
+  text-transform: none;
+  padding-left: 0.6rem;
+  line-height: 1.2;
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  margin-top: 24px;
+  overflow: hidden;
+}
+
+.lily-watermark {
+  position: absolute;
+  top: -4%;
+  right: -10%;
+  width: 60%;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.envelope {
+  position: absolute;
+  right: -6%;
+  bottom: 0;
+  width: 95%;
+  rotate: -12deg;
+}
+
+.strip {
+  position: absolute;
+  left: 8%;
+  top: 22%;
+  width: 58%;
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+  background: #fff;
+  rotate: -8deg;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
+}
+
+.strip img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  filter: grayscale(1);
+}

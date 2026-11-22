@@ -54,3 +54,66 @@ function tick() {
 
 tick();
 setInterval(tick, 1000);
+
+// RSVP
+const RSVP_URL = ''; // set in task 2-2
+
+const form = document.getElementById('rsvp-form');
+const statusEl = document.getElementById('rsvp-status');
+const submitBtn = document.getElementById('rsvp-submit');
+const guestsField = document.getElementById('guests-field');
+
+form.addEventListener('change', (e) => {
+  if (e.target.name === 'attending') {
+    guestsField.hidden = e.target.value !== 'yes';
+  }
+});
+
+function showError(message) {
+  statusEl.textContent = message;
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (submitBtn.disabled) return;
+
+  const data = new FormData(form);
+  const name = String(data.get('name') ?? '').trim();
+  const attending = data.get('attending');
+  const guests = Number(data.get('guests'));
+  const website = String(data.get('website') ?? '');
+
+  if (!name) return showError('Vui lòng nhập tên của quý khách.');
+  if (!attending) return showError('Vui lòng chọn tham dự hay không.');
+  if (attending === 'yes' && !(Number.isInteger(guests) && guests >= 1 && guests <= 10)) {
+    return showError('Số người tham dự từ 1 đến 10.');
+  }
+
+  submitBtn.disabled = true;
+  statusEl.textContent = 'Đang gửi…';
+
+  try {
+    if (!RSVP_URL) throw new Error('RSVP_URL not set');
+    const res = await fetch(RSVP_URL, {
+      method: 'POST',
+      body: new URLSearchParams({
+        name,
+        attending,
+        guests: attending === 'yes' ? String(guests) : '0',
+        website,
+      }),
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error('rejected');
+
+    const done = document.createElement('p');
+    done.className = 'rsvp-done';
+    done.textContent = 'Cảm ơn bạn đã xác nhận!';
+    form.replaceWith(done);
+    document.getElementById('thanks').scrollIntoView({ behavior: 'smooth' });
+  } catch (err) {
+    console.warn('RSVP submit failed:', err);
+    statusEl.textContent = 'Gửi chưa được, vui lòng thử lại.';
+    submitBtn.disabled = false;
+  }
+});

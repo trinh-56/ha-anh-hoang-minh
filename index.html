@@ -151,9 +151,53 @@
         </figcaption>
       </figure>
     </section>
-    <section id="timeline" class="section"></section>
-    <section id="rsvp" class="section">
-      <section id="thanks" class="section"></section>
+    <section id="timeline" class="section timeline">
+      <img class="lily-watermark" src="assets/lily-1.png" alt="" aria-hidden="true" />
+      <h2 class="script timeline-title reveal">Timeline</h2>
+      <ol class="timeline-list reveal">
+        <li><time>09:30</time><span class="t-title">Lễ Vu Quy</span></li>
+        <li><time>10:30</time><span class="t-title">Đón khách</span></li>
+        <li><time>11:00</time><span class="t-title">Lễ thành hôn</span></li>
+        <li><time>11:30</time><span class="t-title">Khai mạc</span></li>
+      </ol>
+      <p class="closing reveal">Rất hân hạnh được đón tiếp</p>
+    </section>
+    <section id="rsvp" class="section rsvp">
+      <form id="rsvp-form" class="rsvp-form reveal" novalidate>
+        <p class="rsvp-intro">Vui lòng xác nhận tham dự để chúng tôi chuẩn bị đón tiếp chu đáo nhất. Trân trọng!</p>
+
+        <div class="field">
+          <label for="name">Tên của quý khách</label>
+          <input id="name" name="name" type="text" required maxlength="100" autocomplete="name" enterkeyhint="next" />
+        </div>
+
+        <fieldset class="field attend">
+          <legend>Quý khách có tham dự không?</legend>
+          <label class="pill"><input type="radio" name="attending" value="yes" /> Tôi sẽ tham dự</label>
+          <label class="pill"><input type="radio" name="attending" value="no" /> Tiếc quá, tôi không thể đến</label>
+        </fieldset>
+
+        <div class="field" id="guests-field" hidden>
+          <label for="guests">Số người tham dự</label>
+          <input id="guests" name="guests" type="number" min="1" max="10" value="1" inputmode="numeric" />
+        </div>
+
+        <div class="hp" aria-hidden="true">
+          <label>Website <input name="website" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
+        <button type="submit" class="submit" id="rsvp-submit">GỬI XÁC NHẬN</button>
+        <p id="rsvp-status" role="status"></p>
+      </form>
+
+      <section id="thanks" class="section thanks">
+        <img class="thanks-bg" src="assets/image-2.jpg" alt="" aria-hidden="true" />
+        <div class="thanks-content">
+          <p>Cảm ơn quý khách đã hiện diện và cùng chia sẻ niềm vui trong ngày đặc biệt này.</p>
+          <p>Sự hiện diện của quý khách chính là món quà ý nghĩa dành cho chúng tôi.</p>
+          <p class="script thanks-script">Thank you!</p>
+        </div>
+      </section>
     </section>
   </main>
   <script type="module" src="app.js"></script>

@@ -298,7 +298,9 @@ body.is-locked {
 /* pull "the" in so the gap above and below it is equal and as tight as around the & in the names block */
 .save-title .amp.sans {
   font-size: var(--the-size); /* scales with the names so the gaps stay equal at every screen width */
-  margin: calc(var(--n) * -0.107) 0 calc(var(--n) * 0.032);
+  margin: calc(var(--n) * -0.121) 0 calc(var(--n) * 0.019); /* gaps above/below tightened by 15% (tuned by measurement) */
+  position: relative;
+  left: 15%; /* nudged right by 15% of the heading's width */
 }
 
 .stage {

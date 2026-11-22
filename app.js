@@ -17,14 +17,21 @@ const observer = new IntersectionObserver((entries) => {
 reveals.forEach((el) => observer.observe(el));
 
 // Scrolling up hides all content below the cover (CSS: body.scrolling-up) until the user scrolls down again.
+// Small movements add up, so slow trackpad scrolling and the tail of a swipe still count; a reversal
+// needs about 4px in the new direction, which filters out sub-pixel jitter.
 let lastY = window.scrollY;
+let moved = 0;
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  if (y > lastY + 2) document.body.classList.remove('scrolling-up');
-  // y > 0 and y < max skip the iOS rubber-band bounce at the top and bottom edges
-  else if (y < lastY - 2 && y > 0 && y < max) document.body.classList.add('scrolling-up');
+  const delta = y - lastY;
   lastY = y;
+  if (delta === 0) return;
+  if (Math.sign(delta) !== Math.sign(moved)) moved = 0;
+  moved += delta;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  if (moved >= 4) document.body.classList.remove('scrolling-up');
+  // y > 0 and y < max skip the iOS rubber-band bounce at the top and bottom edges
+  else if (moved <= -4 && y > 0 && y < max) document.body.classList.add('scrolling-up');
 }, { passive: true });
 
 const intro = document.getElementById('intro');

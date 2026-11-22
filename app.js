@@ -38,14 +38,23 @@ function visibleShare(el) {
 let scrollingUp = false;
 let lastY = window.scrollY;
 let moved = 0;
+let lastHeight = document.documentElement.scrollHeight;
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
+  const height = document.documentElement.scrollHeight;
+  // The page height changed (window resized, image loaded): the browser moved the page, not the user.
+  if (height !== lastHeight) {
+    lastHeight = height;
+    lastY = y;
+    moved = 0;
+    return;
+  }
   const delta = y - lastY;
   lastY = y;
   if (delta === 0) return;
   if (Math.sign(delta) !== Math.sign(moved)) moved = 0;
   moved += delta;
-  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const max = height - window.innerHeight;
   if (moved >= REVERSAL_PX && scrollingUp) {
     scrollingUp = false;
     reveals.forEach((el) => {

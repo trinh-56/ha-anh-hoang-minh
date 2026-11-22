@@ -115,9 +115,11 @@ button:active, a:active {
 .names .amp {
   font-size: 1.7rem;
   line-height: 1;
+  -webkit-text-stroke: 1.8px currentColor; /* the script font has a single weight, so thicken the & with a stroke */
 }
 
 .names .amp.sans {
+  -webkit-text-stroke: 0;
   font-family: var(--sans);
   font-size: 0.95rem;
   font-weight: 300;
@@ -170,8 +172,8 @@ button:active, a:active {
 }
 
 /* Zoomed in so the bouquets and seal hide the photo until the reveal; tilted toward the centre. */
-.lily-left { --tilt: 22.5deg; left: -55%; width: 172%; }
-.lily-right { --tilt: -22.5deg; right: -38%; width: 104%; }
+.lily-left { --tilt: 28deg; left: -55%; width: 172%; }
+.lily-right { --tilt: -28deg; right: -38%; width: 104%; }
 
 .seal {
   position: relative;
@@ -201,7 +203,7 @@ button:active, a:active {
 }
 
 .hint {
-  bottom: calc(5svh + env(safe-area-inset-bottom));
+  top: calc(50% + 26svh);
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;

@@ -19,7 +19,7 @@
   --the-size: calc(clamp(4.42rem, 19.5vw, 5.72rem) * 0.14); /* the small 'the' in Save the Date; Cô dâu / Chú rể use it too */
   --caption-size: 0.75rem; /* 'Quét mã để xem bản đồ' and Cô dâu / Chú rể */
   --small-text: 0.68rem; /* the thank-you paragraph and Cô dâu / Chú rể */
-  --backdrop: #FFF1F1; /* desktop: the area around the invitation column */
+  --backdrop: #FEC6C6; /* desktop: the area around the invitation column */
   --gutter: 32px; /* side padding for text sections (full-bleed photo sections ignore it) */
 }
 

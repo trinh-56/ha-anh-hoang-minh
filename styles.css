@@ -272,6 +272,8 @@ body.is-locked {
 
 .save-title {
   --n: clamp(4.42rem, 19.5vw, 5.72rem); /* name size: 30% bigger than the shared .names size */
+  justify-items: start; /* left-aligned, on the same left edge as the family blocks */
+  text-align: left;
 }
 
 .save-title .name {
@@ -280,8 +282,8 @@ body.is-locked {
 
 /* pull "the" in so the gap above and below it is equal and as tight as around the & in the names block */
 .save-title .amp.sans {
-  font-size: calc(var(--n) * 0.2); /* scales with the names so the gaps stay equal at every screen width */
-  margin: calc(var(--n) * -0.12) 0 calc(var(--n) * 0.045);
+  font-size: calc(var(--n) * 0.14); /* scales with the names so the gaps stay equal at every screen width */
+  margin: calc(var(--n) * -0.107) 0 calc(var(--n) * 0.032);
 }
 
 .stage {

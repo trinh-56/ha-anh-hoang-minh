@@ -1096,6 +1096,6 @@ body.is-locked {
 
   body.scrolling-up .page > section:not(#intro) {
     opacity: 0;
-    transition: opacity 90ms ease-in; /* ...going away is almost instant */
+    transition: opacity 180ms ease-in; /* ...going away is quick (half the earlier speed) */
   }
 }

@@ -98,7 +98,7 @@ button:active, a:active {
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: var(--ink);
+  background: color-mix(in srgb, var(--ink) 90%, var(--ivory)); /* a touch lighter than the desktop backdrop so the column edge reads as a frame */
 }
 
 .intro-photo {

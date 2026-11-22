@@ -56,7 +56,7 @@ tick();
 setInterval(tick, 1000);
 
 // RSVP
-const RSVP_URL = ''; // set in task 2-2
+const RSVP_URL = 'https://script.google.com/macros/s/AKfycbycKTbrWNLMCBz_QZwaJbGPSOdZTzSqWWKYctRFRsRQmXbM4gHa23W44sA5fKNjLPsr/exec';
 
 const form = document.getElementById('rsvp-form');
 const statusEl = document.getElementById('rsvp-status');

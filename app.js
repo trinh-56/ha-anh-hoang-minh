@@ -6,19 +6,29 @@ window.scrollTo(0, 0);
 
 const reveals = document.querySelectorAll('.reveal');
 
-// Fade elements in when they enter the screen and hide them again whenever they leave it (top or bottom),
-// so they animate in each time they come back into view, whichever way the user scrolls.
+// Elements on screen when an upward scroll starts. They stay hidden until they have fully left the screen,
+// so nothing flickers back while the finger is still moving.
+const heldHidden = new WeakSet();
+
+// Show at 20% visible, hide only once fully off screen: the gap stops elements flipping at the screen edge.
 const observer = new IntersectionObserver((entries) => {
   for (const entry of entries) {
-    entry.target.classList.toggle('is-in', entry.intersectionRatio >= 0.2);
+    if (entry.intersectionRatio === 0) {
+      heldHidden.delete(entry.target);
+      entry.target.classList.remove('is-in');
+    } else if (entry.intersectionRatio >= 0.2 && !heldHidden.has(entry.target)) {
+      entry.target.classList.add('is-in');
+    }
   }
 }, { threshold: [0, 0.2] });
 
 reveals.forEach((el) => observer.observe(el));
 
 // Direction rule: starting to scroll UP makes everything on screen disappear; elements that then scroll INTO view
-// fade in as usual (the observer above). Scrolling DOWN again brings back everything on screen.
-// Small movements add up, so slow trackpad scrolling counts too; a reversal needs about 4px.
+// fade in as usual. Scrolling DOWN again brings back everything on screen.
+// Small movements add up, so slow scrolling counts; a reversal needs 16px, which ignores finger wobble on a phone.
+const REVERSAL_PX = 16;
+
 function visibleShare(el) {
   const r = el.getBoundingClientRect();
   if (r.height === 0) return 0;
@@ -36,13 +46,19 @@ window.addEventListener('scroll', () => {
   if (Math.sign(delta) !== Math.sign(moved)) moved = 0;
   moved += delta;
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  if (moved >= 4 && scrollingUp) {
+  if (moved >= REVERSAL_PX && scrollingUp) {
     scrollingUp = false;
-    reveals.forEach((el) => el.classList.toggle('is-in', visibleShare(el) >= 0.2));
+    reveals.forEach((el) => {
+      heldHidden.delete(el);
+      el.classList.toggle('is-in', visibleShare(el) >= 0.2);
+    });
   // y > 0 and y < max skip the iOS rubber-band bounce at the top and bottom edges
-  } else if (moved <= -4 && y > 0 && y < max && !scrollingUp) {
+  } else if (moved <= -REVERSAL_PX && y > 0 && y < max && !scrollingUp) {
     scrollingUp = true;
-    reveals.forEach((el) => el.classList.remove('is-in'));
+    reveals.forEach((el) => {
+      if (visibleShare(el) > 0) heldHidden.add(el);
+      el.classList.remove('is-in');
+    });
   }
 }, { passive: true });
 

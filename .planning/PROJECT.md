@@ -5,8 +5,7 @@ Source brief: `Wedding Invitation Design.rtf`. Visual references: `Reference ima
 
 ## Stack (locked)
 - Plain `index.html` + `styles.css` + `app.js` + `countdown.js` (ES module). No framework, no npm, no build.
-- Fonts: Google Fonts — `Monsieur La Doulaise` (script) and `Montserrat` 300/400/500/600 with `&subset=vietnamese`.
-  Monsieur La Doulaise has NO Vietnamese diacritics (ể, ạ, ầ…) → use it only for: "Hà Anh & Hoàng Minh", "Countdown", "Timeline", "Thank you!", "Save the Date" "the", and couple names. All Vietnamese text in Montserrat.
+- Fonts: script = **FS North Land** (`assets/fonts/FS-North-Land.otf`, from `Reference images/font/`, covers Vietnamese accents; the Swash variant does not, so unused); body = Montserrat 300/400/500/600 via Google Fonts with `&subset=vietnamese`.
 - Hosting: **GitHub Pages** (free, HTTPS, custom URL `<user>.github.io/<repo>`). Fallback if repo must stay private: Cloudflare Pages direct upload (free).
 - RSVP storage: **Google Sheet + Google Apps Script web app** (free, no server, rows readable on phone in Google Sheets app).
 - Image processing: macOS `sips` (built in). No image libraries.

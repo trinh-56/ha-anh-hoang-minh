@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'FS North Land';
+  src: url('assets/fonts/FS-North-Land.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --peony: #D87BAA;
   --ivory: #FFFEEF;
@@ -5,7 +13,7 @@
   --carmine: #C2062B;
   --mauve: #AF3E4D;
   --wine: color-mix(in srgb, var(--carmine) 55%, var(--ink));
-  --script: 'Monsieur La Doulaise', cursive;
+  --script: 'FS North Land', cursive;
   --sans: 'Montserrat', sans-serif;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -116,21 +124,21 @@ button:active, a:active {
 .lily {
   position: absolute;
   top: 50%;
-  width: 75%;
+  max-width: none; /* override the global img cap so the bouquets can be zoomed past the screen edges */
   height: auto;
-  translate: 0 -50%;
-  transition: transform 900ms var(--ease-out);
+  transform: translateY(-50%) rotate(var(--tilt));
+  transition: transform 1100ms var(--ease-out);
   pointer-events: none;
 }
 
-.lily-left { left: -18%; transform: translateX(0); }
-.lily-right { right: -18%; transform: translateX(0); }
+/* Zoomed in so the bouquets and seal hide the photo until the reveal; tilted toward the centre. */
+.lily-left { --tilt: 18deg; left: -62%; width: 190%; }
+.lily-right { --tilt: -18deg; right: -32%; width: 130%; }
 
 .seal {
   position: relative;
   z-index: 1;
-  width: 30%;
-  max-width: 180px;
+  width: 36.5%; /* seal artwork is ~82% of this box, so the visible seal is ~30% of the width */
   padding: 0;
   border: 0;
   background: none;
@@ -160,7 +168,8 @@ button:active, a:active {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 0.85;
+  opacity: 0.95;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.7);
   transition: opacity 400ms var(--ease-out);
 }
 
@@ -189,8 +198,8 @@ button:active, a:active {
   opacity: 0;
 }
 
-#intro.is-open .lily-left { transform: translateX(-110%); }
-#intro.is-open .lily-right { transform: translateX(110%); }
+#intro.is-open .lily-left { transform: translate(-100%, -50%) rotate(var(--tilt)); }
+#intro.is-open .lily-right { transform: translate(100%, -50%) rotate(var(--tilt)); }
 
 #intro.is-open .intro-photo { filter: grayscale(1); }
 #intro.is-open::after { opacity: 0.6; }
@@ -419,12 +428,21 @@ body.is-locked {
 }
 
 .invite {
-  margin-top: 8px;
+  margin-bottom: 10px;
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
+.kicker.spaced {
+  margin-top: 22px;
+}
+
+.family-block .event-time {
+  margin-bottom: 16px;
+}
+
 
 .family-block p {
   margin: 0;
@@ -476,7 +494,7 @@ body.is-locked {
 }
 
 .map-link {
-  justify-self: start;
+  justify-self: center;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -491,7 +509,7 @@ body.is-locked {
 }
 
 .qr-card {
-  justify-self: start;
+  justify-self: center;
   display: inline-grid;
   justify-items: center;
   gap: 6px;
@@ -523,30 +541,6 @@ body.is-locked {
   display: grid;
   gap: 40px;
   justify-items: center;
-}
-
-.pattern {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  display: grid;
-  align-content: start;
-  gap: 4px;
-  pointer-events: none;
-}
-
-.pattern p {
-  margin: 0;
-  font-family: var(--script);
-  font-size: 2.6rem;
-  line-height: 1.2;
-  white-space: nowrap;
-  color: color-mix(in srgb, var(--wine) 85%, white);
-  text-shadow: 0 1px 0 rgb(255 255 255 / 0.12), 0 -1px 0 rgb(0 0 0 / 0.35);
-}
-
-.pattern p:nth-child(even) {
-  padding-left: 3rem;
 }
 
 .couple-card {
@@ -597,6 +591,7 @@ body.is-locked {
   min-height: 0;
   padding-top: 56px;
   padding-bottom: 56px;
+  text-align: center;
 }
 
 .timeline-title {
@@ -610,16 +605,28 @@ body.is-locked {
 
 .timeline-list {
   margin: 28px 0 0;
-  padding: 0 0 0 18px;
+  padding: 0;
   list-style: none;
-  border-left: 1px solid var(--ink);
   display: grid;
-  gap: 22px;
+  gap: 28px;
 }
 
 .timeline-list li {
+  position: relative;
   display: grid;
+  justify-items: center;
   gap: 2px;
+}
+
+/* short centred rule between entries */
+.timeline-list li + li::before {
+  content: '';
+  position: absolute;
+  top: -18px;
+  width: 1px;
+  height: 8px;
+  background: var(--ink);
+  opacity: 0.5;
 }
 
 .timeline-list time {

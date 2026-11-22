@@ -16,6 +16,7 @@
   --script: 'FS North Land', cursive;
   --sans: 'Montserrat', sans-serif;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --the-size: calc(clamp(4.42rem, 19.5vw, 5.72rem) * 0.14); /* the small 'the' in Save the Date; Cô dâu / Chú rể use it too */
   --gutter: 32px; /* side padding for text sections (full-bleed photo sections ignore it) */
 }
 
@@ -280,7 +281,7 @@ body.is-locked {
 
 /* pull "the" in so the gap above and below it is equal and as tight as around the & in the names block */
 .save-title .amp.sans {
-  font-size: calc(var(--n) * 0.14); /* scales with the names so the gaps stay equal at every screen width */
+  font-size: var(--the-size); /* scales with the names so the gaps stay equal at every screen width */
   margin: calc(var(--n) * -0.107) 0 calc(var(--n) * 0.032);
 }
 
@@ -628,7 +629,7 @@ body.is-locked {
 }
 
 .couple-card .role {
-  font-size: 0.8rem;
+  font-size: var(--the-size);
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -636,7 +637,7 @@ body.is-locked {
 
 .couple-card .name {
   font-family: var(--script);
-  font-size: 2.2rem;
+  font-size: 4rem; /* same as the Timeline title */
   line-height: 1.1;
 }
 

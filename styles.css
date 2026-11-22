@@ -283,8 +283,9 @@ body.is-locked {
 
 .save-title {
   --n: clamp(4.42rem, 19.5vw, 5.72rem); /* name size: 30% bigger than the shared .names size */
-  justify-items: start; /* left, on the same edge as the vertical line of the family blocks */
-  text-align: left;
+  width: fit-content; /* the block hugs its text and sits at the left edge, on the same line as the family blocks */
+  justify-items: center; /* ...while the lines inside it stay centred on each other */
+  text-align: center;
 }
 
 .save-title .name {
@@ -315,9 +316,9 @@ body.is-locked {
 /* envelope.png has ~12% transparent padding on every side, so it is drawn oversized to look full-size */
 .envelope {
   position: absolute;
-  left: 27.5%; /* was -17.5%; moved 45% to the right so the middle of the envelope sits beside the strip */
-  bottom: 20px;
-  width: 135%;
+  left: 44.4%; /* 25% smaller than before (135% -> 101.25% wide), keeping the same centre as the earlier 27.5% / 135% */
+  bottom: 57px;
+  width: 101.25%;
   max-width: none;
   rotate: -12deg;
 }
@@ -325,11 +326,11 @@ body.is-locked {
 .strip {
   position: relative;
   z-index: 1;
-  width: 27.75%; /* 25% smaller than the previous 37% */
+  width: 36%; /* 30% bigger than the previous 27.75% */
   margin: 0 auto;
-  padding: 4.5px;
+  padding: 5.85px;
   display: grid;
-  gap: 4.5px;
+  gap: 5.85px;
   background: #fff;
   rotate: 8deg;
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);

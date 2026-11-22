@@ -41,7 +41,34 @@
         </div>
       </div>
     </section>
-    <section id="countdown" class="section"></section>
+    <section id="countdown" class="section countdown">
+      <img class="countdown-bg" src="assets/countdown.jpg" alt="" />
+      <div class="countdown-content">
+        <p class="script countdown-title reveal">Countdown</p>
+        <div class="countdown-row" id="countdown-row" role="timer">
+          <div class="cell">
+            <span class="num" data-unit="days" aria-live="off">00</span>
+            <span class="label">Ngày</span>
+          </div>
+          <span class="sep" aria-hidden="true">:</span>
+          <div class="cell">
+            <span class="num" data-unit="hours" aria-live="off">00</span>
+            <span class="label">Giờ</span>
+          </div>
+          <span class="sep" aria-hidden="true">:</span>
+          <div class="cell">
+            <span class="num" data-unit="minutes" aria-live="off">00</span>
+            <span class="label">Phút</span>
+          </div>
+          <span class="sep" aria-hidden="true">:</span>
+          <div class="cell">
+            <span class="num" data-unit="seconds" aria-live="off">00</span>
+            <span class="label">Giây</span>
+          </div>
+        </div>
+        <p class="countdown-done" id="countdown-done" hidden>Hôm nay là ngày vui!</p>
+      </div>
+    </section>
     <section id="family" class="section"></section>
     <section id="couple" class="section"></section>
     <section id="timeline" class="section"></section>

@@ -1023,8 +1023,10 @@ body.is-locked {
     }
 
     @keyframes envelope-slide {
-      from { translate: 80px 36px; opacity: 0; }
-      to { translate: 0 0; opacity: 1; }
+      0% { translate: 80px 36px; opacity: 0; }
+      25% { translate: 0 0; opacity: 1; }
+      75% { translate: 0 0; opacity: 1; }
+      100% { translate: 0 -24px; opacity: 0; }
     }
 
     @keyframes step-in {
@@ -1054,11 +1056,11 @@ body.is-locked {
       animation-range: entry 0% exit 100%;
     }
 
-    /* the envelope slides in from the right */
+    /* the envelope slides in from the right and fades out again when it leaves the screen */
     .envelope {
-      animation: envelope-slide ease-out both;
+      animation: envelope-slide linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 90%;
+      animation-range: cover 0% cover 100%;
     }
 
     /* timeline entries appear one after another as you scroll */

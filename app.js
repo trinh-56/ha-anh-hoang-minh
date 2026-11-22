@@ -6,15 +6,11 @@ window.scrollTo(0, 0);
 
 const reveals = document.querySelectorAll('.reveal');
 
-// Fade elements in as they enter, and hide them again when the user scrolls back up past them,
-// so they animate in once more on the next scroll down. Elements scrolled past at the top stay visible.
+// Fade elements in when they enter the screen and hide them again whenever they leave it (top or bottom),
+// so they animate in each time they come back into view, whichever way the user scrolls.
 const observer = new IntersectionObserver((entries) => {
   for (const entry of entries) {
-    if (entry.intersectionRatio >= 0.2) {
-      entry.target.classList.add('is-in');
-    } else if (entry.boundingClientRect.top > 0) {
-      entry.target.classList.remove('is-in');
-    }
+    entry.target.classList.toggle('is-in', entry.intersectionRatio >= 0.2);
   }
 }, { threshold: [0, 0.2] });
 

@@ -160,7 +160,7 @@ button:active, a:active {
 
 .lily {
   position: absolute;
-  top: 75%;
+  top: 54%;
   filter: drop-shadow(0 8px 16px rgb(41 39 39 / 0.22));
   max-width: none; /* override the global img cap so the bouquets can be zoomed past the screen edges */
   height: auto;
@@ -170,8 +170,8 @@ button:active, a:active {
 }
 
 /* Zoomed in so the bouquets and seal hide the photo until the reveal; tilted toward the centre. */
-.lily-left { --tilt: 22.5deg; left: -52%; width: 135%; }
-.lily-right { --tilt: -22.5deg; right: -31%; width: 90%; }
+.lily-left { --tilt: 22.5deg; left: -55%; width: 172%; }
+.lily-right { --tilt: -22.5deg; right: -38%; width: 104%; }
 
 .seal {
   position: relative;
@@ -201,7 +201,7 @@ button:active, a:active {
 }
 
 .hint {
-  top: calc(50% - 20svh);
+  bottom: calc(5svh + env(safe-area-inset-bottom));
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;

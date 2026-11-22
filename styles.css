@@ -945,14 +945,15 @@ body.is-locked {
 }
 
 .thanks-content {
+  width: 72%; /* same width as the photo, so the text stays between its left and right edges */
   display: grid;
   gap: 10px;
 }
 
 .thanks-content p {
   margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.6;
+  font-size: 0.68rem;
+  line-height: 1.65;
 }
 
 .thanks-content .thanks-script {

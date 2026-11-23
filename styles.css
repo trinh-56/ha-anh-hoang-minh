@@ -283,6 +283,8 @@ body.is-locked {
 @media (max-width: 480px) {
   #intro {
     --lift: 8lvh;
+    /* even pace: the shared ease-out does most of its movement in the first moments, which reads as a swoosh */
+    --photo-grow: 6000ms cubic-bezier(0.37, 0, 0.63, 1) 300ms;
   }
 
   /* bigger bouquets on phones; they also grow on taller screens so the small photo stays covered */
@@ -306,9 +308,7 @@ body.is-locked {
 /* Phones only: the slow photo reveal (desktop keeps the original speed). Not under Reduce Motion, which stays short. */
 @media (max-width: 480px) and (prefers-reduced-motion: no-preference) {
   .intro-photo {
-    /* growth takes 5078ms (midway between the 8125ms that felt too slow and the 3174ms that felt too fast);
-       the black-and-white change starts with the growth and finishes in 1800ms */
-    transition: transform 5078ms var(--ease-out) 733ms, translate 5078ms var(--ease-out) 733ms, filter 1800ms var(--ease-out) 733ms;
+    transition: transform var(--photo-grow), translate var(--photo-grow), filter 1800ms var(--ease-out) 733ms;
   }
 
   #intro::after {
@@ -320,20 +320,10 @@ body.is-locked {
   }
 }
 
-/* Phones with Reduce Motion on: no zooming or sliding, but the reveal is still slow. The photo is already full size
-   when the bouquets clear, and fades in over several seconds instead of appearing at once. */
-@keyframes photo-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
+/* Phones with Reduce Motion on: the photo keeps the same slow, even growth; colour and text keep their own timing. */
 @media (max-width: 480px) and (prefers-reduced-motion: reduce) {
   .intro-photo {
-    transition: filter 1500ms var(--ease-out) 196ms; /* no transform/translate transition: it jumps to full size */
-  }
-
-  #intro.is-open .intro-photo {
-    animation: photo-fade-in 4375ms var(--ease-out) 196ms both;
+    transition: transform var(--photo-grow), translate var(--photo-grow), filter 1500ms var(--ease-out) 196ms;
   }
 
   #intro::after {

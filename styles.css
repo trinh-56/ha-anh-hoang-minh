@@ -130,7 +130,7 @@ input, textarea, select {
 
 ::placeholder {
   color: var(--mauve);
-  opacity: 0.6;
+  opacity: 1; /* the placeholder is not dimmed */
 }
 
 button, a, [role="button"] {
@@ -580,7 +580,7 @@ body.is-locked {
   top: 14%;
   left: 4.75%; /* 30% bigger, grown around its centre: the bouquet's centre stays ~40% across the page */
   width: 71.5%; /* was 55% */
-  margin-top: -8.25%; /* percent margins use the section's width, which equals the image's height change / 2; no transform, so the scroll fade tracks it exactly */
+  margin-top: -36.85%; /* -8.25% to stay centred when it grew, minus 28.6% = 40% of its height higher. Percent margins use the section's width, which equals the image's height change / 2; no transform, so the scroll fade tracks it exactly */
   opacity: 0.45;
   filter: grayscale(1); /* black and white; the only photo-style effect left on the page, by request */
   pointer-events: none;
@@ -1241,5 +1241,10 @@ p.xbold {
   .family,
   .timeline {
     overflow-x: visible;
+  }
+
+  /* Page 1: the two bouquets run past the column edge instead of being cut off by it. */
+  #intro {
+    overflow: visible;
   }
 }

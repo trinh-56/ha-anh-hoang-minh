@@ -129,8 +129,8 @@ input, textarea, select {
 }
 
 ::placeholder {
-  color: var(--ink);
-  opacity: 0.55;
+  color: var(--mauve);
+  opacity: 0.6;
 }
 
 button, a, [role="button"] {
@@ -888,6 +888,7 @@ p.xbold {
 }
 
 .rsvp-form {
+  color: var(--mauve); /* every piece of text in the form matches the RSVP heading */
   display: grid;
   gap: 22px;
   padding: 28px 22px;
@@ -902,7 +903,7 @@ p.xbold {
   text-align: center;
   font-size: 0.85rem;
   line-height: 1.6;
-  color: var(--ink);
+  color: var(--mauve);
 }
 
 .field {
@@ -932,7 +933,7 @@ p.xbold {
   border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
   border-radius: 999px;
   background: var(--ivory);
-  color: var(--ink);
+  color: var(--mauve);
   font-family: var(--body);
   box-sizing: border-box;
   transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
@@ -983,12 +984,12 @@ p.xbold {
 .choice:has(input:checked) {
   background: var(--pink);
   border-color: color-mix(in srgb, var(--pink) 60%, var(--mauve));
-  color: var(--ink);
+  color: var(--mauve);
 }
 
 .choice:has(input:checked)::before {
-  border-color: var(--ink);
-  background: radial-gradient(circle, var(--ink) 0 4px, transparent 5px);
+  border-color: var(--mauve);
+  background: radial-gradient(circle, var(--mauve) 0 4px, transparent 5px);
 }
 
 .choice:has(input:focus-visible) {
@@ -1047,7 +1048,7 @@ p.xbold {
   border: 0;
   border-radius: 999px;
   background: linear-gradient(135deg, var(--pink), color-mix(in srgb, var(--pink) 78%, white));
-  color: var(--ink);
+  color: var(--mauve);
   font-family: var(--body);
   font-size: 0.95rem;
   font-weight: 600;
@@ -1084,6 +1085,7 @@ p.xbold {
 
 .rsvp-done {
   margin: 0;
+  color: var(--mauve);
   padding: 24px 0;
   text-align: center;
   font-family: var(--script);

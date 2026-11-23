@@ -576,10 +576,6 @@ body.is-locked {
 }
 
 
-.invite {
-  padding-left: 15px; /* lines up with the text of the blocks above (1px line + 14px padding) */
-}
-
 /* Row: bouquet on the left (running to the screen edge), names on the right, as in the reference. */
 .names-row {
   position: relative;

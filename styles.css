@@ -133,7 +133,9 @@ button:active, a:active {
 }
 
 #intro {
-  height: 100svh;
+  /* Largest screen height (Safari's toolbars hidden). 100svh stopped short once the toolbars shrank and let the next section show. */
+  height: 100vh;
+  height: 100lvh;
   min-height: 0;
   padding: 0;
   display: grid;
@@ -177,8 +179,8 @@ button:active, a:active {
 }
 
 /* Zoomed in so the bouquets and seal hide the photo until the reveal; tilted toward the centre. */
-.lily-left { --tilt: 33.6deg; left: -61%; width: 192%; }
-.lily-right { --tilt: -28deg; right: -38%; width: 104%; }
+.lily-left { --tilt: 33.6deg; left: -65%; width: max(204%, 82lvh); }
+.lily-right { --tilt: -28deg; right: -41%; width: max(110%, 50lvh); }
 
 .seal {
   position: relative;
@@ -217,7 +219,7 @@ button:active, a:active {
 }
 
 .intro-text {
-  bottom: calc(6svh + env(safe-area-inset-bottom));
+  bottom: calc(6svh + 100lvh - 100svh + env(safe-area-inset-bottom)); /* measured from the visible bottom, not the hidden one */
   display: grid;
   justify-items: center;
   gap: 10px;
@@ -956,9 +958,12 @@ body.is-locked {
 /* Same look as the bride & groom section: wine background, photo card (colour, original ratio), text below. */
 .thanks {
   margin: 48px calc(-1 * var(--gutter)) 0;
-  min-height: 0;
-  padding: 56px var(--gutter);
+  min-height: 100vh;
+  min-height: 100lvh; /* a full page, so no part of the RSVP shows above it at the end */
+  box-sizing: border-box; /* padding counts inside that height */
+  padding: 56px var(--gutter) calc(56px + env(safe-area-inset-bottom));
   display: grid;
+  align-content: center;
   justify-items: center;
   gap: 28px;
   background: var(--wine);

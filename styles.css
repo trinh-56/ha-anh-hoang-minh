@@ -91,8 +91,14 @@ button:active, a:active {
 }
 
 /* ---------- Shared: stacked names (page 1, save the date, info page) ---------- */
+/* The script lettering overhangs its line box (the tail of the "e" in "Date" reaches ~3.5px right and ~8px below).
+   Padding gives that overhang room inside the element, so a phone's per-layer clipping cannot crop it;
+   the equal negative margin keeps every position exactly where it was. */
 .names {
-  margin: 0;
+  --overhang-x: 10px;
+  --overhang-y: 14px;
+  padding: var(--overhang-y) var(--overhang-x);
+  margin: calc(var(--overhang-y) * -1) calc(var(--overhang-x) * -1);
   display: grid;
   justify-items: center;
   text-align: center;
@@ -300,15 +306,15 @@ body.is-locked {
 /* Phones only: the slow photo reveal (desktop keeps the original speed). Not under Reduce Motion, which stays short. */
 @media (max-width: 480px) and (prefers-reduced-motion: no-preference) {
   .intro-photo {
-    transition: transform 5078ms var(--ease-out) 1172ms, translate 5078ms var(--ease-out) 1172ms, filter 4688ms var(--ease-out) 1953ms; /* 1.6x faster than the previous 8125/1875/7500/3125ms */
+    transition: transform 3174ms var(--ease-out) 733ms, translate 3174ms var(--ease-out) 733ms, filter 2930ms var(--ease-out) 1221ms; /* 1.6x faster than the previous 5078/1172/4688/1953ms */
   }
 
   #intro::after {
-    transition: opacity 3125ms var(--ease-out) 2344ms;
+    transition: opacity 1953ms var(--ease-out) 1465ms;
   }
 
   .intro-text {
-    transition: opacity 3125ms var(--ease-out) 4688ms;
+    transition: opacity 1953ms var(--ease-out) 2930ms;
   }
 }
 
@@ -321,19 +327,19 @@ body.is-locked {
 
 @media (max-width: 480px) and (prefers-reduced-motion: reduce) {
   .intro-photo {
-    transition: filter 3750ms var(--ease-out) 1563ms; /* no transform/translate transition: it jumps to full size */
+    transition: filter 2344ms var(--ease-out) 977ms; /* no transform/translate transition: it jumps to full size */
   }
 
   #intro.is-open .intro-photo {
-    animation: photo-fade-in 4375ms var(--ease-out) 313ms both;
+    animation: photo-fade-in 2734ms var(--ease-out) 196ms both;
   }
 
   #intro::after {
-    transition: opacity 2500ms var(--ease-out) 1875ms;
+    transition: opacity 1563ms var(--ease-out) 1172ms;
   }
 
   .intro-text {
-    transition: opacity 2500ms var(--ease-out) 4063ms;
+    transition: opacity 1563ms var(--ease-out) 2539ms;
   }
 }
 

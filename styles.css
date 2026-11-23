@@ -777,8 +777,8 @@ p.xbold {
   min-height: 0;
   padding-top: 56px;
   padding-bottom: 56px;
-  background: var(--pink);
-  color: var(--mauve); /* Cô dâu / Chú rể and both names match the RSVP heading */
+  background: var(--mauve); /* the RSVP text colour */
+  color: var(--pink); /* Cô dâu / Chú rể and both names */
   overflow: clip; /* hidden would make this its own scroller and freeze the scroll fade inside it */
   display: grid;
   gap: 40px;

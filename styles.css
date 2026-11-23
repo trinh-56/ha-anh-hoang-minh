@@ -154,7 +154,8 @@ button:active, a:active {
   transform: scale(0.3); /* closed: a small centred picture, ~30% of the screen */
   filter: none;
   box-shadow: 0 10px 40px rgb(0 0 0 / 0.22);
-  transition: transform 1300ms var(--ease-out) 300ms, filter 1200ms var(--ease-out) 500ms;
+  /* reveal speed is 60% lower than before: durations and delays are 2.5x the old 1300/300/1200/500ms */
+  transition: transform 3250ms var(--ease-out) 750ms, translate 3250ms var(--ease-out) 750ms, filter 3000ms var(--ease-out) 1250ms;
 }
 
 #intro::after {
@@ -163,7 +164,7 @@ button:active, a:active {
   inset: 0;
   background: linear-gradient(to bottom, rgb(0 0 0 / 0) 45%, rgb(0 0 0 / 0.6) 100%);
   opacity: 0;
-  transition: opacity 800ms var(--ease-out) 600ms;
+  transition: opacity 2000ms var(--ease-out) 1500ms;
   pointer-events: none;
 }
 
@@ -225,7 +226,7 @@ button:active, a:active {
   gap: 10px;
   text-shadow: 0 2px 14px rgb(0 0 0 / 0.55);
   opacity: 0;
-  transition: opacity 800ms var(--ease-out) 1200ms;
+  transition: opacity 2000ms var(--ease-out) 3000ms;
 }
 
 .intro-date {
@@ -250,7 +251,7 @@ button:active, a:active {
 #intro.is-open .lily-left { transform: translate(-100%, -50%) rotate(var(--tilt)); }
 #intro.is-open .lily-right { transform: translate(100%, -50%) rotate(var(--tilt)); }
 
-#intro.is-open .intro-photo { transform: scale(1); filter: grayscale(1); }
+#intro.is-open .intro-photo { transform: scale(1); translate: 0 0; filter: grayscale(1); }
 #intro.is-open::after { opacity: 0.6; }
 
 #intro.is-open .hint { opacity: 0; }
@@ -269,6 +270,20 @@ body.is-locked {
   #intro::after {
     transition-duration: 150ms;
     transition-delay: 0ms;
+  }
+}
+
+/* Phones: the group sits higher so it reads as centred in what you see between Safari's toolbars.
+   The hint is positioned on its own and does not move. The photo drops the lift as it grows to full screen. */
+@media (max-width: 480px) {
+  #intro {
+    --lift: 8lvh;
+  }
+
+  .intro-photo,
+  .seal,
+  .lily {
+    translate: 0 calc(var(--lift) * -1);
   }
 }
 

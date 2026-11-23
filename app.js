@@ -4,72 +4,11 @@ import { TARGET, countdownParts } from './countdown.js';
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 
-const reveals = document.querySelectorAll('.reveal');
-
-// Elements on screen when an upward scroll starts. They stay hidden until they have fully left the screen,
-// so nothing flickers back while the finger is still moving.
-const heldHidden = new WeakSet();
-
-// Show at 20% visible, hide only once fully off screen: the gap stops elements flipping at the screen edge.
-const observer = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    if (entry.intersectionRatio === 0) {
-      heldHidden.delete(entry.target);
-      entry.target.classList.remove('is-in');
-    } else if (entry.intersectionRatio >= 0.2 && !heldHidden.has(entry.target)) {
-      entry.target.classList.add('is-in');
-    }
-  }
-}, { threshold: [0, 0.2] });
-
-reveals.forEach((el) => observer.observe(el));
-
-// Direction rule: starting to scroll UP makes everything on screen disappear; elements that then scroll INTO view
-// fade in as usual. Scrolling DOWN again brings back everything on screen.
-// Small movements add up, so slow scrolling counts; a reversal needs 16px, which ignores finger wobble on a phone.
-const REVERSAL_PX = 16;
-
-function visibleShare(el) {
-  const r = el.getBoundingClientRect();
-  if (r.height === 0) return 0;
-  return Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0)) / r.height;
-}
-
-let scrollingUp = false;
-let lastY = window.scrollY;
-let moved = 0;
-let lastHeight = document.documentElement.scrollHeight;
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  const height = document.documentElement.scrollHeight;
-  // The page height changed (window resized, image loaded): the browser moved the page, not the user.
-  if (height !== lastHeight) {
-    lastHeight = height;
-    lastY = y;
-    moved = 0;
-    return;
-  }
-  const delta = y - lastY;
-  lastY = y;
-  if (delta === 0) return;
-  if (Math.sign(delta) !== Math.sign(moved)) moved = 0;
-  moved += delta;
-  const max = height - window.innerHeight;
-  if (moved >= REVERSAL_PX && scrollingUp) {
-    scrollingUp = false;
-    reveals.forEach((el) => {
-      heldHidden.delete(el);
-      el.classList.toggle('is-in', visibleShare(el) >= 0.2);
-    });
-  // y > 0 and y < max skip the iOS rubber-band bounce at the top and bottom edges
-  } else if (moved <= -REVERSAL_PX && y > 0 && y < max && !scrollingUp) {
-    scrollingUp = true;
-    reveals.forEach((el) => {
-      if (visibleShare(el) > 0) heldHidden.add(el);
-      el.classList.remove('is-in');
-    });
-  }
-}, { passive: true });
+// Everything on the page fades with its position on screen: in at the edge it enters from, out at the edge it
+// leaves by, in both scroll directions. CSS drives .fade on the compositor; older browsers use the fallback below.
+const FADE_TARGETS = '.page > section:not(#intro):not(#rsvp) > :not(.stage), .stage > *, #rsvp > :not(#thanks), #thanks > *';
+const FADE_BAND = 0.12; // share of the element's trip across the screen spent fading (matches @keyframes scroll-fade)
+const fadeOnScroll = !matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const intro = document.getElementById('intro');
 const seal = intro.querySelector('.seal');
@@ -77,6 +16,7 @@ const seal = intro.querySelector('.seal');
 seal.addEventListener('click', () => {
   intro.classList.add('is-open');
   document.body.classList.remove('is-locked');
+  if (fadeOnScroll) intro.classList.add('fade');
 });
 
 // Coming back via the browser's back/forward cache would keep the page opened and scrolled: replay the intro instead.
@@ -84,9 +24,37 @@ window.addEventListener('pageshow', (e) => {
   if (!e.persisted) return;
   intro.classList.remove('is-open');
   document.body.classList.add('is-locked');
-  scrollingUp = false;
+  intro.classList.remove('fade');
+  intro.style.opacity = '';
   window.scrollTo(0, 0);
 });
+
+if (fadeOnScroll) {
+  const targets = [...document.querySelectorAll(FADE_TARGETS)];
+  targets.forEach((el) => el.classList.add('fade'));
+
+  if (!CSS.supports('animation-timeline: view()')) {
+    const items = [intro, ...targets].map((el) => ({ el, base: parseFloat(getComputedStyle(el).opacity) }));
+    let queued = false;
+    const paint = () => {
+      queued = false;
+      const vh = window.innerHeight;
+      for (const { el, base } of items) {
+        if (!el.classList.contains('fade')) continue;
+        const r = el.getBoundingClientRect();
+        const progress = (vh - r.top) / (vh + r.height);
+        el.style.opacity = base * Math.max(0, Math.min(1, Math.min(progress, 1 - progress) / FADE_BAND));
+      }
+    };
+    const queue = () => {
+      if (!queued) requestAnimationFrame(paint);
+      queued = true;
+    };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    queue();
+  }
+}
 
 // Countdown
 

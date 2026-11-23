@@ -90,26 +90,6 @@ button:active, a:active {
   /* all :hover rules live here */
 }
 
-.reveal {
-  opacity: 0;
-  translate: 0 24px;
-  transition: opacity 260ms cubic-bezier(0.4, 0, 0.2, 1), translate 0s linear 260ms; /* hiding only fades; the element moves back once invisible */
-}
-
-.reveal.is-in {
-  opacity: 1;
-  translate: 0 0;
-  transition: opacity 600ms var(--ease-out), translate 600ms var(--ease-out); /* ...showing is soft */
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal.is-in {
-    translate: none;
-    transition-duration: 150ms;
-  }
-}
-
 /* ---------- Shared: stacked names (page 1, save the date, info page) ---------- */
 .names {
   margin: 0;
@@ -372,7 +352,7 @@ body.is-locked {
   padding: 0;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: clip; /* hidden would make this its own scroller and freeze the scroll fade inside it */
   background: var(--ink);
   color: var(--ivory);
 }
@@ -641,7 +621,7 @@ body.is-locked {
   padding-bottom: 56px;
   background: var(--wine);
   color: var(--ivory);
-  overflow: hidden;
+  overflow: clip; /* hidden would make this its own scroller and freeze the scroll fade inside it */
   display: grid;
   gap: 40px;
   justify-items: center;
@@ -1028,10 +1008,20 @@ body.is-locked {
   pointer-events: none;
 }
 
+/* Base opacity of the faint decorations, so the scroll fade returns them to it instead of to full strength */
+.lily-watermark { --fade-to: 0.08; }
+.lily-line { --fade-to: 0.25; }
+
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     @keyframes progress-grow {
       to { transform: scaleX(1); }
+    }
+
+    /* Position on screen, not time: 0% = just entering, 100% = just left. Reverses exactly when scrolling back. */
+    @keyframes scroll-fade {
+      0%, 100% { opacity: 0; }
+      12%, 88% { opacity: var(--fade-to, 1); }
     }
 
     @keyframes strip-sway {
@@ -1054,24 +1044,28 @@ body.is-locked {
       animation-timeline: scroll(root);
     }
 
-    /* the photo strip sways as it travels through the screen */
-    .strip {
-      animation: strip-sway linear both;
+    .fade {
+      animation: scroll-fade linear both;
       animation-timeline: view();
-      animation-range: entry 0% exit 100%;
+      animation-range: cover 0% cover 100%;
     }
 
-    /* bride and groom photos settle straight, like cards being placed */
-    .couple-card.bride {
-      animation: settle-left linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 45%;
+    .strip.fade {
+      animation: scroll-fade linear both, strip-sway linear both;
+      animation-timeline: view(), view();
+      animation-range: cover 0% cover 100%, cover 0% cover 100%;
     }
 
-    .couple-card.groom {
-      animation: settle-right linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 45%;
+    .couple-card.bride.fade {
+      animation: scroll-fade linear both, settle-left linear both;
+      animation-timeline: view(), view();
+      animation-range: cover 0% cover 100%, entry 0% cover 45%;
+    }
+
+    .couple-card.groom.fade {
+      animation: scroll-fade linear both, settle-right linear both;
+      animation-timeline: view(), view();
+      animation-range: cover 0% cover 100%, entry 0% cover 45%;
     }
   }
 }

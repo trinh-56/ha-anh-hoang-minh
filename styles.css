@@ -154,8 +154,7 @@ button:active, a:active {
   transform: scale(0.3); /* closed: a small centred picture, ~30% of the screen */
   filter: none;
   box-shadow: 0 10px 40px rgb(0 0 0 / 0.22);
-  /* reveal runs at 40% of its previous speed: every duration and delay is 2.5x the previous 3250/750/3000/1250ms */
-  transition: transform 8125ms var(--ease-out) 1875ms, translate 8125ms var(--ease-out) 1875ms, filter 7500ms var(--ease-out) 3125ms;
+  transition: transform 1300ms var(--ease-out) 300ms, filter 1200ms var(--ease-out) 500ms;
 }
 
 #intro::after {
@@ -164,7 +163,7 @@ button:active, a:active {
   inset: 0;
   background: linear-gradient(to bottom, rgb(0 0 0 / 0) 45%, rgb(0 0 0 / 0.6) 100%);
   opacity: 0;
-  transition: opacity 5000ms var(--ease-out) 3750ms;
+  transition: opacity 800ms var(--ease-out) 600ms;
   pointer-events: none;
 }
 
@@ -226,7 +225,7 @@ button:active, a:active {
   gap: 10px;
   text-shadow: 0 2px 14px rgb(0 0 0 / 0.55);
   opacity: 0;
-  transition: opacity 5000ms var(--ease-out) 7500ms;
+  transition: opacity 800ms var(--ease-out) 1200ms;
 }
 
 .intro-date {
@@ -284,6 +283,21 @@ body.is-locked {
   .seal,
   .lily {
     translate: 0 calc(var(--lift) * -1);
+  }
+}
+
+/* Phones only: the slow photo reveal (desktop keeps the original speed). Not under Reduce Motion, which stays short. */
+@media (max-width: 480px) and (prefers-reduced-motion: no-preference) {
+  .intro-photo {
+    transition: transform 8125ms var(--ease-out) 1875ms, translate 8125ms var(--ease-out) 1875ms, filter 7500ms var(--ease-out) 3125ms;
+  }
+
+  #intro::after {
+    transition: opacity 5000ms var(--ease-out) 3750ms;
+  }
+
+  .intro-text {
+    transition: opacity 5000ms var(--ease-out) 7500ms;
   }
 }
 

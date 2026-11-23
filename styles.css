@@ -1,7 +1,36 @@
 @font-face {
-  font-family: 'FS North Land';
-  src: url('assets/fonts/FS-North-Land.otf') format('opentype');
+  font-family: 'Citadel Script';
+  src: url('assets/fonts/CitadelScript.ttf') format('truetype');
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Georgia Pro here lacks 34 Vietnamese letters (ơ ư ạ ị ệ ố ụ ...). They fall through to the system Georgia
+   in the stack below, which Georgia Pro was drawn from, so words stay visually consistent. */
+@font-face {
+  font-family: 'Georgia Pro';
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0100-017F, U+2000-206F, U+20AB; /* Latin only; every Vietnamese stacked-accent letter (U+1EA0-1EF9) and ơ ư come whole from Georgia */
+  src: url('assets/fonts/GeorgiaPro-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Georgia Pro';
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0100-017F, U+2000-206F, U+20AB; /* Latin only; every Vietnamese stacked-accent letter (U+1EA0-1EF9) and ơ ư come whole from Georgia */
+  src: url('assets/fonts/GeorgiaPro-Regular.ttf') format('truetype');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Georgia Pro';
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0100-017F, U+2000-206F, U+20AB; /* Latin only; every Vietnamese stacked-accent letter (U+1EA0-1EF9) and ơ ư come whole from Georgia */
+  src: url('assets/fonts/GeorgiaPro-SemiBold.ttf') format('truetype');
+  font-weight: 600 700;
   font-style: normal;
   font-display: swap;
 }
@@ -10,16 +39,15 @@
   --peony: #D87BAA;
   --ivory: #FFFEEF;
   --ink: #292727;
-  --carmine: #C2062B;
   --mauve: #AF3E4D;
-  --wine: color-mix(in srgb, var(--carmine) 55%, var(--ink));
-  --script: 'FS North Land', cursive;
-  --sans: 'Montserrat', sans-serif;
+  --pink: #FEC6C6; /* replaces the old reds (carmine / wine) */
+  --script: 'Citadel Script', cursive;
+  --body: 'Georgia Pro', Georgia, 'Times New Roman', serif;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --the-size: calc(clamp(4.42rem, 19.5vw, 5.72rem) * 0.14); /* the small 'the' in Save the Date; Cô dâu / Chú rể use it too */
   --caption-size: 0.75rem; /* 'Quét mã để xem bản đồ' and Cô dâu / Chú rể */
   --small-text: 0.68rem; /* the thank-you paragraph and Cô dâu / Chú rể */
-  --backdrop: #FEC6C6; /* desktop: the area around the invitation column */
+  --backdrop: var(--pink); /* desktop: the area around the invitation column */
   --gutter: 32px; /* side padding for text sections (full-bleed photo sections ignore it) */
 }
 
@@ -39,8 +67,9 @@ body {
   margin: 0;
   background: var(--ink);
   color: var(--ink);
-  font-family: var(--sans);
+  font-family: var(--body);
   font-weight: 400;
+  font-variant-numeric: lining-nums; /* Georgia's default figures are old-style (uneven heights); dates and times need even ones */
 }
 
 /* Desktop: the area outside the phone-width invitation column */
@@ -120,7 +149,7 @@ button:active, a:active {
 
 .names .amp.sans {
   -webkit-text-stroke: 0;
-  font-family: var(--sans);
+  font-family: var(--body);
   font-size: 0.95rem;
   font-weight: 300;
   letter-spacing: 0.2em;
@@ -130,7 +159,7 @@ button:active, a:active {
 /* page-1 names are 25% bigger than the shared .names size; the info-page names match them exactly */
 .intro-text .names .name,
 .couple-names .name {
-  font-size: clamp(4.25rem, 18.75vw, 5.5rem);
+  font-size: clamp(3.2rem, 15.4vw, 4.4rem); /* sized so "Hoàng Minh" in Citadel Script fits on one line */
 }
 
 .intro-text .names .amp,
@@ -158,9 +187,8 @@ button:active, a:active {
   object-fit: cover;
   object-position: 50% 30%;
   transform: scale(0.3); /* closed: a small centred picture, ~30% of the screen */
-  filter: none;
   box-shadow: 0 10px 40px rgb(0 0 0 / 0.22);
-  transition: transform 1300ms var(--ease-out) 300ms, filter 1200ms var(--ease-out) 500ms;
+  transition: transform 1300ms var(--ease-out) 300ms;
 }
 
 #intro::after {
@@ -256,7 +284,7 @@ button:active, a:active {
 #intro.is-open .lily-left { transform: translate(-100%, -50%) rotate(var(--tilt)); }
 #intro.is-open .lily-right { transform: translate(100%, -50%) rotate(var(--tilt)); }
 
-#intro.is-open .intro-photo { transform: scale(1); translate: 0 0; filter: grayscale(1); }
+#intro.is-open .intro-photo { transform: scale(1); translate: 0 0; }
 #intro.is-open::after { opacity: 0.6; }
 
 #intro.is-open .hint { opacity: 0; }
@@ -308,7 +336,7 @@ body.is-locked {
 /* Phones only: the slow photo reveal (desktop keeps the original speed). Not under Reduce Motion, which stays short. */
 @media (max-width: 480px) and (prefers-reduced-motion: no-preference) {
   .intro-photo {
-    transition: transform var(--photo-grow), translate var(--photo-grow), filter 1800ms var(--ease-out) 733ms;
+    transition: transform var(--photo-grow), translate var(--photo-grow);
   }
 
   #intro::after {
@@ -323,7 +351,7 @@ body.is-locked {
 /* Phones with Reduce Motion on: the photo keeps the same slow, even growth; colour and text keep their own timing. */
 @media (max-width: 480px) and (prefers-reduced-motion: reduce) {
   .intro-photo {
-    transition: transform var(--photo-grow), translate var(--photo-grow), filter 1500ms var(--ease-out) 196ms;
+    transition: transform var(--photo-grow), translate var(--photo-grow);
   }
 
   #intro::after {
@@ -408,7 +436,6 @@ body.is-locked {
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: 50% 30%;
-  filter: grayscale(1);
 }
 
 /* ---------- Countdown (page-countdown) ---------- */
@@ -428,7 +455,18 @@ body.is-locked {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(1);
+}
+
+.countdown::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(41 39 39 / 0.38); /* the photo is in colour now; this keeps the white numbers readable over the dress and bouquet */
+  pointer-events: none;
+}
+
+.countdown-content {
+  z-index: 2;
 }
 
 .countdown::before {
@@ -470,11 +508,11 @@ body.is-locked {
 }
 
 .num {
-  font-family: var(--sans);
+  font-family: var(--body);
   font-weight: 300;
   font-size: 2.4rem;
   line-height: 1;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 .label {
@@ -485,7 +523,7 @@ body.is-locked {
 }
 
 .sep {
-  font-family: var(--sans);
+  font-family: var(--body);
   font-weight: 300;
   font-size: 2.4rem;
   line-height: 1;
@@ -513,7 +551,6 @@ body.is-locked {
   left: -14%;
   width: 55%;
   opacity: 0.25;
-  filter: grayscale(1) sepia(0.3);
   pointer-events: none;
 }
 
@@ -610,8 +647,8 @@ body.is-locked {
 
 /* 2026 is letter-spaced so its visible width equals "Tháng 12" (spacing measured in em, so it scales) */
 .big-month .m2 {
-  letter-spacing: var(--m2-ls, 0.66em);
-  margin-right: calc(-1 * var(--m2-ls, 0.66em));
+  letter-spacing: var(--m2-ls, 0.64em);
+  margin-right: calc(-1 * var(--m2-ls, 0.64em));
 }
 
 .big-rule {
@@ -684,8 +721,8 @@ body.is-locked {
   min-height: 0;
   padding-top: 56px;
   padding-bottom: 56px;
-  background: var(--wine);
-  color: var(--ivory);
+  background: var(--pink);
+  color: var(--ink);
   overflow: clip; /* hidden would make this its own scroller and freeze the scroll fade inside it */
   display: grid;
   gap: 40px;
@@ -730,7 +767,7 @@ body.is-locked {
 
 .couple-card .name {
   font-family: var(--script);
-  font-size: 4rem; /* same as the Timeline title */
+  font-size: clamp(2rem, 11.5vw, 3rem); /* "Hoàng Minh" must fit inside the 72%-wide photo card */
   line-height: 1.1;
 }
 
@@ -809,7 +846,6 @@ body.is-locked {
   font-family: var(--script);
   font-weight: 400;
   font-size: 5.4rem; /* same size as Timeline */
-  letter-spacing: 0.08em; /* the script's R, S, V, P otherwise touch at this size */
   line-height: 1;
   color: var(--mauve);
 }
@@ -860,7 +896,7 @@ body.is-locked {
   border-radius: 999px;
   background: var(--ivory);
   color: var(--ink);
-  font-family: var(--sans);
+  font-family: var(--body);
   box-sizing: border-box;
   transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
 }
@@ -908,14 +944,14 @@ body.is-locked {
 }
 
 .choice:has(input:checked) {
-  background: var(--wine);
-  border-color: var(--wine);
-  color: var(--ivory);
+  background: var(--pink);
+  border-color: color-mix(in srgb, var(--pink) 60%, var(--mauve));
+  color: var(--ink);
 }
 
 .choice:has(input:checked)::before {
-  border-color: var(--ivory);
-  background: radial-gradient(circle, var(--ivory) 0 4px, transparent 5px);
+  border-color: var(--ink);
+  background: radial-gradient(circle, var(--ink) 0 4px, transparent 5px);
 }
 
 .choice:has(input:focus-visible) {
@@ -936,7 +972,7 @@ body.is-locked {
   border-radius: 50%;
   background: var(--ivory);
   color: var(--mauve);
-  font-family: var(--sans);
+  font-family: var(--body);
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
@@ -973,15 +1009,15 @@ body.is-locked {
   min-height: 58px;
   border: 0;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--carmine), color-mix(in srgb, var(--carmine) 62%, var(--ink)));
-  color: var(--ivory);
-  font-family: var(--sans);
+  background: linear-gradient(135deg, var(--pink), color-mix(in srgb, var(--pink) 78%, white));
+  color: var(--ink);
+  font-family: var(--body);
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 12px 26px color-mix(in srgb, var(--carmine) 38%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.25);
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--pink) 70%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.5);
   transition: box-shadow 200ms var(--ease-out), transform 100ms var(--ease-out);
 }
 
@@ -993,7 +1029,7 @@ body.is-locked {
 
 @media (hover: hover) and (pointer: fine) {
   .submit:not(:disabled):hover {
-    box-shadow: 0 16px 32px color-mix(in srgb, var(--carmine) 48%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.25);
+    box-shadow: 0 16px 32px color-mix(in srgb, var(--pink) 85%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.5);
   }
 
   .choice:hover {
@@ -1029,8 +1065,8 @@ body.is-locked {
   align-content: center;
   justify-items: center;
   gap: 28px;
-  background: var(--wine);
-  color: var(--ivory);
+  background: var(--pink);
+  color: var(--ink);
   text-align: center;
 }
 
@@ -1056,7 +1092,7 @@ body.is-locked {
 .thanks-content .thanks-script {
   margin-top: 8px;
   font-family: var(--script);
-  font-size: 4.42rem; /* 30% bigger than before (3.4rem) */
+  font-size: clamp(2.4rem, 14.5vw, 4.4rem); /* "Thank you!" must fit inside the photo width */ /* 30% bigger than before (3.4rem) */
   line-height: 1;
 }
 

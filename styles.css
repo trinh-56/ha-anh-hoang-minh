@@ -578,8 +578,9 @@ body.is-locked {
 .lily-line {
   position: absolute;
   top: 14%;
-  left: 13%; /* the bouquet sits mid-image, so this puts its centre ~40% across the page (it was ~13%, mostly off the edge) */
-  width: 55%;
+  left: 40.5%; /* the bouquet's centre stays ~40% across the page */
+  width: 71.5%; /* 30% bigger than the previous 55% */
+  translate: -50% -11.5%; /* grows around its centre instead of down and to the right */
   opacity: 0.45;
   filter: grayscale(1); /* black and white; the only photo-style effect left on the page, by request */
   pointer-events: none;
@@ -757,7 +758,7 @@ p.xbold {
   padding-top: 56px;
   padding-bottom: 56px;
   background: var(--pink);
-  color: var(--ink);
+  color: var(--mauve); /* Cô dâu / Chú rể and both names match the RSVP heading */
   overflow: clip; /* hidden would make this its own scroller and freeze the scroll fade inside it */
   display: grid;
   gap: 40px;
@@ -1224,5 +1225,21 @@ p.xbold {
       animation-timeline: view(), view();
       animation-range: cover 0% cover 100%, entry 0% cover 45%;
     }
+  }
+}
+
+/* Desktop: flowers and the envelope are no longer cropped at the edge of the invitation column; the window's
+   own edge is the only clip, so no horizontal scrollbar appears. The page 1 cover keeps its edge (the bouquets slide in from it). */
+@media (min-width: 481px) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  .page,
+  .save-date,
+  .family,
+  .timeline {
+    overflow-x: visible;
   }
 }

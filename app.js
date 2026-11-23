@@ -8,7 +8,10 @@ window.scrollTo(0, 0);
 // leaves by, in both scroll directions. CSS drives .fade on the compositor; older browsers use the fallback below.
 // The fade is opacity only, so it also runs when the phone's Reduce Motion setting is on (that setting is about movement).
 const FADE_TARGETS = '.page > section:not(#intro):not(#rsvp) > :not(.stage), .stage > *, #rsvp > :not(#thanks), #thanks > *';
-const FADE_BAND = 0.12; // share of the element's trip across the screen spent fading (matches @keyframes scroll-fade)
+// Share of the element's trip across the screen spent fading (matches @keyframes scroll-fade and scroll-fade-last).
+const FADE_IN = 0.3;
+const FADE_IN_LAST = 0.2;
+const FADE_OUT = 0.12;
 
 const intro = document.getElementById('intro');
 const seal = intro.querySelector('.seal');
@@ -43,7 +46,8 @@ window.addEventListener('pageshow', (e) => {
         if (!el.classList.contains('fade')) continue;
         const r = el.getBoundingClientRect();
         const progress = (vh - r.top) / (vh + r.height);
-        el.style.opacity = base * Math.max(0, Math.min(1, Math.min(progress, 1 - progress) / FADE_BAND));
+        const fadeIn = el.parentElement.id === 'thanks' ? FADE_IN_LAST : FADE_IN;
+        el.style.opacity = base * Math.max(0, Math.min(1, progress / fadeIn, (1 - progress) / FADE_OUT));
       }
     };
     const queue = () => {

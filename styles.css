@@ -1083,15 +1083,26 @@ body.is-locked {
 /* Fades are opacity only, so they stay on when the phone's Reduce Motion setting is on; only movement is gated. */
 @supports (animation-timeline: view()) {
   /* Position on screen, not time: 0% = just entering, 100% = just left. Reverses exactly when scrolling back. */
+  /* Fade-in covers 30% of the trip (60% slower than the earlier 12%); fade-out at the top stays at 12%. */
   @keyframes scroll-fade {
     0%, 100% { opacity: 0; }
-    12%, 88% { opacity: var(--fade-to, 1); }
+    30%, 88% { opacity: var(--fade-to, 1); }
+  }
+
+  /* The thank-you page is the end of the scroll, so it must finish fading in before the page runs out. */
+  @keyframes scroll-fade-last {
+    0%, 100% { opacity: 0; }
+    20%, 88% { opacity: 1; }
   }
 
   .fade {
     animation: scroll-fade linear both;
     animation-timeline: view();
     animation-range: cover 0% cover 100%;
+  }
+
+  #thanks > .fade {
+    animation-name: scroll-fade-last;
   }
 }
 

@@ -154,8 +154,8 @@ button:active, a:active {
   transform: scale(0.3); /* closed: a small centred picture, ~30% of the screen */
   filter: none;
   box-shadow: 0 10px 40px rgb(0 0 0 / 0.22);
-  /* reveal speed is 60% lower than before: durations and delays are 2.5x the old 1300/300/1200/500ms */
-  transition: transform 3250ms var(--ease-out) 750ms, translate 3250ms var(--ease-out) 750ms, filter 3000ms var(--ease-out) 1250ms;
+  /* reveal runs at 40% of its previous speed: every duration and delay is 2.5x the previous 3250/750/3000/1250ms */
+  transition: transform 8125ms var(--ease-out) 1875ms, translate 8125ms var(--ease-out) 1875ms, filter 7500ms var(--ease-out) 3125ms;
 }
 
 #intro::after {
@@ -164,7 +164,7 @@ button:active, a:active {
   inset: 0;
   background: linear-gradient(to bottom, rgb(0 0 0 / 0) 45%, rgb(0 0 0 / 0.6) 100%);
   opacity: 0;
-  transition: opacity 2000ms var(--ease-out) 1500ms;
+  transition: opacity 5000ms var(--ease-out) 3750ms;
   pointer-events: none;
 }
 
@@ -226,7 +226,7 @@ button:active, a:active {
   gap: 10px;
   text-shadow: 0 2px 14px rgb(0 0 0 / 0.55);
   opacity: 0;
-  transition: opacity 2000ms var(--ease-out) 3000ms;
+  transition: opacity 5000ms var(--ease-out) 7500ms;
 }
 
 .intro-date {

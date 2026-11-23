@@ -568,7 +568,6 @@ body.is-locked {
 
 /* ---------- Family & location (page-info-family-location) ---------- */
 .family {
-  color: var(--ivory); /* info section text is ivory; the QR caption below keeps dark text because its card is light */
   min-height: 0;
   padding-top: 56px;
   padding-bottom: 56px;
@@ -578,10 +577,11 @@ body.is-locked {
 
 .lily-line {
   position: absolute;
-  top: 18%;
-  left: -14%;
+  top: 14%;
+  left: 13%; /* the bouquet sits mid-image, so this puts its centre ~40% across the page (it was ~13%, mostly off the edge) */
   width: 55%;
-  opacity: 0.25;
+  opacity: 0.45;
+  filter: grayscale(1); /* black and white; the only photo-style effect left on the page, by request */
   pointer-events: none;
 }
 
@@ -1151,7 +1151,7 @@ p.xbold {
 
 /* Base opacity of the faint decorations, so the scroll fade returns them to it instead of to full strength */
 .lily-watermark { --fade-to: 0.08; }
-.lily-line { --fade-to: 0.25; }
+.lily-line { --fade-to: 0.45; }
 
 /* Fades are opacity only, so they stay on when the phone's Reduce Motion setting is on; only movement is gated. */
 @supports (animation-timeline: view()) {

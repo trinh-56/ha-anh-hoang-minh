@@ -312,6 +312,31 @@ body.is-locked {
   }
 }
 
+/* Phones with Reduce Motion on: no zooming or sliding, but the reveal is still slow. The photo is already full size
+   when the bouquets clear, and fades in over several seconds instead of appearing at once. */
+@keyframes photo-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 480px) and (prefers-reduced-motion: reduce) {
+  .intro-photo {
+    transition: filter 6000ms var(--ease-out) 2500ms; /* no transform/translate transition: it jumps to full size */
+  }
+
+  #intro.is-open .intro-photo {
+    animation: photo-fade-in 7000ms var(--ease-out) 500ms both;
+  }
+
+  #intro::after {
+    transition: opacity 4000ms var(--ease-out) 3000ms;
+  }
+
+  .intro-text {
+    transition: opacity 4000ms var(--ease-out) 6500ms;
+  }
+}
+
 /* ---------- Save the date (page-date) ---------- */
 .save-date {
   min-height: 0;

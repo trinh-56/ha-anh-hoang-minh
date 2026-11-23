@@ -30,7 +30,25 @@
   font-family: 'Georgia Pro';
   unicode-range: U+0020-007E, U+00A0-00FF, U+0100-017F, U+2000-206F, U+20AB; /* Latin only; every Vietnamese stacked-accent letter (U+1EA0-1EF9) and ơ ư come whole from Georgia */
   src: url('assets/fonts/GeorgiaPro-SemiBold.ttf') format('truetype');
-  font-weight: 600 700;
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Georgia Pro';
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0100-017F, U+2000-206F, U+20AB; /* Latin only; every Vietnamese stacked-accent letter (U+1EA0-1EF9) and ơ ư come whole from Georgia */
+  src: url('assets/fonts/GeorgiaPro-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Georgia Pro';
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0100-017F, U+2000-206F, U+20AB; /* Latin only; every Vietnamese stacked-accent letter (U+1EA0-1EF9) and ơ ư come whole from Georgia */
+  src: url('assets/fonts/GeorgiaPro-Black.ttf') format('truetype');
+  font-weight: 800 900;
   font-style: normal;
   font-display: swap;
 }
@@ -47,6 +65,7 @@
   --the-size: calc(clamp(4.42rem, 19.5vw, 5.72rem) * 0.14); /* the small 'the' in Save the Date; Cô dâu / Chú rể use it too */
   --caption-size: 0.75rem; /* 'Quét mã để xem bản đồ' and Cô dâu / Chú rể */
   --small-text: 0.68rem; /* the thank-you paragraph and Cô dâu / Chú rể */
+  --page-bg: var(--pink); /* the invitation's own background */
   --backdrop: var(--pink); /* desktop: the area around the invitation column */
   --gutter: 32px; /* side padding for text sections (full-bleed photo sections ignore it) */
 }
@@ -83,7 +102,7 @@ body {
 .page {
   max-width: 480px;
   margin: 0 auto;
-  background: var(--ivory);
+  background: var(--page-bg);
   overflow-x: clip;
 }
 
@@ -176,7 +195,7 @@ button:active, a:active {
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: var(--ivory);
+  background: var(--page-bg);
 }
 
 .intro-photo {
@@ -253,7 +272,7 @@ button:active, a:active {
 }
 
 .intro-text {
-  bottom: calc(6svh + 100lvh - 100svh + env(safe-area-inset-bottom)); /* measured from the visible bottom, not the hidden one */
+  bottom: calc(26svh + 100lvh - 100svh + env(safe-area-inset-bottom)); /* 20% of the screen higher than before (6svh) */
   display: grid;
   justify-items: center;
   gap: 10px;
@@ -263,7 +282,7 @@ button:active, a:active {
 }
 
 .intro-date {
-  margin: 0;
+  margin: 14px 0 0; /* the date sits lower, further from the names */
   font-size: 0.875rem;
   font-weight: 300;
   letter-spacing: 0.2em;
@@ -390,7 +409,8 @@ body.is-locked {
   font-size: var(--the-size); /* scales with the names so the gaps stay equal at every screen width */
   margin: calc(var(--n) * -0.121) 0 calc(var(--n) * 0.019); /* gaps above/below tightened by 15% (tuned by measurement) */
   position: relative;
-  left: 15%; /* nudged right by 15% of the heading's width */
+  left: 35%; /* right by 35% of the heading's width (was 15%) */
+  top: calc(var(--n) * 0.09); /* 40% lower than the gap it sat in (~6px of the ~15px between Save and Date) */
 }
 
 .stage {
@@ -575,6 +595,10 @@ body.is-locked {
 
 .kicker.mauve {
   color: var(--mauve);
+}
+
+p.xbold {
+  font-weight: 900; /* extra bold: Georgia Pro Black; p.xbold outranks the .kicker / .invite weights that come after it */
 }
 
 .invite {
@@ -843,9 +867,11 @@ body.is-locked {
 .rsvp-title {
   margin: 0 0 20px;
   text-align: center;
-  font-family: var(--script);
-  font-weight: 400;
-  font-size: 5.4rem; /* same size as Timeline */
+  font-family: var(--body);
+  font-weight: 700; /* Georgia Pro Bold */
+  font-size: 3.4rem;
+  letter-spacing: 0.12em;
+  text-indent: 0.12em; /* balances the trailing letter-space so the word stays centred */
   line-height: 1;
   color: var(--mauve);
 }

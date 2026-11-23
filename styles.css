@@ -284,7 +284,7 @@ body.is-locked {
   #intro {
     --lift: 8lvh;
     /* even pace: the shared ease-out does most of its movement in the first moments, which reads as a swoosh */
-    --photo-grow: 6000ms cubic-bezier(0.37, 0, 0.63, 1) 300ms;
+    --photo-grow: 1000ms cubic-bezier(0.37, 0, 0.63, 1) 0ms;
   }
 
   /* bigger bouquets on phones; they also grow on taller screens so the small photo stays covered */

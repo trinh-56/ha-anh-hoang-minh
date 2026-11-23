@@ -179,8 +179,8 @@ button:active, a:active {
 }
 
 /* Zoomed in so the bouquets and seal hide the photo until the reveal; tilted toward the centre. */
-.lily-left { --tilt: 33.6deg; left: -65%; width: max(204%, 82lvh); }
-.lily-right { --tilt: -28deg; right: -41%; width: max(110%, 50lvh); }
+.lily-left { --tilt: 33.6deg; left: -61%; width: 192%; }
+.lily-right { --tilt: -28deg; right: -38%; width: 104%; }
 
 .seal {
   position: relative;
@@ -277,6 +277,17 @@ body.is-locked {
 @media (max-width: 480px) {
   #intro {
     --lift: 8lvh;
+  }
+
+  /* bigger bouquets on phones; they also grow on taller screens so the small photo stays covered */
+  .lily-left {
+    left: -65%;
+    width: max(204%, 82lvh);
+  }
+
+  .lily-right {
+    right: -41%;
+    width: max(110%, 50lvh);
   }
 
   .intro-photo,

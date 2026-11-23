@@ -575,15 +575,46 @@ body.is-locked {
   gap: 28px;
 }
 
-.lily-line {
+
+.invite {
+  padding-left: 15px; /* lines up with the text of the blocks above (1px line + 14px padding) */
+}
+
+/* Row: bouquet on the left (running to the screen edge), names on the right, as in the reference. */
+.names-row {
+  position: relative;
+  margin: 0 calc(-1 * var(--gutter));
+  padding-right: var(--gutter);
+  aspect-ratio: 1.15 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.names-row .lily-line {
   position: absolute;
-  top: 14%;
-  left: 4.75%; /* 30% bigger, grown around its centre: the bouquet's centre stays ~40% across the page */
-  width: 71.5%; /* was 55% */
-  margin-top: -36.85%; /* -8.25% to stay centred when it grew, minus 28.6% = 40% of its height higher. Percent margins use the section's width, which equals the image's height change / 2; no transform, so the scroll fade tracks it exactly */
-  opacity: 0.45;
-  filter: grayscale(1); /* black and white; the only photo-style effect left on the page, by request */
+  left: -18%; /* the bouquet runs to the screen edge, as in the reference */
+  top: 0;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  filter: grayscale(1); /* black and white, by request */
   pointer-events: none;
+}
+
+.names-row .couple-names {
+  position: relative;
+  z-index: 1;
+  justify-items: end;
+  text-align: right;
+}
+
+.names-row .couple-names .name {
+  font-size: clamp(2.2rem, 9.5vw, 3rem); /* smaller than page 1 so both fit beside the bouquet */
+}
+
+.names-row .couple-names .amp {
+  font-size: 1.3rem;
 }
 
 .family-block {
@@ -632,13 +663,6 @@ p.xbold {
 
 .family-block p {
   margin: 0;
-}
-
-.family-block.centered {
-  padding-left: 0;
-  border-left: 0;
-  justify-items: center;
-  text-align: center;
 }
 
 .family-block .event-time {
@@ -1154,7 +1178,6 @@ p.xbold {
 
 /* Base opacity of the faint decorations, so the scroll fade returns them to it instead of to full strength */
 .lily-watermark { --fade-to: 0.08; }
-.lily-line { --fade-to: 0.45; }
 
 /* Fades are opacity only, so they stay on when the phone's Reduce Motion setting is on; only movement is gated. */
 @supports (animation-timeline: view()) {

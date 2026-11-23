@@ -119,8 +119,18 @@ img {
   max-width: 100%;
 }
 
+input, textarea, select, button {
+  font-family: inherit; /* form controls ignore the page font unless told to inherit (they fell back to Arial) */
+  color: inherit; /* ...and default to pure black instead of the page's #292727 */
+}
+
 input, textarea, select {
   font-size: 16px;
+}
+
+::placeholder {
+  color: var(--ink);
+  opacity: 0.55;
 }
 
 button, a, [role="button"] {
@@ -558,6 +568,7 @@ body.is-locked {
 
 /* ---------- Family & location (page-info-family-location) ---------- */
 .family {
+  color: var(--ivory); /* info section text is ivory; the QR caption below keeps dark text because its card is light */
   min-height: 0;
   padding-top: 56px;
   padding-bottom: 56px;
@@ -891,7 +902,7 @@ p.xbold {
   text-align: center;
   font-size: 0.85rem;
   line-height: 1.6;
-  color: color-mix(in srgb, var(--ink) 80%, transparent);
+  color: var(--ink);
 }
 
 .field {

@@ -578,9 +578,9 @@ body.is-locked {
 .lily-line {
   position: absolute;
   top: 14%;
-  left: 40.5%; /* the bouquet's centre stays ~40% across the page */
-  width: 71.5%; /* 30% bigger than the previous 55% */
-  translate: -50% -11.5%; /* grows around its centre instead of down and to the right */
+  left: 4.75%; /* 30% bigger, grown around its centre: the bouquet's centre stays ~40% across the page */
+  width: 71.5%; /* was 55% */
+  margin-top: -8.25%; /* percent margins use the section's width, which equals the image's height change / 2; no transform, so the scroll fade tracks it exactly */
   opacity: 0.45;
   filter: grayscale(1); /* black and white; the only photo-style effect left on the page, by request */
   pointer-events: none;

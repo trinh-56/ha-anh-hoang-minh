@@ -6,9 +6,9 @@ window.scrollTo(0, 0);
 
 // Everything on the page fades with its position on screen: in at the edge it enters from, out at the edge it
 // leaves by, in both scroll directions. CSS drives .fade on the compositor; older browsers use the fallback below.
+// The fade is opacity only, so it also runs when the phone's Reduce Motion setting is on (that setting is about movement).
 const FADE_TARGETS = '.page > section:not(#intro):not(#rsvp) > :not(.stage), .stage > *, #rsvp > :not(#thanks), #thanks > *';
 const FADE_BAND = 0.12; // share of the element's trip across the screen spent fading (matches @keyframes scroll-fade)
-const fadeOnScroll = !matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const intro = document.getElementById('intro');
 const seal = intro.querySelector('.seal');
@@ -16,7 +16,7 @@ const seal = intro.querySelector('.seal');
 seal.addEventListener('click', () => {
   intro.classList.add('is-open');
   document.body.classList.remove('is-locked');
-  if (fadeOnScroll) intro.classList.add('fade');
+  intro.classList.add('fade');
 });
 
 // Coming back via the browser's back/forward cache would keep the page opened and scrolled: replay the intro instead.
@@ -29,7 +29,7 @@ window.addEventListener('pageshow', (e) => {
   window.scrollTo(0, 0);
 });
 
-if (fadeOnScroll) {
+{
   const targets = [...document.querySelectorAll(FADE_TARGETS)];
   targets.forEach((el) => el.classList.add('fade'));
 

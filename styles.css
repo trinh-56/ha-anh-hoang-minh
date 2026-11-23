@@ -1012,16 +1012,25 @@ body.is-locked {
 .lily-watermark { --fade-to: 0.08; }
 .lily-line { --fade-to: 0.25; }
 
+/* Fades are opacity only, so they stay on when the phone's Reduce Motion setting is on; only movement is gated. */
+@supports (animation-timeline: view()) {
+  /* Position on screen, not time: 0% = just entering, 100% = just left. Reverses exactly when scrolling back. */
+  @keyframes scroll-fade {
+    0%, 100% { opacity: 0; }
+    12%, 88% { opacity: var(--fade-to, 1); }
+  }
+
+  .fade {
+    animation: scroll-fade linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     @keyframes progress-grow {
       to { transform: scaleX(1); }
-    }
-
-    /* Position on screen, not time: 0% = just entering, 100% = just left. Reverses exactly when scrolling back. */
-    @keyframes scroll-fade {
-      0%, 100% { opacity: 0; }
-      12%, 88% { opacity: var(--fade-to, 1); }
     }
 
     @keyframes strip-sway {
@@ -1042,12 +1051,6 @@ body.is-locked {
     .scroll-progress {
       animation: progress-grow linear both;
       animation-timeline: scroll(root);
-    }
-
-    .fade {
-      animation: scroll-fade linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 100%;
     }
 
     .strip.fade {

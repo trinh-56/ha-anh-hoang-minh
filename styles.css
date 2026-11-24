@@ -1,6 +1,7 @@
+/* Aston Script lacks most Vietnamese letters (ạ ể ơ ư đ ...): use it only for names and the English headings. */
 @font-face {
-  font-family: 'Citadel Script';
-  src: url('assets/fonts/CitadelScript.ttf') format('truetype');
+  font-family: 'Aston Script';
+  src: url('assets/fonts/AstonScript.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -59,14 +60,24 @@
   --ink: #292727;
   --mauve: #AF3E4D;
   --pink: #FEC6C6; /* replaces the old reds (carmine / wine) */
-  --script: 'Citadel Script', cursive;
+  --red: #7A0000; /* all text, rules, gift button */
+  --rose: #E094A0; /* timeline dots, field borders, confirm button */
+  --paper: #EDCACE; /* desktop backdrop, theme-color */
+  --silk: #F9F7F3; /* fallback behind silk.jpg */
+  --cream: #FFFCF7; /* text on photos and the rose panel */
+  --sky-top: #C5EBFF;
+  --sky-low: #EAF9FE;
+  --hill-dark: #88A201;
+  --hill-light: #C7E084;
+  --u: calc(min(100vw, 480px) / 1080); /* one design pixel (the designs are 1080 wide) */
+  --script: 'Aston Script', cursive;
   --body: 'Georgia Pro', Georgia, 'Times New Roman', serif;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --the-size: calc(clamp(4.42rem, 19.5vw, 5.72rem) * 0.14); /* the small 'the' in Save the Date; Cô dâu / Chú rể use it too */
   --caption-size: 0.75rem; /* 'Quét mã để xem bản đồ' and Cô dâu / Chú rể */
   --small-text: 0.68rem; /* the thank-you paragraph and Cô dâu / Chú rể */
   --page-bg: var(--pink); /* the invitation's own background */
-  --backdrop: var(--pink); /* desktop: the area around the invitation column */
+  --backdrop: var(--paper); /* desktop: the area around the invitation column */
   --gutter: 32px; /* side padding for text sections (full-bleed photo sections ignore it) */
 }
 
@@ -85,7 +96,7 @@ html {
 body {
   margin: 0;
   background: var(--ink);
-  color: var(--ink);
+  color: var(--red);
   font-family: var(--body);
   font-weight: 400;
   font-variant-numeric: lining-nums; /* Georgia's default figures are old-style (uneven heights); dates and times need even ones */
@@ -188,7 +199,7 @@ button:active, a:active {
 /* page-1 names are 25% bigger than the shared .names size; the info-page names match them exactly */
 .intro-text .names .name,
 .couple-names .name {
-  font-size: clamp(3.2rem, 15.4vw, 4.4rem); /* sized so "Hoàng Minh" in Citadel Script fits on one line */
+  font-size: clamp(3.2rem, 15.4vw, 4.4rem); /* sized so "Hoàng Minh" in Aston Script fits on one line */
 }
 
 .intro-text .names .amp,
@@ -1116,7 +1127,7 @@ p.xbold {
 /* ---------- Thank you (page-confirm bottom) ---------- */
 /* Same look as the bride & groom section: wine background, photo card (colour, original ratio), text below. */
 .thanks {
-  margin: 48px calc(-1 * var(--gutter)) 0;
+  margin: 0; /* now a sibling of #rsvp, so it no longer needs to break out of the form section's gutters */
   min-height: 100vh;
   min-height: 100lvh; /* a full page, so no part of the RSVP shows above it at the end */
   box-sizing: border-box; /* padding counts inside that height */
@@ -1159,19 +1170,6 @@ p.xbold {
 /* ---------- Scroll-driven motion ---------- */
 /* Progressive enhancement: browsers without animation-timeline keep the static layout (plus the fade-ups in app.js).
    These tie to scroll position, so they also play in reverse when scrolling back up. */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: max(0px, calc(50% - 240px));
-  width: min(100%, 480px);
-  height: 3px;
-  background: var(--mauve);
-  transform: scaleX(0);
-  transform-origin: left;
-  z-index: 10;
-  pointer-events: none;
-}
-
 /* Base opacity of the faint decorations, so the scroll fade returns them to it instead of to full strength */
 .lily-watermark { --fade-to: 0.08; }
 
@@ -1203,10 +1201,6 @@ p.xbold {
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    @keyframes progress-grow {
-      to { transform: scaleX(1); }
-    }
-
     @keyframes strip-sway {
       from { rotate: 2deg; }
       to { rotate: 14deg; }
@@ -1220,11 +1214,6 @@ p.xbold {
     @keyframes settle-right {
       from { rotate: 4deg; }
       to { rotate: 0deg; }
-    }
-
-    .scroll-progress {
-      animation: progress-grow linear both;
-      animation-timeline: scroll(root);
     }
 
     .strip.fade {

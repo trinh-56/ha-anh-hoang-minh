@@ -37,21 +37,18 @@
 }
 
 :root {
-  --ink: #292727;
   --mauve: #AF3E4D;
   --pink: #FEC6C6; /* replaces the old reds (carmine / wine) */
   --red: #7A0000; /* all text, rules, gift button */
   --rose: #E094A0; /* timeline dots, field borders, confirm button */
   --paper: #EDCACE; /* desktop backdrop, theme-color */
-  --silk: #F9F7F3; /* fallback behind silk.jpg */
+  --silk: #F8F2DC; /* the silk texture's average colour, shown until the image loads */
   --cream: #FFFCF7; /* text on photos and the rose panel */
   --u: calc(min(100vw, 480px) / 1080); /* one design pixel (the designs are 1080 wide) */
   --bleed: calc((100vw - min(100vw, 480px)) / 2); /* desktop: the strip on each side of the 480px column (0 on phones) */
   --script: 'Aston Script', cursive;
   --body: 'Georgia Pro', Georgia, 'Times New Roman', serif;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --page-bg: var(--pink); /* the invitation's own background */
-  --backdrop: var(--paper); /* desktop: the area around the invitation column */
   --gutter: 32px; /* side padding for text sections (full-bleed photo sections ignore it) */
 }
 
@@ -60,8 +57,10 @@
   display: none !important;
 }
 
+/* One silk background for the whole page: sections that sit on silk are transparent, so it never restarts at a section edge.
+   The tile is mirrored 2x2, so its own edges continue into each other as well. */
 html {
-  background: var(--ink);
+  background: var(--silk) url('assets/design/silk-tile.jpg') 0 0 / 1400px auto repeat;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   overscroll-behavior: none;
@@ -69,7 +68,6 @@ html {
 
 body {
   margin: 0;
-  background: var(--ink);
   color: var(--red);
   font-family: var(--body);
   font-weight: 400;
@@ -77,17 +75,9 @@ body {
 }
 
 /* Desktop: the area outside the phone-width invitation column */
-@media (min-width: 481px) {
-  html,
-  body {
-    background: var(--backdrop);
-  }
-}
-
 .page {
   max-width: 480px;
   margin: 0 auto;
-  background: var(--page-bg);
   overflow-x: clip;
 }
 
@@ -139,7 +129,6 @@ button:active, a:active {
   padding: 0;
   overflow: hidden;
   isolation: isolate; /* the layers below use z-index; keep them from stacking against later sections */
-  background: var(--silk);
   /* width of the framed photo: 94% of the column, or less when the visible height cannot hold it (the frame is 2:3) */
   --F: min(calc(1015 * var(--u)), 61.33svh);
 }
@@ -381,17 +370,9 @@ body.is-locked {
 }
 
 /* ---------- Full-bleed backgrounds ---------- */
-/* Each panel's background is a layer that reaches --bleed past the column on both sides (0 on phones, so it equals the
-   section there). The column's art stays where the design puts it; on a wide window the background simply continues. */
-.save-date::before,
-#intro::before,
-.countdown::before,
-.family::before,
-.venue::before,
-.couple::before,
-.timeline::before,
-.rsvp::before,
-.thanks::before {
+/* The silk is the page's own background (see html). The pink couple panel is a layer that reaches --bleed past the column
+   on both sides (0 on phones, so it equals the section there); on a wide window the pink simply continues. */
+.couple::before {
   content: '';
   position: absolute;
   top: 0;
@@ -399,25 +380,8 @@ body.is-locked {
   left: calc(-1 * var(--bleed));
   right: calc(-1 * var(--bleed));
   z-index: -1;
+  background: var(--rose) url('assets/design/couple-panel-2.jpg') center / cover;
   pointer-events: none;
-}
-
-.save-date::before,
-#intro::before,
-.family::before,
-.venue::before,
-.timeline::before,
-.rsvp::before {
-  background: var(--silk) url('assets/design/silk.jpg') center / cover;
-}
-
-.couple::before {
-  background: var(--rose) url('assets/design/couple-panel.jpg') center / cover;
-}
-
-/* the thank-you panel sits on the same pink paper as the doors */
-.thanks::before {
-  background: #EBB8BF url('assets/design/door-paper.jpg') center / cover;
 }
 
 /* ---------- Countdown (design 5, top) ---------- */
@@ -439,6 +403,10 @@ body.is-locked {
   max-width: none;
   object-fit: cover;
   object-position: 50% 72%;
+}
+
+.countdown-photo--side {
+  display: none; /* phones show the one photo; the side photos only appear on desktop (and are never downloaded here) */
 }
 
 .countdown::after {
@@ -588,13 +556,13 @@ body.is-locked {
 }
 
 /* ---------- Lilies and stamps (extra artwork, not in the designs) ---------- */
-/* 50% opacity; --fade-to makes the scroll fade end at 50% instead of 100% */
+/* 20% opacity; --fade-to makes the scroll fade end at 20% instead of 100% */
 .lily {
   position: absolute;
   height: auto;
   max-width: none;
-  opacity: 0.5;
-  --fade-to: 0.5;
+  opacity: 0.2;
+  --fade-to: 0.2;
   pointer-events: none;
 }
 
@@ -1113,29 +1081,25 @@ body.is-locked {
     overflow-y: clip;
   }
 
-  .save-date::before,
-  #intro::before,
-  .family::before,
-  .venue::before,
-  .timeline::before,
-  .rsvp::before {
-    background-image: url('assets/design/silk-wide.jpg');
+  /* the countdown banner becomes a wide strip: photo 2 to the left of the column photo, photo 3 to the right, each as wide
+     as the space beside the column (the veil below covers all three) */
+  .countdown-photo--side {
+    display: block;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: var(--bleed);
   }
 
-  .thanks::before {
-    background-image: url('assets/design/door-paper-wide.jpg');
+  .countdown-photo--left {
+    left: auto;
+    right: 100%;
+    object-position: 50% 15%;
   }
 
-  /* the countdown photo stays in the column; a blurred copy carries the banner out to the window edges */
-  .countdown::before {
-    top: -40px;
-    bottom: -40px;
-    background: url('assets/design/countdown-photo.jpg') center 12% / cover;
-    filter: blur(28px) saturate(1.15);
-  }
-
-  /* the photo's side edges melt into the blur instead of ending in a hard line */
-  .countdown-photo {
-    mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  .countdown-photo--right {
+    left: 100%;
+    right: auto;
+    object-position: 50% 20%;
   }
 }

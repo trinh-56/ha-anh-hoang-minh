@@ -726,66 +726,79 @@ body.is-locked {
 .cp-role-groom { left: calc(810 * var(--u)); top: calc(718 * var(--u)); }
 .cp-name-groom { left: calc(806 * var(--u)); top: calc(811 * var(--u)); }
 
-/* ---------- Timeline (page-timeline) ---------- */
+/* ---------- Timeline (design 7) ---------- */
 .timeline {
+  height: calc(1920 * var(--u));
   min-height: 0;
-  padding-top: 56px;
-  padding-bottom: 56px;
-  text-align: center;
+  padding: 0;
+  overflow: clip;
+  background: var(--silk) url('assets/design/silk.jpg') center / cover;
 }
 
+/* Aston Script at 99u is as wide as the design's "Timeline" (480u) */
 .timeline-title {
+  position: absolute;
+  left: calc(108 * var(--u));
+  top: calc(187 * var(--u));
   margin: 0;
   font-family: var(--script);
   font-weight: 400;
-  font-size: 5.4rem; /* 35% bigger than before (4rem) */
-  line-height: 1.1;
-  color: var(--ink);
+  font-size: calc(99 * var(--u));
+  line-height: 1;
 }
 
+/* every line is 70u tall: an entry is 4 lines (time, title, 2 description lines) and entries are 342u apart */
 .timeline-list {
-  margin: 28px 0 0;
+  position: absolute;
+  left: calc(108 * var(--u));
+  top: calc(378 * var(--u));
+  margin: 0;
   padding: 0;
   list-style: none;
-  display: grid;
-  gap: 28px;
+  line-height: calc(70 * var(--u));
+  font-size: calc(46 * var(--u));
+}
+
+/* the rule runs from the first dot down past the last entry */
+.timeline-list::before {
+  content: '';
+  position: absolute;
+  left: calc(-35 * var(--u));
+  top: calc(36 * var(--u));
+  width: calc(3 * var(--u));
+  height: calc(922 * var(--u));
+  background: var(--red);
 }
 
 .timeline-list li {
   position: relative;
   display: grid;
-  justify-items: center;
-  gap: 2px;
+  margin-bottom: calc(62 * var(--u));
 }
 
-/* short centred rule between entries */
-.timeline-list li + li::before {
+.timeline-list li::before {
   content: '';
   position: absolute;
-  top: -18px;
-  width: 1px;
-  height: 8px;
-  background: var(--ink);
-  opacity: 0.5;
+  left: calc(-47 * var(--u));
+  top: calc(21 * var(--u));
+  width: calc(28 * var(--u));
+  height: calc(28 * var(--u));
+  border-radius: 50%;
+  background: var(--rose);
 }
 
 .timeline-list time {
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: calc(44 * var(--u));
+  font-weight: 700;
 }
 
 .t-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
-.closing {
-  margin: 36px 0 0;
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: 500;
+.t-desc {
+  white-space: nowrap;
 }
 
 /* ---------- RSVP (page-confirm) ---------- */
@@ -1058,9 +1071,6 @@ body.is-locked {
 /* ---------- Scroll-driven motion ---------- */
 /* Progressive enhancement: browsers without animation-timeline keep the static layout (plus the fade-ups in app.js).
    These tie to scroll position, so they also play in reverse when scrolling back up. */
-/* Base opacity of the faint decorations, so the scroll fade returns them to it instead of to full strength */
-.lily-watermark { --fade-to: 0.08; }
-
 /* Fades are opacity only, so they stay on when the phone's Reduce Motion setting is on; only movement is gated. */
 @supports (animation-timeline: view()) {
   /* Position on screen, not time: 0% = just entering, 100% = just left. Reverses exactly when scrolling back. */
@@ -1100,8 +1110,7 @@ body.is-locked {
     overflow-x: clip;
   }
 
-  .page,
-  .timeline {
+  .page {
     overflow-x: visible;
   }
 }

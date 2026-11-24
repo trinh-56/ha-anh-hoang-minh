@@ -129,38 +129,27 @@
       </ol>
     </section>
     <section id="rsvp" class="section rsvp">
-      <h2 class="script rsvp-title">RSVP</h2>
       <form id="rsvp-form" class="rsvp-form" novalidate>
-        <p class="rsvp-intro">Vui lòng xác nhận tham dự để chúng tôi chuẩn bị đón tiếp chu đáo nhất. Trân trọng!</p>
+        <p class="rsvp-intro">Vui lòng xác nhận tham dự trước 11:30 ngày 17 tháng 12, 2026 để chúng tôi có thể chuẩn bị đón tiếp Quý khách một cách chu đáo nhất. Trân trọng!</p>
 
-        <div class="field">
-          <label for="name">Tên của quý khách</label>
-          <input id="name" name="name" type="text" required maxlength="100" autocomplete="name" enterkeyhint="next" placeholder="Nhập họ và tên" />
-        </div>
+        <label class="sr-only" for="name">Tên của Quý khách</label>
+        <input id="name" name="name" type="text" required maxlength="100" autocomplete="name" enterkeyhint="next" placeholder="Nhập tên của Quý khách..." />
 
-        <div class="field attend" role="radiogroup" aria-labelledby="attend-label">
-          <p class="field-label" id="attend-label">Quý khách có tham dự không?</p>
-          <label class="choice"><input type="radio" name="attending" value="yes" /><span>Tôi sẽ tham dự</span></label>
-          <label class="choice"><input type="radio" name="attending" value="no" /><span>Tiếc quá, tôi không thể đến</span></label>
-        </div>
+        <label class="sr-only" for="message">Lời chúc</label>
+        <textarea id="message" name="message" maxlength="500" placeholder="Gửi lời chúc đến Dâu Rể nhé!"></textarea>
 
-        <div class="field" id="guests-field" hidden>
-          <label for="guests">Số người tham dự</label>
-          <div class="stepper">
-            <button type="button" class="step" data-step="-1" aria-label="Giảm số người">&minus;</button>
-            <input id="guests" name="guests" type="number" min="1" max="10" value="1" inputmode="numeric" />
-            <button type="button" class="step" data-step="1" aria-label="Tăng số người">+</button>
-          </div>
-        </div>
+        <label class="sr-only" for="attending">Tham dự</label>
+        <select id="attending" name="attending" required>
+          <option value="" disabled selected>Xác nhận tham dự</option>
+          <option value="yes">Tôi sẽ tham dự</option>
+          <option value="no">Tiếc quá, tôi không thể đến</option>
+        </select>
 
         <div class="hp" aria-hidden="true">
           <label>Website <input name="website" tabindex="-1" autocomplete="off" /></label>
         </div>
 
-        <button type="submit" class="submit" id="rsvp-submit">
-          <span>Gửi xác nhận</span>
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </button>
+        <button type="submit" class="submit" id="rsvp-submit">Xác nhận</button>
         <p id="rsvp-status" role="status"></p>
       </form>
     </section>

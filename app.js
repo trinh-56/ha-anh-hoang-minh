@@ -100,13 +100,9 @@ const RSVP_URL = 'https://script.google.com/macros/s/AKfycbycKTbrWNLMCBz_QZwaJbG
 const form = document.getElementById('rsvp-form');
 const statusEl = document.getElementById('rsvp-status');
 const submitBtn = document.getElementById('rsvp-submit');
-const guestsField = document.getElementById('guests-field');
 
 form.addEventListener('change', (e) => {
-  if (e.target.name === 'attending') {
-    guestsField.hidden = e.target.value !== 'yes';
-    statusEl.textContent = '';
-  }
+  if (e.target.name === 'attending') statusEl.textContent = '';
 });
 
 function showError(message) {
@@ -120,14 +116,11 @@ form.addEventListener('submit', async (e) => {
   const data = new FormData(form);
   const name = String(data.get('name') ?? '').trim();
   const attending = data.get('attending');
-  const guests = Number(data.get('guests'));
+  const message = String(data.get('message') ?? '').trim();
   const website = String(data.get('website') ?? '');
 
   if (!name) return showError('Vui lòng nhập tên của quý khách.');
   if (!attending) return showError('Vui lòng chọn tham dự hay không.');
-  if (attending === 'yes' && !(Number.isInteger(guests) && guests >= 1 && guests <= 10)) {
-    return showError('Số người tham dự từ 1 đến 10.');
-  }
 
   submitBtn.disabled = true;
   statusEl.textContent = 'Đang gửi…';
@@ -139,7 +132,7 @@ form.addEventListener('submit', async (e) => {
       body: new URLSearchParams({
         name,
         attending,
-        guests: attending === 'yes' ? String(guests) : '0',
+        message,
         website,
       }),
     });
@@ -156,13 +149,4 @@ form.addEventListener('submit', async (e) => {
     statusEl.textContent = 'Gửi chưa được, vui lòng thử lại.';
     submitBtn.disabled = false;
   }
-});
-
-// Guests stepper
-const guestsInput = document.getElementById('guests');
-document.querySelectorAll('.step').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const next = Number(guestsInput.value || 1) + Number(btn.dataset.step);
-    guestsInput.value = Math.min(10, Math.max(1, next));
-  });
 });

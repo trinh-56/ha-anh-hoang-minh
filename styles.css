@@ -801,167 +801,79 @@ body.is-locked {
   white-space: nowrap;
 }
 
-/* ---------- RSVP (page-confirm) ---------- */
+/* ---------- RSVP (design 8, top) ---------- */
+/* Controls are at least 44px tall and 16px text (no iOS zoom), so on small screens they are a little larger than in the design. */
 .rsvp {
-  min-height: 0;
-  padding-top: 64px;
-  padding-bottom: 0;
+  min-height: calc(1238 * var(--u));
+  padding: calc(131 * var(--u)) calc(85 * var(--u)) calc(61 * var(--u));
+  background: var(--silk) url('assets/design/silk.jpg') center / cover;
+  color: var(--red);
 }
 
-.rsvp-title {
-  margin: 0 0 20px;
-  text-align: center;
-  font-family: var(--body);
-  font-weight: 700; /* Georgia Pro Bold */
-  font-size: 3.4rem;
-  letter-spacing: 0.12em;
-  text-indent: 0.12em; /* balances the trailing letter-space so the word stays centred */
-  line-height: 1;
-  color: var(--mauve);
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .rsvp-form {
-  color: var(--mauve); /* every piece of text in the form matches the RSVP heading */
   display: grid;
-  gap: 22px;
-  padding: 28px 22px;
-  background: #fff;
-  border: 1px solid color-mix(in srgb, var(--mauve) 18%, transparent);
-  border-radius: 24px;
-  box-shadow: 0 16px 40px rgb(41 39 39 / 0.08);
+  gap: calc(32 * var(--u));
 }
 
 .rsvp-intro {
-  margin: 0;
+  margin: 0 0 calc(17 * var(--u));
   text-align: center;
-  font-size: 0.85rem;
-  line-height: 1.6;
-  color: var(--mauve);
+  font-size: calc(46 * var(--u));
+  line-height: calc(70 * var(--u));
 }
 
-.field {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  display: grid;
-  gap: 8px;
-  min-width: 0;
-}
-
-.field > label:not(.choice),
-.field > .field-label {
-  padding: 0;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--mauve);
-}
-
-.field input[type="text"],
-.stepper input {
+.rsvp-form input[type="text"],
+.rsvp-form textarea,
+.rsvp-form select,
+.submit {
   width: 100%;
-  height: 52px;
-  padding: 0 20px;
-  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-  border-radius: 999px;
-  background: var(--ivory);
-  color: var(--mauve);
-  font-family: var(--body);
+  min-height: max(calc(80 * var(--u)), 44px);
   box-sizing: border-box;
-  transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
-}
-
-.field input:focus-visible {
-  outline: none;
-  border-color: var(--mauve);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--peony) 30%, transparent);
-}
-
-.field > .field-label {
-  margin: 0;
-}
-
-.choice {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 52px;
-  padding: 0 18px;
-  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+  border: calc(4 * var(--u)) solid var(--rose);
   border-radius: 999px;
-  background: var(--ivory);
-  font-size: 0.92rem;
-  cursor: pointer;
-  transition: background 150ms var(--ease-out), border-color 150ms var(--ease-out), color 150ms var(--ease-out);
-}
-
-/* the real radio stays in the DOM (keyboard + screen reader) but is drawn by ::before */
-.choice input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.choice::before {
-  content: '';
-  flex: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid color-mix(in srgb, var(--ink) 40%, transparent);
-  box-sizing: border-box;
-}
-
-.choice:has(input:checked) {
-  background: var(--pink);
-  border-color: color-mix(in srgb, var(--pink) 60%, var(--mauve));
-  color: var(--mauve);
-}
-
-.choice:has(input:checked)::before {
-  border-color: var(--mauve);
-  background: radial-gradient(circle, var(--mauve) 0 4px, transparent 5px);
-}
-
-.choice:has(input:focus-visible) {
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--peony) 30%, transparent);
-}
-
-.stepper {
-  display: grid;
-  grid-template-columns: 52px 1fr 52px;
-  align-items: center;
-  gap: 12px;
-}
-
-.step {
-  height: 52px;
-  padding: 0;
-  border: 1px solid color-mix(in srgb, var(--mauve) 45%, transparent);
-  border-radius: 50%;
-  background: var(--ivory);
-  color: var(--mauve);
+  background: transparent;
+  color: var(--red);
   font-family: var(--body);
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
+  font-size: max(16px, calc(44 * var(--u)));
+  font-weight: 400;
 }
 
-.stepper input {
-  padding: 0;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 500;
-  appearance: textfield;
-  -moz-appearance: textfield;
+.rsvp-form input[type="text"],
+.rsvp-form select {
+  padding: 0 calc(53 * var(--u));
 }
 
-.stepper input::-webkit-inner-spin-button,
-.stepper input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.rsvp-form textarea {
+  min-height: max(calc(281 * var(--u)), 120px);
+  padding: calc(24 * var(--u)) calc(53 * var(--u));
+  border-radius: calc(50 * var(--u));
+  line-height: 1.4;
+  resize: none;
+}
+
+.rsvp-form ::placeholder {
+  color: var(--red);
+}
+
+/* the design has no arrow; a small one tells people it is a menu */
+.rsvp-form select {
+  appearance: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%237A0000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E") right calc(45 * var(--u)) center / calc(40 * var(--u)) no-repeat;
+}
+
+.rsvp-form :is(input, textarea, select):focus-visible,
+.submit:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 2px;
 }
 
 .hp {
@@ -973,56 +885,33 @@ body.is-locked {
 }
 
 .submit {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 58px;
-  border: 0;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--pink), color-mix(in srgb, var(--pink) 78%, white));
-  color: var(--mauve);
-  font-family: var(--body);
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  border-color: var(--rose);
+  background: var(--rose);
+  color: var(--cream);
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 12px 26px color-mix(in srgb, var(--pink) 70%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.5);
-  transition: box-shadow 200ms var(--ease-out), transform 100ms var(--ease-out);
 }
 
 .submit:disabled {
   opacity: 0.6;
   cursor: default;
-  box-shadow: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .submit:not(:disabled):hover {
-    box-shadow: 0 16px 32px color-mix(in srgb, var(--pink) 85%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.5);
-  }
-
-  .choice:hover {
-    border-color: var(--mauve);
-  }
 }
 
 #rsvp-status {
   margin: 0;
-  min-height: 1.2em;
   text-align: center;
-  font-size: 0.85rem;
-  color: var(--mauve);
+  font-size: max(14px, calc(38 * var(--u)));
+}
+
+#rsvp-status:empty {
+  display: none;
 }
 
 .rsvp-done {
   margin: 0;
-  color: var(--mauve);
-  padding: 24px 0;
+  padding: calc(60 * var(--u)) 0;
   text-align: center;
-  font-family: var(--script);
-  font-size: 2rem;
+  font-size: calc(56 * var(--u));
 }
 
 /* ---------- Thank you (page-confirm bottom) ---------- */

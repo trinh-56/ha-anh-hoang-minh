@@ -8,16 +8,24 @@ function validateRsvp(p) {
 
   if (p.attending !== 'yes' && p.attending !== 'no') return { ok: false, error: 'attending' };
 
+  // The guest count is optional (the new form has no such field); blank when attending without one.
   var guests = 0;
   if (p.attending === 'yes') {
-    guests = Number(p.guests);
-    if (!Number.isInteger(guests) || guests < 1 || guests > 10) return { ok: false, error: 'guests' };
+    guests = '';
+    if (p.guests !== undefined && String(p.guests).trim() !== '') {
+      guests = Number(p.guests);
+      if (!Number.isInteger(guests) || guests < 1 || guests > 10) return { ok: false, error: 'guests' };
+    }
   }
+
+  var message = String(p.message || '').trim();
+  if (message.length > 500) return { ok: false, error: 'message' };
 
   // Stop spreadsheet formula injection: a leading = + - @ would run as a formula.
   if (/^[=+\-@]/.test(name)) name = "'" + name;
+  if (/^[=+\-@]/.test(message)) message = "'" + message;
 
-  return { ok: true, row: [name, p.attending === 'yes' ? 'Có' : 'Không', guests] };
+  return { ok: true, row: [name, p.attending === 'yes' ? 'Có' : 'Không', guests, message] };
 }
 
 function json(obj) {
@@ -39,5 +47,5 @@ function doPost(e) {
 // Run once from the Apps Script editor to write the header row.
 function setup() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-  if (sheet.getLastRow() === 0) sheet.appendRow(['Thời gian', 'Tên', 'Tham dự', 'Số người']);
+  if (sheet.getLastRow() === 0) sheet.appendRow(['Thời gian', 'Tên', 'Tham dự', 'Số người', 'Lời chúc']);
 }

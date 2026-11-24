@@ -13,11 +13,28 @@ vm.runInContext(src, ctx);
 const plain = (x) => JSON.parse(JSON.stringify(x));
 
 test('yes with 2 guests is stored', () => {
-  assert.deepEqual(plain(ctx.validateRsvp({ name: 'An', attending: 'yes', guests: '2' })), { ok: true, row: ['An', 'Có', 2] });
+  assert.deepEqual(plain(ctx.validateRsvp({ name: 'An', attending: 'yes', guests: '2' })), { ok: true, row: ['An', 'Có', 2, ''] });
+});
+
+test('yes without a guest count is accepted and stores it blank', () => {
+  assert.deepEqual(plain(ctx.validateRsvp({ name: 'An', attending: 'yes' })), { ok: true, row: ['An', 'Có', '', ''] });
+});
+
+test('message is trimmed and stored', () => {
+  assert.equal(plain(ctx.validateRsvp({ name: 'An', attending: 'yes', message: '  Chúc mừng!  ' })).row[3], 'Chúc mừng!');
+});
+
+test('message over 500 characters is rejected', () => {
+  assert.deepEqual(plain(ctx.validateRsvp({ name: 'An', attending: 'yes', message: 'x'.repeat(501) })), { ok: false, error: 'message' });
+  assert.equal(ctx.validateRsvp({ name: 'An', attending: 'yes', message: 'x'.repeat(500) }).ok, true);
+});
+
+test('formula-looking message is prefixed with an apostrophe', () => {
+  assert.equal(plain(ctx.validateRsvp({ name: 'An', attending: 'no', message: '=1+1' })).row[3], "'=1+1");
 });
 
 test('no forces guests to 0', () => {
-  assert.deepEqual(plain(ctx.validateRsvp({ name: 'An', attending: 'no', guests: '5' })), { ok: true, row: ['An', 'Không', 0] });
+  assert.deepEqual(plain(ctx.validateRsvp({ name: 'An', attending: 'no', guests: '5' })), { ok: true, row: ['An', 'Không', 0, ''] });
 });
 
 test('blank name is rejected', () => {

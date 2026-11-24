@@ -187,7 +187,7 @@ button:active, a:active {
   pointer-events: none;
 }
 
-/* sizes and positions are fractions of the frame width F; the two baselines are 0.109F apart, as in design 3 */
+/* sizes and positions are fractions of the frame width F; the two baselines are 0.1F apart. At 0.056F, "Hoàng Minh" ends at 0.76F, clear of the frame's vines. */
 .intro-names {
   position: absolute;
   left: 0;
@@ -195,8 +195,8 @@ button:active, a:active {
   margin: 0;
   font-family: var(--script);
   font-weight: 400;
-  font-size: calc(var(--F) * 0.066);
-  line-height: calc(var(--F) * 0.109);
+  font-size: calc(var(--F) * 0.056);
+  line-height: calc(var(--F) * 0.1);
   white-space: nowrap;
 }
 
@@ -380,7 +380,7 @@ body.is-locked {
   left: calc(-1 * var(--bleed));
   right: calc(-1 * var(--bleed));
   z-index: -1;
-  background: var(--rose) url('assets/design/couple-panel-2.jpg') center / cover;
+  background: var(--rose) url('assets/design/couple-panel-3.jpg') center / cover;
   pointer-events: none;
 }
 
@@ -849,6 +849,17 @@ body.is-locked {
 
 .rsvp-form ::placeholder {
   color: var(--red);
+}
+
+/* While the box is empty its placeholder sits in the middle (as in the design); once the guest types, the text moves up to the
+   top so the whole box is usable. The padding is half the box height minus half a line and the border. */
+.rsvp-form textarea {
+  text-align: left;
+  transition: padding-top 150ms var(--ease-out);
+}
+
+.rsvp-form textarea:placeholder-shown {
+  padding-top: calc(max(calc(281 * var(--u)), 120px) / 2 - 0.7em - 4 * var(--u));
 }
 
 /* the design has no arrow; a small one tells people it is a menu */

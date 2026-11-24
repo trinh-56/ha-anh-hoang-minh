@@ -195,14 +195,12 @@ button:active, a:active {
   letter-spacing: 0.2em;
 }
 
-/* ---------- Intro (page-1 / page-1.2) ---------- */
-/* page-1 names are 25% bigger than the shared .names size; the info-page names match them exactly */
-.intro-text .names .name,
+/* ---------- Intro (designs 1-3): two paper doors over the hero photo ---------- */
+/* the info-page names keep the size they had on page 1 */
 .couple-names .name {
   font-size: clamp(3.2rem, 15.4vw, 4.4rem); /* sized so "Hoàng Minh" in Aston Script fits on one line */
 }
 
-.intro-text .names .amp,
 .couple-names .amp {
   font-size: 2.125rem;
 }
@@ -213,193 +211,175 @@ button:active, a:active {
   height: 100lvh;
   min-height: 0;
   padding: 0;
-  display: grid;
-  place-items: center;
   overflow: hidden;
-  background: var(--page-bg);
+  isolation: isolate; /* the layers below use z-index; keep them from stacking against later sections */
+  background: var(--paper);
+  --below: calc(100lvh - 100svh); /* the strip hidden under Safari's toolbars: text is placed from the visible bottom */
 }
 
+/* hero.jpg is 2:3 with extra studio wall above the couple. Sized by width (131% of the screen) so the couple fills ~74% of it, as in
+   design 3; never narrower than the screen is tall (no gap) and never taller than 1.2x the screen (heads must stay in view). */
 .intro-photo {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 30%;
-  transform: scale(0.3); /* closed: a small centred picture, ~30% of the screen */
-  box-shadow: 0 10px 40px rgb(0 0 0 / 0.22);
-  transition: transform 1300ms var(--ease-out) 300ms;
+  left: 50%;
+  bottom: 0;
+  z-index: 0;
+  width: min(max(131%, calc(100lvh * 0.6667)), calc(100lvh * 0.8));
+  height: auto;
+  max-width: none;
+  translate: -50% 0;
 }
 
 #intro::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgb(0 0 0 / 0) 45%, rgb(0 0 0 / 0.6) 100%);
-  opacity: 0;
-  transition: opacity 800ms var(--ease-out) 600ms;
-  pointer-events: none;
-}
-
-.lily {
-  position: absolute;
-  top: 54%;
-  filter: drop-shadow(0 8px 16px rgb(41 39 39 / 0.22));
-  max-width: none; /* override the global img cap so the bouquets can be zoomed past the screen edges */
-  height: auto;
-  transform: translateY(-50%) rotate(var(--tilt));
-  transition: transform 1100ms var(--ease-out);
-  pointer-events: none;
-}
-
-/* Zoomed in so the bouquets and seal hide the photo until the reveal; tilted toward the centre. */
-.lily-left { --tilt: 33.6deg; left: -61%; width: 192%; }
-.lily-right { --tilt: -28deg; right: -38%; width: 104%; }
-
-.seal {
-  position: relative;
   z-index: 1;
-  width: 36.5%; /* seal artwork is ~82% of this box, so the visible seal is ~30% of the width */
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0) 55%, rgb(0 0 0 / 0.35) 100%);
+  pointer-events: none;
+}
+
+.intro-text {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  color: var(--cream);
+  pointer-events: none;
+}
+
+/* Aston Script is wide: 80u gives the same width as the design's lettering ("Hoàng Minh" is ~633u wide in design 3) */
+.intro-names {
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--below) + 274 * var(--u));
+  margin: 0;
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: calc(80 * var(--u));
+  line-height: calc(175 * var(--u)); /* the two baselines are 175u apart in design 3 */
+  white-space: nowrap;
+}
+
+.intro-names span {
+  display: block;
+}
+
+.intro-names span:first-child {
+  margin-left: calc(108 * var(--u));
+}
+
+.intro-names span:last-child {
+  margin-left: calc(330 * var(--u));
+}
+
+.intro-date {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--below) + 205 * var(--u));
+  margin: 0;
+  text-align: center;
+  font-size: calc(52 * var(--u));
+  line-height: 1;
+}
+
+.door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  /* the multiply tint lowers red ~7% so the paper matches the design's slightly duller pink */
+  background: #EDFFFF url('assets/design/door-paper.jpg') center / cover;
+  background-blend-mode: multiply;
+  transition: transform 1100ms var(--ease-out);
+}
+
+/* the doors meet at x 644-649 of 1080 (a 5u white seam sits between them) */
+.door-left {
+  z-index: 4; /* above the right door, so the seal that overhangs its edge is not painted over */
+  left: 0;
+  width: 59.63%;
+  background-position: 0 50%;
+}
+
+.door-right {
+  right: 0;
+  width: 39.91%;
+  background-position: 100% 50%;
+}
+
+/* the seal is part of the left door and overhangs its edge, so it travels with it */
+.door-seal {
+  position: absolute;
+  left: calc(455 * var(--u));
+  top: calc(50% - 311 * var(--u));
+  width: calc(375 * var(--u));
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+}
+
+.seam {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 59.63%;
+  z-index: 3; /* behind the left door, so the seal covers the line as in design 1 */
+  width: calc(5 * var(--u));
+  background: #fff;
+  transition: opacity 150ms linear;
+}
+
+.open-card {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  width: 100%;
   padding: 0;
   border: 0;
   background: none;
   cursor: pointer;
-  transition: transform 600ms var(--ease-out), opacity 600ms var(--ease-out);
 }
 
-.seal img {
-  width: 100%;
-  height: auto;
+.open-card:active {
+  transform: none;
 }
 
-.hint,
-.intro-text {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: 0;
-  text-align: center;
-  color: var(--ivory);
-  z-index: 1;
+.open-card:focus-visible {
+  outline: 3px solid var(--cream);
+  outline-offset: -8px;
 }
 
-.hint {
-  top: calc(50% + 26svh);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--mauve);
-  transition: opacity 400ms var(--ease-out);
+/* opened state: the left door slides far enough that its overhanging seal also leaves the screen */
+#intro.is-open .door-left {
+  transform: translateX(calc(-860 * var(--u)));
 }
 
-.intro-text {
-  bottom: calc(26svh + 100lvh - 100svh + env(safe-area-inset-bottom)); /* 20% of the screen higher than before (6svh) */
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-  text-shadow: 0 2px 14px rgb(0 0 0 / 0.55);
-  opacity: 0;
-  transition: opacity 800ms var(--ease-out) 1200ms;
+#intro.is-open .door-right {
+  transform: translateX(100%);
 }
 
-.intro-date {
-  margin: 14px 0 0; /* the date sits lower, further from the names */
-  font-size: 0.875rem;
-  font-weight: 300;
-  letter-spacing: 0.2em;
-}
-
-/* opened state */
-#intro.is-open .seal {
-  transform: scale(1.4);
-  opacity: 0;
-}
-
-/* once off screen, drop the big bouquets and their shadows so they stop using phone memory while scrolling */
-#intro.is-open .lily {
+#intro.is-open .door {
   visibility: hidden;
   transition: transform 1100ms var(--ease-out), visibility 0s linear 1100ms;
 }
 
-#intro.is-open .lily-left { transform: translate(-100%, -50%) rotate(var(--tilt)); }
-#intro.is-open .lily-right { transform: translate(100%, -50%) rotate(var(--tilt)); }
+#intro.is-open .seam {
+  opacity: 0;
+}
 
-#intro.is-open .intro-photo { transform: scale(1); translate: 0 0; }
-#intro.is-open::after { opacity: 0.6; }
-
-#intro.is-open .hint { opacity: 0; }
-#intro.is-open .intro-text { opacity: 1; }
+#intro.is-open .open-card {
+  display: none;
+}
 
 body.is-locked {
   overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro-photo,
-  .lily,
-  .seal,
-  .hint,
-  .intro-text,
-  #intro::after {
-    transition-duration: 150ms;
-    transition-delay: 0ms;
-  }
-}
-
-/* Phones: the group sits higher so it reads as centred in what you see between Safari's toolbars.
-   The hint is positioned on its own and does not move. The photo drops the lift as it grows to full screen. */
-@media (max-width: 480px) {
-  #intro {
-    --lift: 8lvh;
-    /* even pace: the shared ease-out does most of its movement in the first moments, which reads as a swoosh */
-    --photo-grow: 1000ms cubic-bezier(0.37, 0, 0.63, 1) 0ms;
-  }
-
-  /* bigger bouquets on phones; they also grow on taller screens so the small photo stays covered */
-  .lily-left {
-    left: -65%;
-    width: max(204%, 82lvh);
-  }
-
-  .lily-right {
-    right: -41%;
-    width: max(110%, 50lvh);
-  }
-
-  .intro-photo,
-  .seal,
-  .lily {
-    translate: 0 calc(var(--lift) * -1);
-  }
-}
-
-/* Phones only: the slow photo reveal (desktop keeps the original speed). Not under Reduce Motion, which stays short. */
-@media (max-width: 480px) and (prefers-reduced-motion: no-preference) {
-  .intro-photo {
-    transition: transform var(--photo-grow), translate var(--photo-grow);
-  }
-
-  #intro::after {
-    transition: opacity 1200ms var(--ease-out) 1100ms;
-  }
-
-  .intro-text {
-    transition: opacity 1200ms var(--ease-out) 1600ms;
-  }
-}
-
-/* Phones with Reduce Motion on: the photo keeps the same slow, even growth; colour and text keep their own timing. */
-@media (max-width: 480px) and (prefers-reduced-motion: reduce) {
-  .intro-photo {
-    transition: transform var(--photo-grow), translate var(--photo-grow);
-  }
-
-  #intro::after {
-    transition: opacity 1200ms var(--ease-out) 900ms;
-  }
-
-  .intro-text {
-    transition: opacity 1200ms var(--ease-out) 1300ms;
+  .door,
+  #intro.is-open .door {
+    transition: transform 150ms linear, visibility 0s linear 150ms;
   }
 }
 
@@ -1249,10 +1229,5 @@ p.xbold {
   .family,
   .timeline {
     overflow-x: visible;
-  }
-
-  /* Page 1: the two bouquets run past the column edge instead of being cut off by it. */
-  #intro {
-    overflow: visible;
   }
 }

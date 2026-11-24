@@ -14,9 +14,9 @@ const FADE_IN_LAST = 0.2;
 const FADE_OUT = 0.12;
 
 const intro = document.getElementById('intro');
-const seal = intro.querySelector('.seal');
+const openCard = intro.querySelector('.open-card');
 
-seal.addEventListener('click', () => {
+openCard.addEventListener('click', () => {
   intro.classList.add('is-open');
   document.body.classList.remove('is-locked');
   intro.classList.add('fade');

@@ -586,219 +586,145 @@ body.is-locked {
   font-size: calc(64 * var(--u));
 }
 
-.family-block {
-  position: relative;
+/* ---------- Venue (design 6, top) ---------- */
+/* placed in design px; for text with line-height 1 the baseline sits ~0.85em below the top */
+.venue {
+  height: calc(808 * var(--u));
+  min-height: 0;
+  padding: 0;
+  overflow: clip;
+  background: var(--silk) url('assets/design/silk.jpg') center / cover;
+}
+
+.venue p {
+  position: absolute;
   margin: 0;
-  padding-left: 14px;
-  border-left: 1px solid var(--ink);
-  display: grid;
-  gap: 6px;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.kicker {
-  margin: 0;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.kicker.mauve {
-  color: var(--mauve);
-}
-
-p.xbold {
-  font-weight: 900; /* extra bold: Georgia Pro Black; p.xbold outranks the .kicker / .invite weights that come after it */
-}
-
-.invite {
-  margin-bottom: 10px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.kicker.spaced {
-  margin-top: 22px;
-}
-
-.family-block .event-time {
-  margin-bottom: 16px;
-}
-
-
-.family-block p {
-  margin: 0;
-}
-
-.family-block .event-time {
-  font-size: 1.05rem;
-  letter-spacing: 0.04em;
-}
-
-/* Date row and venue share one grid column, so "17 | Tháng 12 / 2026" is exactly as wide as PROMES CENTER.
-   Everything scales from --u so the proportions hold on every screen width. */
-.lockup {
-  --u: clamp(1.1rem, 5.6vw, 1.5rem);
-  display: grid;
-  justify-items: stretch;
-  width: fit-content;
-  max-width: 100%;
-  gap: 4px;
-}
-
-.lockup .big-date {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6em;
-  font-size: calc(var(--u) * 1.05);
-  line-height: 1.2;
-  text-align: left;
-}
-
-.big-day {
-  font-size: calc(var(--u) * 3.7);
-  font-weight: 300;
-  line-height: 1;
-}
-
-.big-month {
-  display: grid;
-  justify-items: start;
-  font-size: calc(var(--u) * 0.7875); /* Tháng 12 is 25% smaller than before (1.05 * 0.75) */
-  line-height: 1.3;
-}
-
-/* 2026 is letter-spaced so its visible width equals "Tháng 12" (spacing measured in em, so it scales) */
-.big-month .m2 {
-  letter-spacing: var(--m2-ls, 0.64em);
-  margin-right: calc(-1 * var(--m2-ls, 0.64em));
-}
-
-.big-rule {
-  align-self: stretch;
-  width: 1px;
-  background: var(--ink);
-}
-
-.lockup .kicker {
-  margin-top: 18px;
-}
-
-.lockup .venue {
-  margin: 0 -0.14em 0 0; /* cancels the trailing letter-spacing so the visible text spans the full column */
-  font-size: var(--u);
-  font-weight: 600;
-  letter-spacing: 0.14em;
   white-space: nowrap;
 }
 
-.family-block .hall {
-  margin-top: 6px;
-  font-size: 0.95rem;
+.ven-rule,
+.ven-sep {
+  position: absolute;
+  background: var(--red);
 }
 
-.family-block .address {
-  font-size: 0.85rem;
-  opacity: 0.85;
-}
+.ven-rule { left: calc(73 * var(--u)); top: calc(118 * var(--u)); width: calc(3 * var(--u)); height: calc(632 * var(--u)); }
+.ven-sep { left: calc(267 * var(--u)); top: calc(262 * var(--u)); width: calc(3 * var(--u)); height: calc(108 * var(--u)); }
 
-.map-link {
-  justify-self: center;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 18px;
-  border: 1px solid var(--mauve);
-  border-radius: 999px;
-  color: var(--mauve);
-  font-size: 0.85rem;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.qr-card {
-  justify-self: center;
-  display: inline-grid;
-  justify-items: center;
-  gap: 6px;
-  padding: 10px;
-  background: var(--ivory);
-  border: 1px solid var(--mauve);
-  border-radius: 12px;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.qr-card img {
-  width: 140px;
-  height: 140px;
-}
-
-.qr-card .caption {
-  font-size: var(--caption-size);
-}
-
-/* ---------- Couple (page-info-couple) ---------- */
-.couple {
-  min-height: 0;
-  padding-top: 56px;
-  padding-bottom: 56px;
-  background: var(--mauve); /* the RSVP text colour */
-  color: var(--pink); /* Cô dâu / Chú rể and both names */
-  overflow: clip; /* hidden would make this its own scroller and freeze the scroll fade inside it */
-  display: grid;
-  gap: 40px;
-  justify-items: center;
-}
-
-.couple-card {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  width: 72%;
-}
-
-.couple-card .photo {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
-}
-
-.bride .photo {
-  object-position: var(--bride-pos, 50% 50%);
-}
-
-.groom .photo {
-  object-position: var(--groom-pos, 50% 50%);
-}
-
-.couple-card figcaption {
-  margin-top: 14px;
-  display: grid;
-  justify-items: center;
-  gap: 2px;
-}
-
-.couple-card .role {
-  font-size: calc(var(--small-text) * 0.7); /* 30% smaller than the thank-you paragraph */
-  font-weight: 500;
-  letter-spacing: 0.2em;
+.ven-when {
+  left: calc(108 * var(--u));
+  top: calc(116 * var(--u));
+  font-size: calc(38 * var(--u));
+  line-height: calc(56 * var(--u));
   text-transform: uppercase;
 }
 
-.couple-card .name {
-  font-family: var(--script);
-  font-size: clamp(2rem, 11.5vw, 3rem); /* "Hoàng Minh" must fit inside the 72%-wide photo card */
-  line-height: 1.1;
+.ven-day {
+  left: calc(112 * var(--u));
+  top: calc(258 * var(--u));
+  font-size: calc(120 * var(--u));
+  line-height: 1;
 }
+
+.ven-month {
+  left: calc(295 * var(--u));
+  top: calc(262 * var(--u));
+  font-size: calc(40 * var(--u));
+  line-height: calc(55 * var(--u));
+  text-transform: uppercase;
+}
+
+.ven-kicker {
+  left: calc(108 * var(--u));
+  top: calc(423 * var(--u));
+  font-size: calc(38 * var(--u));
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.ven-name {
+  left: calc(108 * var(--u));
+  top: calc(485 * var(--u));
+  font-size: calc(54 * var(--u));
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.ven-place {
+  left: calc(108 * var(--u));
+  top: calc(556 * var(--u));
+  font-size: calc(36 * var(--u));
+  line-height: calc(53 * var(--u));
+}
+
+/* the link is centred on the pin (y 719); min-height keeps the tap target at 44px on small screens */
+.ven-map {
+  position: absolute;
+  left: calc(108 * var(--u));
+  top: calc(719 * var(--u));
+  translate: 0 -50%;
+  display: flex;
+  align-items: center;
+  gap: calc(17 * var(--u));
+  min-height: 44px;
+  color: var(--red);
+  font-size: calc(34 * var(--u));
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.ven-map svg {
+  width: calc(46 * var(--u));
+  height: calc(46 * var(--u));
+}
+
+/* ---------- Couple (design 6, bottom) ---------- */
+.couple {
+  height: calc(1112 * var(--u));
+  min-height: 0;
+  padding: 0;
+  overflow: clip; /* hidden would make this its own scroller and freeze the scroll fade inside it */
+  background: var(--rose) url('assets/design/couple-panel.jpg') center / cover;
+  color: var(--cream);
+}
+
+.couple img {
+  position: absolute;
+  height: auto;
+  max-width: none;
+}
+
+.cp-bride { left: calc(528 * var(--u)); top: calc(48 * var(--u)); width: calc(497 * var(--u)); }
+.cp-groom { left: calc(22 * var(--u)); top: calc(495 * var(--u)); width: calc(542 * var(--u)); }
+.cp-seal { left: calc(432 * var(--u)); top: calc(390 * var(--u)); width: calc(212 * var(--u)); }
+
+.cp-role,
+.cp-name {
+  position: absolute;
+  margin: 0;
+  translate: -50% 0; /* left is the text's centre line */
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.cp-role {
+  font-size: calc(44 * var(--u));
+  text-transform: uppercase;
+}
+
+/* Aston Script at 52u is as wide as the design's lettering */
+.cp-name {
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: calc(52 * var(--u));
+}
+
+.cp-role-bride { left: calc(270 * var(--u)); top: calc(235 * var(--u)); }
+.cp-name-bride { left: calc(276 * var(--u)); top: calc(336 * var(--u)); }
+.cp-role-groom { left: calc(810 * var(--u)); top: calc(718 * var(--u)); }
+.cp-name-groom { left: calc(806 * var(--u)); top: calc(811 * var(--u)); }
 
 /* ---------- Timeline (page-timeline) ---------- */
 .timeline {
@@ -1163,27 +1089,6 @@ p.xbold {
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    @keyframes settle-left {
-      from { rotate: -4deg; }
-      to { rotate: 0deg; }
-    }
-
-    @keyframes settle-right {
-      from { rotate: 4deg; }
-      to { rotate: 0deg; }
-    }
-
-    .couple-card.bride.fade {
-      animation: scroll-fade linear both, settle-left linear both;
-      animation-timeline: view(), view();
-      animation-range: cover 0% cover 100%, entry 0% cover 45%;
-    }
-
-    .couple-card.groom.fade {
-      animation: scroll-fade linear both, settle-right linear both;
-      animation-timeline: view(), view();
-      animation-range: cover 0% cover 100%, entry 0% cover 45%;
-    }
   }
 }
 

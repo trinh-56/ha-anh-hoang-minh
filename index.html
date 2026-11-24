@@ -43,61 +43,47 @@
       <img class="sd-flowers sd-flowers-bottom" src="assets/design/flowers-top.webp" alt="" />
       <h2 class="save-title"><span>SAVE</span><span><i>the</i>DATE</span></h2>
     </section>
-    <section id="countdown" class="section countdown">
-      <img class="countdown-bg" src="assets/countdown.jpg" alt="" />
-      <div class="countdown-content">
-        <p class="script countdown-title">Countdown</p>
-        <div class="countdown-row" id="countdown-row" role="timer">
-          <div class="cell">
-            <span class="num" data-unit="days" aria-live="off">00</span>
-            <span class="label">Ngày</span>
-          </div>
-          <span class="sep" aria-hidden="true">:</span>
-          <div class="cell">
-            <span class="num" data-unit="hours" aria-live="off">00</span>
-            <span class="label">Giờ</span>
-          </div>
-          <span class="sep" aria-hidden="true">:</span>
-          <div class="cell">
-            <span class="num" data-unit="minutes" aria-live="off">00</span>
-            <span class="label">Phút</span>
-          </div>
-          <span class="sep" aria-hidden="true">:</span>
-          <div class="cell">
-            <span class="num" data-unit="seconds" aria-live="off">00</span>
-            <span class="label">Giây</span>
-          </div>
+    <section id="countdown" class="section countdown scene">
+      <p class="countdown-title">Countdown</p>
+      <div class="countdown-row" id="countdown-row" role="timer">
+        <div class="cell">
+          <span class="num" data-unit="days" aria-live="off">00</span>
+          <span class="label">Ngày</span>
         </div>
-        <p class="countdown-done" id="countdown-done" hidden>Hôm nay là ngày vui!</p>
+        <span class="sep" aria-hidden="true">:</span>
+        <div class="cell">
+          <span class="num" data-unit="hours" aria-live="off">00</span>
+          <span class="label">Giờ</span>
+        </div>
+        <span class="sep" aria-hidden="true">:</span>
+        <div class="cell">
+          <span class="num" data-unit="minutes" aria-live="off">00</span>
+          <span class="label">Phút</span>
+        </div>
+        <span class="sep" aria-hidden="true">:</span>
+        <div class="cell">
+          <span class="num" data-unit="seconds" aria-live="off">00</span>
+          <span class="label">Giây</span>
+        </div>
       </div>
+      <p class="countdown-done" id="countdown-done" hidden>Hôm nay là ngày vui!</p>
     </section>
     <section id="family" class="section family">
-      <div class="family-block">
-        <p class="kicker xbold">Nhà gái</p>
-        <p>Bố: Mai Hồng Anh</p>
-        <p>Mẹ: Đặng Thị Thúy Hà</p>
-        <p class="kicker spaced xbold">Nhà trai</p>
-        <p>Bố: Nguyễn Văn Hải</p>
-        <p>Mẹ: Vũ Thị Thuyền Quyên</p>
+      <span class="fam-rule" aria-hidden="true"></span>
+      <div class="fam-text">
+        <p class="fam-head">Nhà gái</p>
+        <p class="fam-line">Ông: Mai Hồng Anh</p>
+        <p class="fam-line">Bà: Đặng Thị Thuý Hà</p>
+        <p class="fam-head">Nhà trai</p>
+        <p class="fam-line">Ông: Nguyễn Văn Hải</p>
+        <p class="fam-line">Bà: Vũ Thị Thuyền Quyên</p>
+        <p class="fam-invite">Trân trọng kính mời quý khách đến dự bữa tiệc<br />thân mật chung vui cùng gia đình chúng tôi.</p>
       </div>
-
-      <div class="family-block">
-        <p class="invite xbold">Thân mời tới dự lễ cưới thân mật</p>
-        <p class="kicker mauve">Lễ Vu Quy</p>
-        <p>Hôn lễ được tổ chức tại tư gia</p>
-        <p>BT02-19 khu đô thị An Hưng, Dương Nội, Hà Nội</p>
-        <p>9:30 (Tức ngày 09 tháng 11 Bính Ngọ)</p>
-      </div>
-
-      <div class="names-row">
-        <img class="lily-line" src="assets/lily-1.png" alt="" aria-hidden="true" />
-        <div class="names couple-names">
-          <span class="name">Hà Anh</span>
-          <span class="amp">&amp;</span>
-          <span class="name">Hoàng Minh</span>
-        </div>
-      </div>
-
+      <p class="fam-name fam-name-1">Hà Anh</p>
+      <p class="fam-and">AND</p>
+      <p class="fam-name fam-name-2">Hoàng Minh</p>
+    </section>
+    <section id="venue" class="section venue">
       <div class="family-block">
         <p class="kicker">Được tổ chức vào lúc</p>
         <p class="event-time">11:30, Thứ 5</p>
@@ -106,7 +92,7 @@
           <p class="kicker">Trung tâm tiệc cưới</p>
           <p class="venue">PROMES CENTER</p>
         </div>
-        <p class="hall">Sảnh Camella - Tầng 2</p>
+        <p class="hall">Sảnh Camellia - Tầng 2</p>
         <p class="address">122-124 Xuân Thuỷ, Cầu Giấy, Hà Nội</p>
       </div>
 
@@ -116,13 +102,7 @@
         </svg>
         <span>Hướng dẫn tới địa chỉ</span>
       </a>
-
-      <a class="qr-card" href="https://maps.app.goo.gl/MWEVd2WznuuyFbfQA" target="_blank" rel="noopener">
-        <img src="assets/map-qr.svg" alt="Mã QR chỉ đường tới PROMES CENTER" width="140" height="140" />
-        <span class="caption">Quét mã để xem bản đồ</span>
-      </a>
     </section>
-    <section id="venue" class="section venue"></section>
     <section id="couple" class="section couple">
 
       <figure class="couple-card bride">

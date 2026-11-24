@@ -433,149 +433,157 @@ body.is-locked {
   font-size: calc(98 * var(--u));
 }
 
-/* ---------- Countdown (page-countdown) ---------- */
+/* ---------- Sky scene (countdown and thank-you panels) ---------- */
+/* clouds hang from the top, hills sit on the bottom; the sky is a gradient behind them */
+.scene {
+  background:
+    url('assets/design/clouds.svg') center top / 100% calc(200 * var(--u)) no-repeat,
+    url('assets/design/hills.svg') center bottom / 100% calc(255 * var(--u)) no-repeat,
+    linear-gradient(to bottom, var(--sky-top), var(--sky-low) 65%);
+}
+
+/* ---------- Countdown (design 5, top) ---------- */
 .countdown {
-  min-height: 100svh;
+  height: calc(604 * var(--u));
+  min-height: 0;
   padding: 0;
-  display: grid;
-  place-items: center;
-  overflow: clip; /* hidden would make this its own scroller and freeze the scroll fade inside it */
-  background: var(--ink);
-  color: var(--ivory);
-}
-
-.countdown-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.countdown::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgb(41 39 39 / 0.38); /* the photo is in colour now; this keeps the white numbers readable over the dress and bouquet */
-  pointer-events: none;
-}
-
-.countdown-content {
-  z-index: 2;
-}
-
-.countdown::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 40%;
-  background: linear-gradient(to bottom, var(--ink), rgb(41 39 39 / 0));
-  pointer-events: none;
-}
-
-.countdown-content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding-top: 8svh;
+  overflow: clip;
+  color: var(--red);
 }
 
 .countdown-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(160 * var(--u));
   margin: 0;
+  text-align: center;
   font-family: var(--script);
-  font-size: 3.6rem;
-  line-height: 1.1;
+  font-weight: 400;
+  font-size: calc(107 * var(--u)); /* Aston Script is wide: this gives the design's 640u width */
+  line-height: 1;
 }
 
+/* four 160.7u columns centred on x 300 / 461 / 621 / 782; each ":" is a zero-width item centred on the join */
 .countdown-row {
+  position: absolute;
+  left: calc(219.6 * var(--u));
+  top: calc(317 * var(--u));
   display: flex;
   align-items: flex-start;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 8px;
 }
 
 .cell {
+  width: calc(160.7 * var(--u));
   display: grid;
   justify-items: center;
-  gap: 6px;
-  min-width: 3.2ch;
+  gap: calc(25 * var(--u));
 }
 
-.num {
-  font-family: var(--body);
-  font-weight: 300;
-  font-size: 2.4rem;
+.num,
+.sep {
+  font-size: calc(84 * var(--u));
+  font-weight: 400;
   line-height: 1;
   font-variant-numeric: lining-nums tabular-nums;
 }
 
 .label {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
+  font-size: calc(34 * var(--u));
+  line-height: 1;
   text-transform: uppercase;
-  opacity: 0.85;
 }
 
 .sep {
-  font-family: var(--body);
-  font-weight: 300;
-  font-size: 2.4rem;
-  line-height: 1;
-  opacity: 0.7;
+  width: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .countdown-done {
-  margin: 24px 0 0;
-  font-family: var(--script);
-  font-size: 2.2rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(330 * var(--u));
+  margin: 0;
+  text-align: center;
+  font-size: calc(56 * var(--u));
 }
 
 /* ---------- Family & location (page-info-family-location) ---------- */
 .family {
+  height: calc(1316 * var(--u));
   min-height: 0;
-  padding-top: 56px;
-  padding-bottom: 56px;
-  display: grid;
-  gap: 28px;
+  padding: 0;
+  overflow: clip;
+  background: var(--silk) url('assets/design/silk.jpg') center / cover;
 }
 
-
-/* Row: bouquet on the left (running to the screen edge), names on the right, as in the reference. */
-.names-row {
-  position: relative;
-  margin: 0 calc(-1 * var(--gutter));
-  padding-right: var(--gutter);
-  aspect-ratio: 1.15 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.names-row .lily-line {
+.fam-rule {
   position: absolute;
-  left: -18%; /* the bouquet runs to the screen edge, as in the reference */
-  top: 0;
-  height: 100%;
-  width: auto;
-  max-width: none;
-  filter: grayscale(1); /* black and white, by request */
-  pointer-events: none;
+  left: calc(73 * var(--u));
+  top: calc(88 * var(--u));
+  width: calc(3 * var(--u));
+  height: calc(616 * var(--u));
+  background: var(--red);
 }
 
-.names-row .couple-names {
-  position: relative;
-  z-index: 1;
-  justify-items: end;
-  text-align: right;
+.fam-text {
+  position: absolute;
+  left: calc(108 * var(--u));
+  top: calc(88 * var(--u));
 }
 
-.names-row .couple-names .name {
-  font-size: clamp(2.2rem, 9.5vw, 3rem); /* smaller than page 1 so both fit beside the bouquet */
+.fam-text p {
+  margin: 0;
+  white-space: nowrap;
 }
 
-.names-row .couple-names .amp {
-  font-size: 1.3rem;
+.fam-head {
+  font-size: calc(46 * var(--u));
+  font-weight: 700;
+  line-height: calc(61 * var(--u));
+  text-transform: uppercase;
+}
+
+.fam-line {
+  font-size: calc(42 * var(--u));
+  line-height: calc(60 * var(--u));
+}
+
+.fam-head + .fam-line { margin-top: calc(27 * var(--u)); }
+.fam-line + .fam-head { margin-top: calc(56 * var(--u)); }
+
+.fam-text .fam-invite {
+  margin-top: calc(52 * var(--u));
+  font-size: calc(34 * var(--u));
+  line-height: calc(46 * var(--u));
+  text-transform: uppercase;
+}
+
+/* the two names (Aston Script, 88u gives the design's width) and "AND", right-aligned near x 1000 */
+.fam-name,
+.fam-and {
+  position: absolute;
+  margin: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.fam-name {
+  right: calc(85 * var(--u));
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: calc(88 * var(--u));
+}
+
+.fam-name-1 { top: calc(843 * var(--u)); }
+.fam-name-2 { top: calc(1118 * var(--u)); }
+
+.fam-and {
+  right: calc(112 * var(--u));
+  top: calc(967 * var(--u));
+  font-size: calc(64 * var(--u));
 }
 
 .family-block {
@@ -1188,7 +1196,6 @@ p.xbold {
   }
 
   .page,
-  .family,
   .timeline {
     overflow-x: visible;
   }

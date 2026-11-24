@@ -149,11 +149,3 @@ form.addEventListener('submit', async (e) => {
     submitBtn.disabled = false;
   }
 });
-
-// Gift popup: a native <dialog> (Esc closes it); a tap on the dimmed area outside it closes it too.
-const giftDialog = document.getElementById('gift-dialog');
-document.getElementById('gift-btn').addEventListener('click', () => giftDialog.showModal());
-document.getElementById('gift-close').addEventListener('click', () => giftDialog.close());
-giftDialog.addEventListener('click', (e) => {
-  if (e.target === giftDialog) giftDialog.close();
-});

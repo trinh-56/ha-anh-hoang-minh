@@ -39,7 +39,7 @@
 :root {
   --mauve: #AF3E4D;
   --pink: #FEC6C6; /* replaces the old reds (carmine / wine) */
-  --red: #7A0000; /* all text, rules, gift button */
+  --red: #7A0000; /* all text and rules */
   --rose: #E094A0; /* timeline dots, field borders, confirm button */
   --paper: #EDCACE; /* desktop backdrop, theme-color */
   --silk: #F8F2DC; /* the silk texture's average colour, shown until the image loads */
@@ -129,12 +129,11 @@ button:active, a:active {
   padding: 0;
   overflow: hidden;
   isolation: isolate; /* the layers below use z-index; keep them from stacking against later sections */
-  /* width of the framed photo: 94% of the column, or less when the visible height cannot hold it (the frame is 2:3) */
-  --F: min(calc(1015 * var(--u)), 61.33svh);
+  /* width of the photo card: 86% of the column, or less when the visible height cannot hold it (the card is 2:3) */
+  --F: min(calc(930 * var(--u)), 58svh);
 }
 
-/* frame-1.png is 1024x1536; its transparent window is 15.7% / 8.1% from the top-left, 73% wide and 80% tall. The photo is a
-   hair larger than the window so it tucks under the frame's inner line. */
+/* the photo is a 2:3 card with a white border and a soft shadow, like the bride and groom cards */
 .intro-frame {
   position: absolute;
   left: 50%;
@@ -147,10 +146,10 @@ button:active, a:active {
 
 .intro-photo-box {
   position: absolute;
-  left: 15.33%;
-  top: 7.8%;
-  width: 73.8%;
-  height: 80.1%;
+  inset: 0;
+  box-sizing: border-box;
+  border: calc(var(--F) * 0.03) solid var(--cream);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
   overflow: hidden;
 }
 
@@ -170,15 +169,6 @@ button:active, a:active {
   object-position: 50% 100%; /* hero.jpg has extra studio wall above the couple; keep the couple, crop the wall */
 }
 
-.intro-frame-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  pointer-events: none;
-}
-
 .intro-text {
   position: absolute;
   inset: 0;
@@ -187,16 +177,16 @@ button:active, a:active {
   pointer-events: none;
 }
 
-/* sizes and positions are fractions of the frame width F; the two baselines are 0.1F apart. At 0.056F, "Hoàng Minh" ends at 0.76F, clear of the frame's vines. */
+/* sizes and positions are fractions of the card width F; at 0.062F, "Hoàng Minh" ends at about 0.67F, well inside the border. */
 .intro-names {
   position: absolute;
   left: 0;
-  bottom: calc(var(--F) * 0.36);
+  bottom: calc(var(--F) * 0.2);
   margin: 0;
   font-family: var(--script);
   font-weight: 400;
-  font-size: calc(var(--F) * 0.056);
-  line-height: calc(var(--F) * 0.1);
+  font-size: calc(var(--F) * 0.062);
+  line-height: calc(var(--F) * 0.11);
   white-space: nowrap;
 }
 
@@ -205,18 +195,18 @@ button:active, a:active {
 }
 
 .intro-names span:first-child {
-  margin-left: calc(var(--F) * 0.245);
+  margin-left: calc(var(--F) * 0.1);
 }
 
 .intro-names span:last-child {
-  margin-left: calc(var(--F) * 0.295);
+  margin-left: calc(var(--F) * 0.16);
 }
 
 .intro-date {
   position: absolute;
-  left: 15.33%;
-  width: 73.8%;
-  bottom: calc(var(--F) * 0.3135);
+  left: 0;
+  width: 100%;
+  bottom: calc(var(--F) * 0.14);
   margin: 0;
   text-align: center;
   font-size: calc(var(--F) * 0.04);
@@ -912,68 +902,6 @@ body.is-locked {
   font-size: calc(56 * var(--u));
 }
 
-/* ---------- Gift button and popup ---------- */
-.gift-btn,
-.gift-close {
-  display: block;
-  width: 100%;
-  min-height: max(calc(80 * var(--u)), 44px);
-  border: calc(4 * var(--u)) solid var(--rose);
-  border-radius: 999px;
-  background: var(--red);
-  color: var(--cream);
-  font-family: var(--body);
-  font-size: max(16px, calc(44 * var(--u)));
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.gift-btn {
-  margin-top: calc(26 * var(--u));
-}
-
-.gift-btn:focus-visible,
-.gift-close:focus-visible {
-  outline: 3px solid var(--red);
-  outline-offset: 2px;
-}
-
-.gift-dialog {
-  width: min(86vw, 420px);
-  padding: 20px;
-  border: 3px solid var(--rose);
-  border-radius: 24px;
-  background: var(--silk);
-  color: var(--red);
-}
-
-.gift-dialog::backdrop {
-  background: rgb(41 39 39 / 0.55);
-}
-
-/* an empty dashed square until assets/design/gift-qr.png exists (the image removes itself if it fails to load) */
-.gift-slot {
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  border: 3px dashed var(--rose);
-  border-radius: 12px;
-}
-
-.gift-slot:has(img) {
-  border: 0;
-}
-
-.gift-slot img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.gift-close {
-  margin-top: 16px;
-}
-
 /* ---------- Thank you (design 8, bottom) ---------- */
 .thanks {
   height: calc(1611 * var(--u)); /* 682u for the text, plus 929u for the framed photo above it */
@@ -993,22 +921,21 @@ body.is-locked {
   white-space: nowrap;
 }
 
-/* frame-2.png is square (500x500); its transparent window is 14.6% / 8.2% from the top-left, 72.4% wide and 83% tall.
-   The photo is a hair larger than the window so it tucks under the frame's inner line. */
+/* a square card with a white border and a soft shadow, like the bride and groom cards */
 .thanks-frame {
   position: absolute;
-  left: calc(160 * var(--u));
-  top: calc(210 * var(--u));
-  width: calc(760 * var(--u));
+  left: calc(230 * var(--u));
+  top: calc(250 * var(--u));
+  width: calc(620 * var(--u));
   aspect-ratio: 1;
 }
 
 .thanks-photo-box {
   position: absolute;
-  left: 14.2%;
-  top: 7.8%;
-  width: 73%;
-  height: 83.8%;
+  inset: 0;
+  box-sizing: border-box;
+  border: calc(18 * var(--u)) solid var(--cream);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
   overflow: hidden;
 }
 
@@ -1019,15 +946,6 @@ body.is-locked {
   max-width: none;
   object-fit: cover;
   object-position: 50% 55%; /* faces sit at 42-62% of the photo's height */
-}
-
-.thanks-frame-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  pointer-events: none;
 }
 
 .thanks-text {

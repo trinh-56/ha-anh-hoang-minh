@@ -7,7 +7,7 @@ window.scrollTo(0, 0);
 // Everything on the page fades with its position on screen: in at the edge it enters from, out at the edge it
 // leaves by, in both scroll directions. CSS drives .fade on the compositor; older browsers use the fallback below.
 // The fade is opacity only, so it also runs when the phone's Reduce Motion setting is on (that setting is about movement).
-const FADE_TARGETS = '.page > section:not(#intro) > :not(.stage), .stage > *';
+const FADE_TARGETS = '.page > section:not(#intro) > *';
 // Share of the element's trip across the screen spent fading (matches @keyframes scroll-fade and scroll-fade-last).
 const FADE_IN = 0.3;
 const FADE_IN_LAST = 0.2;

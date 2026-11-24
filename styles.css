@@ -383,80 +383,54 @@ body.is-locked {
   }
 }
 
-/* ---------- Save the date (page-date) ---------- */
+/* ---------- Save the date (design 4) ---------- */
+/* Everything is placed in design pixels (u) from the section's top-left; the section is 1080u x 1920u. */
 .save-date {
+  height: calc(1920 * var(--u));
   min-height: 0;
-  padding-top: 56px;
-  padding-bottom: 48px;
+  padding: 0;
+  overflow: clip; /* the envelope, pearls and flowers run off the edges, as in the design */
+  background: var(--silk) url('assets/design/silk.jpg') center / cover;
 }
 
-.save-title {
-  color: var(--mauve);
-}
-
-.save-title {
-  --n: clamp(4.42rem, 19.5vw, 5.72rem); /* name size: 30% bigger than the shared .names size */
-  width: fit-content; /* the block hugs its text and sits at the left edge, on the same line as the family blocks */
-  justify-items: center; /* ...while the lines inside it stay centred on each other */
-  text-align: center;
-}
-
-.save-title .name {
-  font-size: var(--n);
-}
-
-/* pull "the" in so the gap above and below it is equal and as tight as around the & in the names block */
-.save-title .amp.sans {
-  font-size: var(--the-size); /* scales with the names so the gaps stay equal at every screen width */
-  margin: calc(var(--n) * -0.121) 0 calc(var(--n) * 0.019); /* gaps above/below tightened by 15% (tuned by measurement) */
-  position: relative;
-  left: 35%; /* right by 35% of the heading's width (was 15%) */
-  top: calc(var(--n) * 0.09); /* 40% lower than the gap it sat in (~6px of the ~15px between Save and Date) */
-}
-
-.stage {
-  position: relative;
-  margin-top: 8px;
-  padding: 36px 0 60px;
-}
-
-.lily-watermark {
+.save-date img {
   position: absolute;
-  top: -4%;
-  right: -10%;
-  width: 60%;
-  opacity: 0.08;
-  pointer-events: none;
-}
-
-/* envelope.png has ~12% transparent padding on every side, so it is drawn oversized to look full-size */
-.envelope {
-  position: absolute;
-  left: 44.4%; /* 25% smaller than before (135% -> 101.25% wide), keeping the same centre as the earlier 27.5% / 135% */
-  bottom: 57px;
-  width: 101.25%;
+  height: auto;
   max-width: none;
-  rotate: -12deg;
 }
 
-.strip {
-  position: relative;
-  z-index: 1;
-  width: 36%; /* 30% bigger than the previous 27.75% */
-  margin: 0 auto;
-  padding: 5.85px;
-  display: grid;
-  gap: 5.85px;
-  background: #fff;
-  rotate: 8deg;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
+.sd-envelope { left: calc(157 * var(--u)); top: calc(647 * var(--u)); width: calc(1279 * var(--u)); }
+/* the envelope artwork has a smaller seal than the design, so the rose seal is laid over it */
+.sd-seal { left: calc(682 * var(--u)); top: calc(1074 * var(--u)); width: calc(312 * var(--u)); }
+.sd-pearls { left: calc(828 * var(--u)); top: calc(1378 * var(--u)); width: calc(520 * var(--u)); }
+.sd-strip { left: calc(122 * var(--u)); top: calc(490 * var(--u)); width: calc(540 * var(--u)); }
+
+.sd-flowers-top { left: calc(560 * var(--u)); top: calc(155 * var(--u)); width: calc(655 * var(--u)); }
+.sd-flowers-bottom { left: calc(-230 * var(--u)); top: calc(1560 * var(--u)); width: calc(560 * var(--u)); rotate: 45deg; }
+
+/* Georgia Pro is wider than the design's serif, so 100u / SemiBold gives the same width as "SAVE" and "DATE" there; the baselines are 133u apart */
+.save-title {
+  position: absolute;
+  left: calc(108 * var(--u));
+  top: calc(177 * var(--u));
+  margin: 0;
+  font-size: calc(100 * var(--u));
+  font-weight: 600;
+  line-height: calc(133 * var(--u));
+  color: var(--red);
+  white-space: nowrap;
 }
 
-.strip img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  object-position: 50% 30%;
+.save-title span {
+  display: block;
+}
+
+.save-title i {
+  margin: 0 calc(54 * var(--u)) 0 calc(50 * var(--u));
+  font-family: var(--script);
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(98 * var(--u));
 }
 
 /* ---------- Countdown (page-countdown) ---------- */
@@ -1181,11 +1155,6 @@ p.xbold {
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    @keyframes strip-sway {
-      from { rotate: 2deg; }
-      to { rotate: 14deg; }
-    }
-
     @keyframes settle-left {
       from { rotate: -4deg; }
       to { rotate: 0deg; }
@@ -1194,12 +1163,6 @@ p.xbold {
     @keyframes settle-right {
       from { rotate: 4deg; }
       to { rotate: 0deg; }
-    }
-
-    .strip.fade {
-      animation: scroll-fade linear both, strip-sway linear both;
-      animation-timeline: view(), view();
-      animation-range: cover 0% cover 100%, cover 0% cover 100%;
     }
 
     .couple-card.bride.fade {
@@ -1225,7 +1188,6 @@ p.xbold {
   }
 
   .page,
-  .save-date,
   .family,
   .timeline {
     overflow-x: visible;

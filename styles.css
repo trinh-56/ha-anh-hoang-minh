@@ -49,6 +49,7 @@
   --sky-low: #EAF9FE;
   --hill-dark: #88A201;
   --u: calc(min(100vw, 480px) / 1080); /* one design pixel (the designs are 1080 wide) */
+  --clouds: url('assets/design/clouds.svg'); /* desktop swaps in a version without the cloud that touches the phone's right edge */
   --bleed: calc((100vw - min(100vw, 480px)) / 2); /* desktop: the strip on each side of the 480px column (0 on phones) */
   --script: 'Aston Script', cursive;
   --body: 'Georgia Pro', Georgia, 'Times New Roman', serif;
@@ -96,6 +97,7 @@ body {
 
 .section {
   position: relative;
+  isolation: isolate; /* the background layer below sits at z-index -1 inside the section */
   min-height: 100svh;
   overflow-x: clip;
   padding-left: max(var(--gutter), env(safe-area-inset-left));
@@ -325,7 +327,6 @@ body.is-locked {
   min-height: 0;
   padding: 0;
   overflow: clip; /* the envelope, pearls and flowers run off the edges, as in the design */
-  background: var(--silk) url('assets/design/silk.jpg') center / cover;
 }
 
 .save-date img {
@@ -370,13 +371,70 @@ body.is-locked {
 
 /* ---------- Sky scene (countdown and thank-you panels) ---------- */
 /* clouds hang from the top, hills sit on the bottom; the sky is a gradient behind them */
+/* the sky art is drawn by .scene::before, see "Full-bleed backgrounds" below */
+
+/* ---------- Full-bleed backgrounds ---------- */
+/* Each panel's background is a layer that reaches --bleed past the column on both sides (0 on phones, so it equals the
+   section there). The column's art stays where the design puts it; on a wide window the background simply continues. */
+.save-date::before,
+.countdown::before,
+.family::before,
+.venue::before,
+.couple::before,
+.timeline::before,
+.rsvp::before,
+.thanks::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-1 * var(--bleed));
+  right: calc(-1 * var(--bleed));
+  z-index: -1;
+  pointer-events: none;
+}
+
+.save-date::before,
+.family::before,
+.venue::before,
+.timeline::before,
+.rsvp::before {
+  background: var(--silk) url('assets/design/silk.jpg') center / cover;
+}
+
+.couple::before {
+  background: var(--rose) url('assets/design/couple-panel.jpg') center / cover;
+}
+
+/* Sky panels: the clouds and hills stay column-sized (stretching would squash the clouds). The ground carries on to the
+   window edges as flat green at the height of the hills' end points (y 56 on the left, 61 on the right of the artwork). */
+.scene::before {
+  background-image:
+    var(--clouds),
+    url('assets/design/hills.svg'),
+    linear-gradient(var(--hill-dark), var(--hill-dark)),
+    linear-gradient(var(--hill-dark), var(--hill-dark)),
+    linear-gradient(var(--hill-dark), var(--hill-dark)),
+    linear-gradient(to bottom, var(--sky-top), var(--sky-low) 65%);
+  background-size:
+    calc(100% - 2 * var(--bleed)) calc(200 * var(--u)),
+    calc(100% - 2 * var(--bleed)) calc(255 * var(--u)),
+    calc(var(--bleed) + 2px) calc(199 * var(--u) + var(--hill-lift)),
+    calc(var(--bleed) + 2px) calc(194 * var(--u) + var(--hill-lift)),
+    100% var(--hill-lift),
+    100% 100%;
+  background-position:
+    center top,
+    center calc(100% - var(--hill-lift)),
+    left bottom,
+    right bottom,
+    center bottom,
+    center;
+  background-repeat: no-repeat;
+}
+
 .scene {
   --hill-lift: 0px;
-  background:
-    url('assets/design/clouds.svg') center top / 100% calc(200 * var(--u)) no-repeat,
-    url('assets/design/hills.svg') center calc(100% - var(--hill-lift)) / 100% calc(255 * var(--u)) no-repeat,
-    linear-gradient(var(--hill-dark), var(--hill-dark)) center bottom / 100% var(--hill-lift) no-repeat,
-    linear-gradient(to bottom, var(--sky-top), var(--sky-low) 65%);
 }
 
 /* ---------- Countdown (design 5, top) ---------- */
@@ -453,7 +511,6 @@ body.is-locked {
   min-height: 0;
   padding: 0;
   overflow: clip;
-  background: var(--silk) url('assets/design/silk.jpg') center / cover;
 }
 
 .fam-rule {
@@ -530,7 +587,6 @@ body.is-locked {
   min-height: 0;
   padding: 0;
   overflow: clip;
-  background: var(--silk) url('assets/design/silk.jpg') center / cover;
 }
 
 .venue p {
@@ -623,7 +679,6 @@ body.is-locked {
   min-height: 0;
   padding: 0;
   overflow: clip; /* hidden would make this its own scroller and freeze the scroll fade inside it */
-  background: var(--rose) url('assets/design/couple-panel.jpg') center / cover;
   color: var(--cream);
 }
 
@@ -669,7 +724,6 @@ body.is-locked {
   min-height: 0;
   padding: 0;
   overflow: clip;
-  background: var(--silk) url('assets/design/silk.jpg') center / cover;
 }
 
 /* Aston Script at 99u is as wide as the design's "Timeline" (480u) */
@@ -743,7 +797,6 @@ body.is-locked {
 .rsvp {
   min-height: calc(1238 * var(--u));
   padding: calc(131 * var(--u)) calc(85 * var(--u)) calc(61 * var(--u));
-  background: var(--silk) url('assets/design/silk.jpg') center / cover;
   color: var(--red);
 }
 
@@ -967,8 +1020,12 @@ body.is-locked {
 
 }
 
-/* Desktop: the doors cover the whole window, so they may leave the 480px column; the window edge is the only clip. */
+/* Desktop: the doors and the panel backgrounds cover the whole window, so they may leave the 480px column; the window edge is the only clip. */
 @media (min-width: 481px) {
+  :root {
+    --clouds: url('assets/design/clouds-wide.svg');
+  }
+
   body {
     overflow-x: hidden; /* clip is ignored by Safari before 16; hidden on body applies to the whole window */
   }
@@ -979,5 +1036,27 @@ body.is-locked {
 
   #intro {
     overflow: visible;
+  }
+
+  /* sections no longer clip sideways: the background layer and the envelope, flowers and pearls run past the column.
+     Vertically they still clip, so nothing spills into the next panel. */
+  .save-date,
+  .countdown,
+  .family,
+  .venue,
+  .couple,
+  .timeline,
+  .rsvp,
+  .thanks {
+    overflow-x: visible;
+    overflow-y: clip;
+  }
+
+  .save-date::before,
+  .family::before,
+  .venue::before,
+  .timeline::before,
+  .rsvp::before {
+    background-image: url('assets/design/silk-wide.jpg');
   }
 }

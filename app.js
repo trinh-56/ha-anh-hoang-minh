@@ -8,7 +8,7 @@ window.scrollTo(0, 0);
 // leaves by, in both scroll directions. CSS drives .fade on the compositor; older browsers use the fallback below.
 // The fade is opacity only, so it also runs when the phone's Reduce Motion setting is on (that setting is about movement).
 // The thank-you panel is the end of the page and shorter than the screen, so it never fades (it would stay faint at the bottom).
-const FADE_TARGETS = '.page > section:not(#intro):not(#thanks) > *';
+const FADE_TARGETS = '.page > section:not(#intro):not(#thanks) > :not(.countdown-photo)';
 // Share of the element's trip across the screen spent fading (matches @keyframes scroll-fade).
 const FADE_IN = 0.3;
 const FADE_OUT = 0.12;

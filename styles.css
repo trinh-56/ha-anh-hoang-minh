@@ -336,8 +336,6 @@ body.is-locked {
 }
 
 .sd-envelope { left: calc(157 * var(--u)); top: calc(647 * var(--u)); width: calc(1279 * var(--u)); }
-/* the envelope artwork has a smaller seal than the design, so the rose seal is laid over it */
-.sd-seal { left: calc(682 * var(--u)); top: calc(1074 * var(--u)); width: calc(312 * var(--u)); }
 .sd-pearls { left: calc(828 * var(--u)); top: calc(1378 * var(--u)); width: calc(520 * var(--u)); }
 .sd-strip { left: calc(122 * var(--u)); top: calc(490 * var(--u)); width: calc(540 * var(--u)); }
 
@@ -444,6 +442,30 @@ body.is-locked {
   padding: 0;
   overflow: clip;
   color: var(--red);
+}
+
+/* the banner keeps its 604u height; the photo fills it (cropped to the kiss under the veil) and a light veil keeps the red text readable */
+.countdown-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 72%;
+}
+
+.countdown::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(-1 * var(--bleed));
+  right: calc(-1 * var(--bleed));
+  z-index: -1;
+  background: rgb(255 252 247 / 0.38);
+  pointer-events: none;
 }
 
 .countdown-title {
@@ -578,6 +600,34 @@ body.is-locked {
   right: calc(112 * var(--u));
   top: calc(967 * var(--u));
   font-size: calc(64 * var(--u));
+}
+
+/* ---------- Lilies and stamps (extra artwork, not in the designs) ---------- */
+/* 50% opacity; --fade-to makes the scroll fade end at 50% instead of 100% */
+.lily {
+  position: absolute;
+  height: auto;
+  max-width: none;
+  opacity: 0.5;
+  --fade-to: 0.5;
+  pointer-events: none;
+}
+
+.fam-lily { left: calc(790 * var(--u)); top: calc(100 * var(--u)); width: calc(210 * var(--u)); }
+.ven-lily { left: calc(790 * var(--u)); top: calc(170 * var(--u)); width: calc(270 * var(--u)); }
+
+.tl-stamp {
+  position: absolute;
+  left: calc(350 * var(--u));
+  top: calc(1480 * var(--u));
+  width: calc(380 * var(--u));
+  height: auto;
+}
+
+.rsvp-stamp {
+  justify-self: center;
+  width: calc(300 * var(--u));
+  height: auto;
 }
 
 /* ---------- Venue (design 6, top) ---------- */
@@ -968,7 +1018,7 @@ body.is-locked {
 
 /* ---------- Thank you (design 8, bottom) ---------- */
 .thanks {
-  height: calc(682 * var(--u));
+  height: calc(1651 * var(--u)); /* 682u of sky and text plus 969u for the photo card above */
   min-height: 0;
   padding: 0;
   overflow: clip;
@@ -986,15 +1036,28 @@ body.is-locked {
   white-space: nowrap;
 }
 
+.thanks-photo {
+  position: absolute;
+  left: calc(220 * var(--u));
+  top: calc(210 * var(--u));
+  width: calc(640 * var(--u));
+  aspect-ratio: 4 / 5;
+  box-sizing: border-box;
+  border: calc(14 * var(--u)) solid var(--cream);
+  object-fit: cover;
+  object-position: 50% 55%;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
+}
+
 .thanks-text {
-  top: calc(131 * var(--u));
+  top: calc(1100 * var(--u));
   font-size: calc(46 * var(--u));
   line-height: calc(70 * var(--u));
 }
 
 /* Aston Script at 80u is as wide as the design's "Thank You" */
 .thanks-script {
-  top: calc(491 * var(--u));
+  top: calc(1460 * var(--u));
   font-family: var(--script);
   font-size: calc(80 * var(--u));
   line-height: 1;
@@ -1058,5 +1121,18 @@ body.is-locked {
   .timeline::before,
   .rsvp::before {
     background-image: url('assets/design/silk-wide.jpg');
+  }
+
+  /* the countdown photo stays in the column; a blurred copy carries the banner out to the window edges */
+  .countdown::before {
+    top: -40px;
+    bottom: -40px;
+    background: url('assets/design/countdown-photo.jpg') center 12% / cover;
+    filter: blur(28px) saturate(1.15);
+  }
+
+  /* the photo's side edges melt into the blur instead of ending in a hard line */
+  .countdown-photo {
+    mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
   }
 }

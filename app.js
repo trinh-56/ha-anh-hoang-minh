@@ -7,10 +7,10 @@ window.scrollTo(0, 0);
 // Everything on the page fades with its position on screen: in at the edge it enters from, out at the edge it
 // leaves by, in both scroll directions. CSS drives .fade on the compositor; older browsers use the fallback below.
 // The fade is opacity only, so it also runs when the phone's Reduce Motion setting is on (that setting is about movement).
-const FADE_TARGETS = '.page > section:not(#intro) > *';
-// Share of the element's trip across the screen spent fading (matches @keyframes scroll-fade and scroll-fade-last).
+// The thank-you panel is the end of the page and shorter than the screen, so it never fades (it would stay faint at the bottom).
+const FADE_TARGETS = '.page > section:not(#intro):not(#thanks) > *';
+// Share of the element's trip across the screen spent fading (matches @keyframes scroll-fade).
 const FADE_IN = 0.3;
-const FADE_IN_LAST = 0.2;
 const FADE_OUT = 0.12;
 
 const intro = document.getElementById('intro');
@@ -46,8 +46,7 @@ window.addEventListener('pageshow', (e) => {
         if (!el.classList.contains('fade')) continue;
         const r = el.getBoundingClientRect();
         const progress = (vh - r.top) / (vh + r.height);
-        const fadeIn = el.parentElement.id === 'thanks' ? FADE_IN_LAST : FADE_IN;
-        el.style.opacity = base * Math.max(0, Math.min(1, progress / fadeIn, (1 - progress) / FADE_OUT));
+        el.style.opacity = base * Math.max(0, Math.min(1, progress / FADE_IN, (1 - progress) / FADE_OUT));
       }
     };
     const queue = () => {
@@ -149,4 +148,12 @@ form.addEventListener('submit', async (e) => {
     statusEl.textContent = 'Gửi chưa được, vui lòng thử lại.';
     submitBtn.disabled = false;
   }
+});
+
+// Gift popup: a native <dialog> (Esc closes it); a tap on the dimmed area outside it closes it too.
+const giftDialog = document.getElementById('gift-dialog');
+document.getElementById('gift-btn').addEventListener('click', () => giftDialog.showModal());
+document.getElementById('gift-close').addEventListener('click', () => giftDialog.close());
+giftDialog.addEventListener('click', (e) => {
+  if (e.target === giftDialog) giftDialog.close();
 });

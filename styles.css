@@ -436,9 +436,11 @@ body.is-locked {
 /* ---------- Sky scene (countdown and thank-you panels) ---------- */
 /* clouds hang from the top, hills sit on the bottom; the sky is a gradient behind them */
 .scene {
+  --hill-lift: 0px;
   background:
     url('assets/design/clouds.svg') center top / 100% calc(200 * var(--u)) no-repeat,
-    url('assets/design/hills.svg') center bottom / 100% calc(255 * var(--u)) no-repeat,
+    url('assets/design/hills.svg') center calc(100% - var(--hill-lift)) / 100% calc(255 * var(--u)) no-repeat,
+    linear-gradient(var(--hill-dark), var(--hill-dark)) center bottom / 100% var(--hill-lift) no-repeat,
     linear-gradient(to bottom, var(--sky-top), var(--sky-low) 65%);
 }
 
@@ -914,46 +916,99 @@ body.is-locked {
   font-size: calc(56 * var(--u));
 }
 
-/* ---------- Thank you (page-confirm bottom) ---------- */
-/* Same look as the bride & groom section: wine background, photo card (colour, original ratio), text below. */
-.thanks {
-  margin: 0; /* now a sibling of #rsvp, so it no longer needs to break out of the form section's gutters */
-  min-height: 100vh;
-  min-height: 100lvh; /* a full page, so no part of the RSVP shows above it at the end */
-  box-sizing: border-box; /* padding counts inside that height */
-  padding: 56px var(--gutter) calc(56px + env(safe-area-inset-bottom));
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 28px;
-  background: var(--pink);
-  color: var(--ink);
-  text-align: center;
-}
-
-.thanks-bg {
+/* ---------- Gift button and popup ---------- */
+.gift-btn,
+.gift-close {
   display: block;
-  width: 72%;
-  height: auto;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
+  width: 100%;
+  min-height: max(calc(80 * var(--u)), 44px);
+  border: calc(4 * var(--u)) solid var(--rose);
+  border-radius: 999px;
+  background: var(--red);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: max(16px, calc(44 * var(--u)));
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
-.thanks-content {
-  width: 72%; /* same width as the photo, so the text stays between its left and right edges */
+.gift-btn {
+  margin-top: calc(26 * var(--u));
+}
+
+.gift-btn:focus-visible,
+.gift-close:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 2px;
+}
+
+.gift-dialog {
+  width: min(86vw, 420px);
+  padding: 20px;
+  border: 3px solid var(--rose);
+  border-radius: 24px;
+  background: var(--silk);
+  color: var(--red);
+}
+
+.gift-dialog::backdrop {
+  background: rgb(41 39 39 / 0.55);
+}
+
+/* an empty dashed square until assets/design/gift-qr.png exists (the image removes itself if it fails to load) */
+.gift-slot {
+  aspect-ratio: 1;
   display: grid;
-  gap: 10px;
+  place-items: center;
+  border: 3px dashed var(--rose);
+  border-radius: 12px;
 }
 
-.thanks-content p {
+.gift-slot:has(img) {
+  border: 0;
+}
+
+.gift-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.gift-close {
+  margin-top: 16px;
+}
+
+/* ---------- Thank you (design 8, bottom) ---------- */
+.thanks {
+  height: calc(682 * var(--u));
+  min-height: 0;
+  padding: 0;
+  overflow: clip;
+  color: var(--red);
+  --hill-lift: calc(31 * var(--u)); /* the crest sits 31u higher here than in the countdown panel */
+}
+
+.thanks-text,
+.thanks-script {
+  position: absolute;
+  left: 0;
+  right: 0;
   margin: 0;
-  font-size: var(--small-text);
-  line-height: 1.65;
+  text-align: center;
+  white-space: nowrap;
 }
 
-.thanks-content .thanks-script {
-  margin-top: 8px;
+.thanks-text {
+  top: calc(131 * var(--u));
+  font-size: calc(46 * var(--u));
+  line-height: calc(70 * var(--u));
+}
+
+/* Aston Script at 80u is as wide as the design's "Thank You" */
+.thanks-script {
+  top: calc(491 * var(--u));
   font-family: var(--script);
-  font-size: clamp(2.4rem, 14.5vw, 4.4rem); /* "Thank you!" must fit inside the photo width */ /* 30% bigger than before (3.4rem) */
+  font-size: calc(80 * var(--u));
   line-height: 1;
 }
 
@@ -969,21 +1024,12 @@ body.is-locked {
     30%, 88% { opacity: var(--fade-to, 1); }
   }
 
-  /* The thank-you page is the end of the scroll, so it must finish fading in before the page runs out. */
-  @keyframes scroll-fade-last {
-    0%, 100% { opacity: 0; }
-    20%, 88% { opacity: 1; }
-  }
-
   .fade {
     animation: scroll-fade linear both;
     animation-timeline: view();
     animation-range: cover 0% cover 100%;
   }
 
-  #thanks > .fade {
-    animation-name: scroll-fade-last;
-  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

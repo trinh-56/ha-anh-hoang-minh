@@ -10,3 +10,8 @@ Requirements: R1 intro transition · R2 save-the-date · R3 countdown · R4 fami
 Goal: live public URL; every RSVP lands as a row in the couple's Google Sheet.
 Plan: `phases/02-rsvp-and-deploy/02-01-PLAN.md` (tasks 2-1 … 2-4)
 Requirements: R10 RSVP stored in Google Sheet · R11 free public hosting · R12 link preview in Zalo/Messenger
+
+## Phase 3: Design revamp — GATE
+Goal: site matches the 8 designs in `~/Downloads/Hà Anh & Hoàng Minh/`, with RSVP still saving to the Sheet.
+Plan: `phases/03-design-revamp/03-01-PLAN.md` (tasks 3-0 … 3-12)
+**GATE:** user checks on a real phone and desktop before merge or push.

@@ -1,4 +1,5 @@
 # State
-Current phase: 3 (design revamp, not started)
-Last action: Phase 3 planned (Opus); task 3-0 answered (ANSWERS.md). Execution handed to Sonnet. Graphics are in assets-v2/.
-Blockers: none. Start with 3-1.
+Current phase: 3 (design revamp) — all tasks 3-0 … 3-12 done on branch `design-revamp`; stopped at the GATE.
+Last action: Sonnet executed the plan; every section compared with its design at 360x640.
+Blockers: none. Waiting for the user to check on a real phone and desktop before merge or push.
+Open items for the user: gift-qr.png, flowers/seal assets noted in the report, og.jpg is still the old link preview.

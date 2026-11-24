@@ -143,57 +143,75 @@ button:active, a:active {
   padding: 0;
   overflow: hidden;
   isolation: isolate; /* the layers below use z-index; keep them from stacking against later sections */
-  background: var(--paper);
-  --below: calc(100lvh - 100svh); /* the strip hidden under Safari's toolbars: text is placed from the visible bottom */
+  background: var(--silk);
+  /* width of the framed photo: 94% of the column, or less when the visible height cannot hold it (the frame is 2:3) */
+  --F: min(calc(1015 * var(--u)), 61.33svh);
 }
 
-/* hero.jpg is 2:3 with extra studio wall above the couple. Sized by width (131% of the screen) so the couple fills ~74% of it, as in
-   design 3; never narrower than the screen is tall (no gap) and never taller than 1.2x the screen (heads must stay in view). */
-/* the photo can be wider than the column; this box clips it to the column even when the doors are allowed to spill out */
-.intro-stage {
+/* frame-1.png is 1024x1536; its transparent window is 15.7% / 8.1% from the top-left, 73% wide and 80% tall. The photo is a
+   hair larger than the window so it tucks under the frame's inner line. */
+.intro-frame {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50svh; /* centred in what is visible between the browser bars */
   z-index: 0;
+  width: var(--F);
+  height: calc(var(--F) * 1.5);
+  translate: -50% -50%;
+}
+
+.intro-photo-box {
+  position: absolute;
+  left: 15.33%;
+  top: 7.8%;
+  width: 73.8%;
+  height: 80.1%;
   overflow: hidden;
 }
 
-.intro-photo {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: min(max(131%, calc(100lvh * 0.6667)), calc(100lvh * 0.8));
-  height: auto;
-  max-width: none;
-  translate: -50% 0;
-}
-
-#intro::after {
+.intro-photo-box::after {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 1;
   background: linear-gradient(to bottom, rgb(0 0 0 / 0) 55%, rgb(0 0 0 / 0.35) 100%);
+}
+
+.intro-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 100%; /* hero.jpg has extra studio wall above the couple; keep the couple, crop the wall */
+}
+
+.intro-frame-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
   pointer-events: none;
 }
 
 .intro-text {
   position: absolute;
   inset: 0;
-  z-index: 2;
   color: var(--cream);
+  text-shadow: 0 1px 10px rgb(0 0 0 / 0.4); /* keeps the white lettering readable over the white dress */
   pointer-events: none;
 }
 
-/* Aston Script is wide: 80u gives the same width as the design's lettering ("Hoàng Minh" is ~633u wide in design 3) */
+/* sizes and positions are fractions of the frame width F; the two baselines are 0.109F apart, as in design 3 */
 .intro-names {
   position: absolute;
   left: 0;
-  bottom: calc(var(--below) + 274 * var(--u));
+  bottom: calc(var(--F) * 0.36);
   margin: 0;
   font-family: var(--script);
   font-weight: 400;
-  font-size: calc(80 * var(--u));
-  line-height: calc(175 * var(--u)); /* the two baselines are 175u apart in design 3 */
+  font-size: calc(var(--F) * 0.066);
+  line-height: calc(var(--F) * 0.109);
   white-space: nowrap;
 }
 
@@ -202,21 +220,21 @@ button:active, a:active {
 }
 
 .intro-names span:first-child {
-  margin-left: calc(108 * var(--u));
+  margin-left: calc(var(--F) * 0.245);
 }
 
 .intro-names span:last-child {
-  margin-left: calc(330 * var(--u));
+  margin-left: calc(var(--F) * 0.295);
 }
 
 .intro-date {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: calc(var(--below) + 205 * var(--u));
+  left: 15.33%;
+  width: 73.8%;
+  bottom: calc(var(--F) * 0.3135);
   margin: 0;
   text-align: center;
-  font-size: calc(52 * var(--u));
+  font-size: calc(var(--F) * 0.04);
   line-height: 1;
 }
 
@@ -225,9 +243,8 @@ button:active, a:active {
   top: 0;
   bottom: 0;
   z-index: 3;
-  /* the multiply tint lowers red ~7% so the paper matches the design's slightly duller pink */
-  background: #EDFFFF url('assets/design/door-paper.jpg') center / cover;
-  background-blend-mode: multiply;
+  /* the paper matches the design's slightly duller pink (red lowered ~7% in the image); the colour shows while it loads */
+  background: #EBB8BF url('assets/design/door-paper.jpg') center / cover;
   transition: transform 1100ms var(--ease-out);
 }
 
@@ -375,6 +392,7 @@ body.is-locked {
 /* Each panel's background is a layer that reaches --bleed past the column on both sides (0 on phones, so it equals the
    section there). The column's art stays where the design puts it; on a wide window the background simply continues. */
 .save-date::before,
+#intro::before,
 .countdown::before,
 .family::before,
 .venue::before,
@@ -393,6 +411,7 @@ body.is-locked {
 }
 
 .save-date::before,
+#intro::before,
 .family::before,
 .venue::before,
 .timeline::before,
@@ -621,12 +640,6 @@ body.is-locked {
   left: calc(350 * var(--u));
   top: calc(1480 * var(--u));
   width: calc(380 * var(--u));
-  height: auto;
-}
-
-.rsvp-stamp {
-  justify-self: center;
-  width: calc(300 * var(--u));
   height: auto;
 }
 
@@ -1116,6 +1129,7 @@ body.is-locked {
   }
 
   .save-date::before,
+  #intro::before,
   .family::before,
   .venue::before,
   .timeline::before,

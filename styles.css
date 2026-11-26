@@ -716,10 +716,15 @@ body.is-locked {
 .cp-role-groom { left: calc(810 * var(--u)); top: calc(718 * var(--u)); }
 .cp-name-groom { left: calc(806 * var(--u)); top: calc(811 * var(--u)); }
 
-/* ---------- Album: two 1080x1920 collages; each fades and grows in (like the page-1 photo) when it scrolls into view ---------- */
+/* ---------- Album: five photos; each fades and grows in (like the page-1 photo) when it scrolls into view ---------- */
 .album {
+  display: grid;
+  gap: calc(30 * var(--u));
   min-height: 0;
-  padding: 0;
+  padding-top: calc(30 * var(--u));
+  padding-bottom: calc(30 * var(--u));
+  padding-left: calc(30 * var(--u));
+  padding-right: calc(30 * var(--u));
 }
 
 .album img {

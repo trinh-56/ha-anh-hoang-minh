@@ -42,7 +42,7 @@
   --red: #7A0000; /* all text and rules */
   --rose: #E094A0; /* timeline dots, field borders, confirm button */
   --paper: #EDCACE; /* desktop backdrop, theme-color */
-  --silk: #F8F2DC; /* the silk texture's average colour, shown until the image loads */
+  --silk: #F3F0EB; /* the silk texture's average colour, shown until the image loads */
   --cream: #FFFCF7; /* text on photos and the rose panel */
   --u: calc(min(100vw, 480px) / 1080); /* one design pixel (the designs are 1080 wide) */
   --bleed: calc((100vw - min(100vw, 480px)) / 2); /* desktop: the strip on each side of the 480px column (0 on phones) */
@@ -79,7 +79,7 @@ body {
   max-width: 480px;
   margin: 0 auto;
   overflow-x: clip;
-  background: var(--silk) url('assets/design/silk-tile.jpg') 0 0 / 1400px auto repeat;
+  background: var(--silk) url('assets/design/silk-tile.jpg') 0 0 / 960px auto repeat;
 }
 
 .section {

@@ -346,8 +346,8 @@ body.is-locked {
 .sd-flowers-bottom { left: calc(-230 * var(--u)); top: calc(1560 * var(--u)); width: calc(560 * var(--u)); rotate: 45deg; }
 
 /* slide-in distance (see scroll-fade-slide): the strip and the bottom-left flower come from the left, the rest from the right */
-.sd-strip, .sd-flowers-bottom { --slide: calc(-300 * var(--u)); }
-.sd-envelope, .sd-pearls, .sd-flowers-top { --slide: calc(300 * var(--u)); }
+.sd-strip, .sd-flowers-bottom, .cp-groom { --slide: calc(-300 * var(--u)); }
+.sd-envelope, .sd-pearls, .sd-flowers-top, .cp-bride { --slide: calc(300 * var(--u)); }
 
 /* Georgia Pro is wider than the design's serif, so 100u / SemiBold gives the same width as "SAVE" and "DATE" there; the baselines are 133u apart */
 .save-title {
@@ -1057,7 +1057,8 @@ body.is-locked {
     30%, 88% { opacity: var(--fade-to, 1); translate: 0 0; }
   }
 
-  .save-date img.fade {
+  .save-date img.fade,
+  .cp-card.fade {
     animation-name: scroll-fade-slide;
   }
 

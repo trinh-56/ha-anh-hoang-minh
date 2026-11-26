@@ -46,7 +46,9 @@ window.addEventListener('pageshow', (e) => {
         if (!el.classList.contains('fade')) continue;
         const r = el.getBoundingClientRect();
         const progress = (vh - r.top) / (vh + r.height);
-        el.style.opacity = base * Math.max(0, Math.min(1, progress / FADE_IN, (1 - progress) / FADE_OUT));
+        const k = Math.max(0, Math.min(1, progress / FADE_IN, (1 - progress) / FADE_OUT));
+        el.style.opacity = base * k;
+        if (el.matches('#album .rv')) el.style.scale = 0.88 + 0.12 * k; // same grow/shrink as @keyframes scroll-fade-grow
       }
     };
     const queue = () => {

@@ -1049,16 +1049,14 @@ body.is-locked {
     30%, 88% { opacity: var(--fade-to, 1); translate: 0 0; }
   }
 
-  /* album photos: fade + grow in, fade + shrink out (the grow is skipped under Reduce Motion) */
+  /* album photos: fade + grow in, fade + shrink out (a gentle 12%, so it stays on under Reduce Motion too) */
   @keyframes scroll-fade-grow {
     0%, 100% { opacity: 0; scale: .88; }
     30%, 88% { opacity: 1; scale: 1; }
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    #album .rv.fade {
-      animation-name: scroll-fade-grow;
-    }
+  #album .rv.fade {
+    animation-name: scroll-fade-grow;
   }
 
   .save-date img.fade,

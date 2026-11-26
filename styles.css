@@ -779,14 +779,6 @@ body.is-locked {
   display: block;
 }
 
-.album .rv.pending {
-  opacity: 0;
-}
-
-.album .rv.shown {
-  animation: hero-in 1s var(--ease-out) both;
-}
-
 /* ---------- Timeline (design 7) ---------- */
 .timeline {
   height: calc(1500 * var(--u)); /* ends below the last entry; the album follows */

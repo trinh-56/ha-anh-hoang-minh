@@ -728,10 +728,10 @@ body.is-locked {
   overflow-x: clip;
 }
 
-/* two 1080u x 1920u collages; every photo is placed in design pixels (--x --y --w --h, crop focus --p) */
+/* two collages; every gap, between photos and to the edge, is 20u; every photo is placed in design pixels (--x --y --w --h, crop focus --p) */
 .al {
   position: relative;
-  height: calc(1920 * var(--u));
+  height: calc(var(--H) * var(--u));
 }
 
 .ph {
@@ -764,7 +764,7 @@ body.is-locked {
 .al-love {
   position: absolute;
   left: calc(400 * var(--u));
-  top: calc(560 * var(--u));
+  top: calc(550 * var(--u));
   margin: 0;
   font-family: var(--script);
   font-size: calc(110 * var(--u));

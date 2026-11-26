@@ -741,6 +741,7 @@ body.is-locked {
   width: calc(var(--w) * var(--u));
   height: calc(var(--h) * var(--u));
   overflow: hidden;
+  background: #CFC6BA; /* blank placeholder until the photo (an <img> inside) is added */
 }
 
 .ph img {

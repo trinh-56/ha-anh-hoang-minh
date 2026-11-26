@@ -45,6 +45,7 @@
   --silk: #F8F2DC; /* the silk texture's average colour, shown until the image loads */
   --cream: #FFFCF7; /* text on photos and the rose panel */
   --u: calc(min(100vw, 480px) / 1080); /* one design pixel (the designs are 1080 wide) */
+  --bleed: calc((100vw - min(100vw, 480px)) / 2); /* desktop: the strip on each side of the 480px column (0 on phones) */
   --script: 'Aston Script', cursive;
   --body: 'Georgia Pro', Georgia, 'Times New Roman', serif;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -133,13 +134,20 @@ button:active, a:active {
   --below: calc(100lvh - 100svh); /* the strip hidden under Safari's toolbars: text is placed from the visible bottom */
 }
 
+/* the photo can be wider than the column; this box clips it to the column even when the doors are allowed to spill out */
+.intro-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
 /* hero.jpg is 2:3 with extra studio wall above the couple. Sized by width (131% of the screen) so the couple fills ~74% of it, as in
    design 3; never narrower than the screen is tall (no gap) and never taller than 1.2x the screen (heads must stay in view). */
 .intro-photo {
   position: absolute;
   left: 50%;
   bottom: 0;
-  z-index: 0;
   width: min(max(131%, calc(100lvh * 0.6667)), calc(100lvh * 0.8));
   height: auto;
   max-width: none;
@@ -227,21 +235,21 @@ button:active, a:active {
 /* the doors meet at x 644-649 of 1080 (a 5u white seam sits between them) */
 .door-left {
   z-index: 4; /* above the right door, so the seal that overhangs its edge is not painted over */
-  left: 0;
-  width: 59.63%;
+  left: calc(-1 * var(--bleed)); /* on desktop the closed doors run out to the window edges */
+  width: calc(59.63% + var(--bleed));
   background-position: 0 50%;
 }
 
 .door-right {
-  right: 0;
-  width: 39.91%;
+  right: calc(-1 * var(--bleed));
+  width: calc(39.91% + var(--bleed));
   background-position: 100% 50%;
 }
 
 /* the seal is part of the left door and overhangs its edge, so it travels with it */
 .door-seal {
   position: absolute;
-  left: calc(455 * var(--u));
+  left: calc(var(--bleed) + 455 * var(--u)); /* measured from the column, not from the wider door */
   top: calc(50% - 311 * var(--u));
   width: calc(375 * var(--u));
   height: auto;
@@ -282,7 +290,7 @@ button:active, a:active {
 
 /* opened state: the left door slides far enough that its overhanging seal also leaves the screen */
 #intro.is-open .door-left {
-  transform: translateX(calc(-860 * var(--u)));
+  transform: translateX(calc(-1 * (var(--bleed) + 860 * var(--u))));
 }
 
 #intro.is-open .door-right {
@@ -1001,4 +1009,20 @@ body.is-locked {
     animation-range: cover 0% cover 100%;
   }
 
+}
+
+/* Desktop: the closed doors cover the whole window; once open, only the 480px column remains, with the paper beside it. */
+@media (min-width: 481px) {
+  body {
+    overflow-x: hidden; /* clip is ignored by Safari before 16; hidden on body applies to the whole window */
+  }
+
+  .page,
+  #intro {
+    overflow-x: visible;
+  }
+
+  #intro {
+    overflow: visible;
+  }
 }

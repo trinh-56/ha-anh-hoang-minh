@@ -932,12 +932,34 @@ body.is-locked {
 }
 
 /* ---------- Thank you (design 8, bottom) ---------- */
+/* a 1080u x 682u panel: the photo fills it under a dark veil, the text is white with a shadow so it stays readable */
 .thanks {
-  height: calc(1611 * var(--u)); /* 682u for the text, plus 929u for the framed photo above it */
+  height: calc(682 * var(--u));
   min-height: 0;
   padding: 0;
   overflow: clip;
-  color: var(--red);
+  color: #fff;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.6), 0 0 3px rgb(0 0 0 / 0.5);
+}
+
+.thanks-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.thanks::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgb(0 0 0 / 0.4);
+  pointer-events: none;
 }
 
 .thanks-text,
@@ -950,42 +972,15 @@ body.is-locked {
   white-space: nowrap;
 }
 
-/* a square card with a white border and a soft shadow, like the bride and groom cards */
-.thanks-frame {
-  position: absolute;
-  left: calc(230 * var(--u));
-  top: calc(250 * var(--u));
-  width: calc(620 * var(--u));
-  aspect-ratio: 1;
-}
-
-.thanks-photo-box {
-  position: absolute;
-  inset: 0;
-  box-sizing: border-box;
-  border: calc(18 * var(--u)) solid var(--cream);
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
-  overflow: hidden;
-}
-
-.thanks-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: 50% 55%; /* faces sit at 42-62% of the photo's height */
-}
-
 .thanks-text {
-  top: calc(1060 * var(--u));
+  top: calc(132 * var(--u));
   font-size: calc(46 * var(--u));
   line-height: calc(70 * var(--u));
 }
 
 /* Aston Script at 80u is as wide as the design's "Thank You" */
 .thanks-script {
-  top: calc(1420 * var(--u));
+  top: calc(470 * var(--u));
   font-family: var(--script);
   font-size: calc(80 * var(--u));
   line-height: 1;

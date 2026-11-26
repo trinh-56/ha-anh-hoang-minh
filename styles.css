@@ -60,7 +60,7 @@
 /* html shows only beside the phone-width column. The page itself carries one silk background: sections that sit on silk are
    transparent, so it never restarts at a section edge (the tile is mirrored 2x2, so its own edges continue too). */
 html {
-  background: #EBB8BF url('assets/design/door-paper-wide.jpg') center / cover fixed; /* beside the phone-width column on desktop: the same paper as the intro doors */
+  background: #E8B2B9 url('assets/design/pink-paper.webp') center / cover fixed; /* beside the phone-width column on desktop: the same paper as the intro doors */
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   overscroll-behavior: none;
@@ -190,7 +190,7 @@ button:active, a:active {
 .intro-rings {
   position: absolute;
   right: calc(110 * var(--u));
-  bottom: calc(var(--below) + 480 * var(--u));
+  bottom: calc(var(--below) + 700 * var(--u));
   width: calc(190 * var(--u));
   height: auto;
   opacity: 0.2; /* same as the lilies */
@@ -203,9 +203,10 @@ button:active, a:active {
   margin: 0;
   font-family: var(--script);
   font-weight: 400;
-  font-size: calc(68 * var(--u));
-  line-height: calc(160 * var(--u));
+  font-size: calc(84 * var(--u));
+  line-height: calc(185 * var(--u));
   white-space: nowrap;
+  text-shadow: 0 2px 14px rgb(0 0 0 / 0.55), 0 0 3px rgb(0 0 0 / 0.4);
 }
 
 .intro-names span {
@@ -213,11 +214,11 @@ button:active, a:active {
 }
 
 .intro-names span:first-child {
-  margin-left: calc(108 * var(--u));
+  margin-left: calc(90 * var(--u));
 }
 
 .intro-names span:last-child {
-  margin-left: calc(330 * var(--u));
+  margin-left: calc(230 * var(--u));
 }
 
 .intro-date {
@@ -229,6 +230,7 @@ button:active, a:active {
   text-align: center;
   font-size: calc(52 * var(--u));
   line-height: 1;
+  text-shadow: 0 2px 10px rgb(0 0 0 / 0.5);
 }
 
 .door {
@@ -237,7 +239,7 @@ button:active, a:active {
   bottom: 0;
   z-index: 3;
   /* the paper matches the design's slightly duller pink (red lowered ~7% in the image); the colour shows while it loads */
-  background: #EBB8BF url('assets/design/door-paper.jpg') center / cover;
+  background: #E8B2B9 url('assets/design/pink-paper.webp') center / cover;
   transition: transform 1100ms var(--ease-out);
 }
 
@@ -718,25 +720,68 @@ body.is-locked {
 
 /* ---------- Album: five photos; each fades and grows in (like the page-1 photo) when it scrolls into view ---------- */
 .album {
-  display: grid;
-  gap: calc(30 * var(--u));
   min-height: 0;
-  padding-top: calc(30 * var(--u));
-  padding-bottom: calc(30 * var(--u));
-  padding-left: calc(30 * var(--u));
-  padding-right: calc(30 * var(--u));
+  padding: 0;
+  overflow-x: clip;
 }
 
-.album img {
+/* two 1080u x 1920u collages; every photo is placed in design pixels (--x --y --w --h, crop focus --p) */
+.al {
+  position: relative;
+  height: calc(1920 * var(--u));
+}
+
+.ph {
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  width: calc(var(--w) * var(--u));
+  height: calc(var(--h) * var(--u));
+  overflow: hidden;
+}
+
+.ph img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: var(--p);
 }
 
-.album img.pending {
+.al-title {
+  position: absolute;
+  right: calc(35 * var(--u));
+  bottom: calc(45 * var(--u));
+  color: #fff;
+  font-size: calc(108 * var(--u));
+  line-height: 1;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.5);
+}
+
+.al-love {
+  position: absolute;
+  left: calc(400 * var(--u));
+  top: calc(560 * var(--u));
+  margin: 0;
+  font-family: var(--script);
+  font-size: calc(110 * var(--u));
+  line-height: calc(150 * var(--u));
+  color: var(--red);
+}
+
+.al-love span {
+  display: block;
+}
+
+.al-love span:last-child {
+  margin-left: calc(-10 * var(--u));
+}
+
+.album .rv.pending {
   opacity: 0;
 }
 
-.album img.shown {
+.album .rv.shown {
   animation: hero-in 1s var(--ease-out) both;
 }
 

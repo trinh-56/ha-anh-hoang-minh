@@ -59,9 +59,9 @@ window.addEventListener('pageshow', (e) => {
   }
 }
 
-// Album: each collage fades and grows in (CSS .shown) the first time it is mostly on screen.
+// Album: each album photo fades and grows in (CSS .shown) the first time it is mostly on screen.
 {
-  const imgs = document.querySelectorAll('#album img');
+  const imgs = document.querySelectorAll('#album .rv');
   imgs.forEach((img) => img.classList.add('pending'));
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {

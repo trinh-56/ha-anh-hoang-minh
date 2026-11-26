@@ -187,15 +187,6 @@ button:active, a:active {
   pointer-events: none;
 }
 
-.intro-rings {
-  position: absolute;
-  right: calc(110 * var(--u));
-  bottom: calc(var(--below) + 700 * var(--u));
-  width: calc(190 * var(--u));
-  height: auto;
-  opacity: 0.2; /* same as the lilies */
-}
-
 .intro-names {
   position: absolute;
   left: 0;
@@ -565,6 +556,18 @@ body.is-locked {
   font-size: calc(64 * var(--u));
 }
 
+/* the wedding rings sit left of the names, at the lilies' opacity */
+.fam-rings {
+  position: absolute;
+  left: calc(150 * var(--u));
+  top: calc(840 * var(--u));
+  width: calc(250 * var(--u));
+  height: auto;
+  opacity: 0.2;
+  --fade-to: 0.2;
+  pointer-events: none;
+}
+
 /* ---------- Lilies (extra artwork, not in the designs) ---------- */
 /* 20% opacity; --fade-to makes the scroll fade end at 20% instead of 100% */
 .lily {
@@ -578,7 +581,7 @@ body.is-locked {
 }
 
 .fam-lily { left: calc(830 * var(--u)); top: calc(80 * var(--u)); width: calc(380 * var(--u)); } /* runs off the right edge, like the envelope */
-.ven-lily { left: calc(830 * var(--u)); top: calc(130 * var(--u)); width: calc(460 * var(--u)); }
+.ven-lily { left: calc(830 * var(--u)); top: calc(130 * var(--u)); width: calc(690 * var(--u)); }
 
 /* ---------- Venue (design 6, top) ---------- */
 /* placed in design px; for text with line-height 1 the baseline sits ~0.85em below the top */

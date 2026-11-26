@@ -971,7 +971,10 @@ body.is-locked {
 
 .rsvp-done {
   margin: 0;
-  padding: calc(60 * var(--u)) 0;
+  min-height: calc(1238 * var(--u)); /* fills the section's content box, so the message sits mid-section */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   font-size: calc(56 * var(--u));
 }

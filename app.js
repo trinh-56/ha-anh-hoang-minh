@@ -142,7 +142,7 @@ form.addEventListener('submit', async (e) => {
 
     const done = document.createElement('p');
     done.className = 'rsvp-done';
-    done.textContent = 'Cảm ơn bạn đã xác nhận!';
+    done.textContent = 'Cảm ơn quý khách đã xác nhận!';
     form.replaceWith(done);
     document.getElementById('thanks').scrollIntoView({ behavior: 'smooth' });
   } catch (err) {

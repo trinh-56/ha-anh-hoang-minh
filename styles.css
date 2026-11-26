@@ -764,8 +764,10 @@ body.is-locked {
 
 .al-love {
   position: absolute;
-  left: calc(400 * var(--u));
-  top: calc(550 * var(--u));
+  left: calc(380 * var(--u)); /* the 280u gap between the small photo and the tall one */
+  width: calc(280 * var(--u));
+  text-align: center;
+  top: calc(540 * var(--u));
   margin: 0;
   font-family: var(--script);
   font-size: calc(110 * var(--u));
@@ -775,10 +777,6 @@ body.is-locked {
 
 .al-love span {
   display: block;
-}
-
-.al-love span:last-child {
-  margin-left: calc(-10 * var(--u));
 }
 
 .album .rv.pending {

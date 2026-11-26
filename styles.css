@@ -559,9 +559,9 @@ body.is-locked {
 /* the wedding rings sit left of the names, at the lilies' opacity */
 .fam-rings {
   position: absolute;
-  left: calc(150 * var(--u));
-  top: calc(840 * var(--u));
-  width: calc(250 * var(--u));
+  left: calc(-120 * var(--u)); /* runs off the left edge, like the envelope */
+  top: calc(770 * var(--u));
+  width: calc(400 * var(--u));
   height: auto;
   opacity: 0.2;
   --fade-to: 0.2;

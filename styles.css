@@ -146,6 +146,22 @@ button:active, a:active {
   translate: -50% 0;
 }
 
+/* once the card opens the photo fades in and grows into place over 1s (grow is skipped under Reduce Motion) */
+@keyframes hero-in {
+  from { opacity: 0; scale: 0.88; }
+}
+
+#intro.is-open .intro-photo {
+  transform-origin: 50% 100%;
+  animation: hero-in 1s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes hero-in {
+    from { opacity: 0; }
+  }
+}
+
 #intro::after {
   content: '';
   position: absolute;

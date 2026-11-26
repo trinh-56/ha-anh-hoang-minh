@@ -401,10 +401,11 @@ body.is-locked {
   min-height: 0;
   padding: 0;
   overflow: clip;
-  color: var(--red);
+  color: #fff;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.6), 0 0 3px rgb(0 0 0 / 0.5); /* same treatment as the thank-you panel */
 }
 
-/* the banner keeps its 604u height; the photo fills it (cropped to the kiss under the veil) and a light veil keeps the red text readable */
+/* the banner keeps its 604u height; the photo (cropped to the held hands) fills it and a dark veil keeps the white text readable */
 .countdown-photo {
   position: absolute;
   inset: 0;
@@ -413,7 +414,7 @@ body.is-locked {
   height: 100%;
   max-width: none;
   object-fit: cover;
-  object-position: 50% 72%;
+  object-position: 50% 50%;
 }
 
 .countdown::after {
@@ -424,7 +425,7 @@ body.is-locked {
   left: 0;
   right: 0;
   z-index: -1;
-  background: rgb(255 252 247 / 0.38);
+  background: rgb(0 0 0 / 0.4);
   pointer-events: none;
 }
 

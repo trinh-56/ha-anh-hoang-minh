@@ -8,7 +8,7 @@ window.scrollTo(0, 0);
 // leaves by, in both scroll directions. CSS drives .fade on the compositor; older browsers use the fallback below.
 // The fade is opacity only, so it also runs when the phone's Reduce Motion setting is on (that setting is about movement).
 // The thank-you panel is the end of the page and shorter than the screen, so it never fades (it would stay faint at the bottom).
-const FADE_TARGETS = '.page > section:not(#intro):not(#thanks) > :not(.countdown-photo)';
+const FADE_TARGETS = '.page > section:not(#intro):not(#thanks):not(#album) > :not(.countdown-photo)';
 // Share of the element's trip across the screen spent fading (matches @keyframes scroll-fade).
 const FADE_IN = 0.3;
 const FADE_OUT = 0.12;
@@ -57,6 +57,20 @@ window.addEventListener('pageshow', (e) => {
     window.addEventListener('resize', queue);
     queue();
   }
+}
+
+// Album: each collage fades and grows in (CSS .shown) the first time it is mostly on screen.
+{
+  const imgs = document.querySelectorAll('#album img');
+  imgs.forEach((img) => img.classList.add('pending'));
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      e.target.classList.replace('pending', 'shown');
+      io.unobserve(e.target);
+    }
+  }, { threshold: 0.25 });
+  imgs.forEach((img) => io.observe(img));
 }
 
 // Countdown

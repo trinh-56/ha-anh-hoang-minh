@@ -545,7 +545,7 @@ body.is-locked {
   font-size: calc(64 * var(--u));
 }
 
-/* ---------- Lilies and stamps (extra artwork, not in the designs) ---------- */
+/* ---------- Lilies (extra artwork, not in the designs) ---------- */
 /* 20% opacity; --fade-to makes the scroll fade end at 20% instead of 100% */
 .lily {
   position: absolute;
@@ -558,14 +558,6 @@ body.is-locked {
 
 .fam-lily { left: calc(790 * var(--u)); top: calc(100 * var(--u)); width: calc(210 * var(--u)); }
 .ven-lily { left: calc(790 * var(--u)); top: calc(170 * var(--u)); width: calc(270 * var(--u)); }
-
-.tl-stamp {
-  position: absolute;
-  left: calc(350 * var(--u));
-  top: calc(1480 * var(--u));
-  width: calc(380 * var(--u));
-  height: auto;
-}
 
 /* ---------- Venue (design 6, top) ---------- */
 /* placed in design px; for text with line-height 1 the baseline sits ~0.85em below the top */
@@ -705,9 +697,28 @@ body.is-locked {
 .cp-role-groom { left: calc(810 * var(--u)); top: calc(718 * var(--u)); }
 .cp-name-groom { left: calc(806 * var(--u)); top: calc(811 * var(--u)); }
 
+/* ---------- Album: two 1080x1920 collages; each fades and grows in (like the page-1 photo) when it scrolls into view ---------- */
+.album {
+  min-height: 0;
+  padding: 0;
+}
+
+.album img {
+  width: 100%;
+  height: auto;
+}
+
+.album img.pending {
+  opacity: 0;
+}
+
+.album img.shown {
+  animation: hero-in 1s var(--ease-out) both;
+}
+
 /* ---------- Timeline (design 7) ---------- */
 .timeline {
-  height: calc(1920 * var(--u));
+  height: calc(1500 * var(--u)); /* ends below the last entry; the album follows */
   min-height: 0;
   padding: 0;
   overflow: clip;

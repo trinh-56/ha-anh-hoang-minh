@@ -187,6 +187,15 @@ button:active, a:active {
   pointer-events: none;
 }
 
+.intro-rings {
+  position: absolute;
+  right: calc(110 * var(--u));
+  bottom: calc(var(--below) + 480 * var(--u));
+  width: calc(190 * var(--u));
+  height: auto;
+  opacity: 0.2; /* same as the lilies */
+}
+
 .intro-names {
   position: absolute;
   left: 0;
@@ -561,6 +570,7 @@ body.is-locked {
   max-width: none;
   opacity: 0.2;
   --fade-to: 0.2;
+  rotate: -30deg; /* tilted to the left */
   pointer-events: none;
 }
 
